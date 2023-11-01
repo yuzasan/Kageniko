@@ -162,6 +162,7 @@ void Player::Update() {
 
 	NavNode* node = NavManeger::Instance()->GetNearNavNode(m_navNode);
 
+	DebugPrint::Print("P:%f, %f, %f", m_pos.x, m_pos.y, m_pos.z);
 	if (node != nullptr){
 		CVector3D npos = node->GetPos();
 		DebugPrint::Print("N:%f, %f, %f", npos.x, npos.y, npos.z);

@@ -11,7 +11,7 @@
 
 
 //ï‡Ç´ë¨ìx
-#define WALK_SPEED 2.4f
+#define WALK_SPEED 10.0f//4.8f//2.4f
 //í«ê’ë¨ìx
 //#define CHASE_SPEED 0.05f
 //âÒì]ë¨ìx
@@ -55,7 +55,8 @@ Enemy::Enemy(const CVector3D& pos):CharaBase(TaskType::eEnemy)
 	m_moveDir = m_dir;
 
 	//m_rad = 0.8f / 2.0f;
-	m_rad = 0.8f;
+	//m_rad = 0.8f;
+	m_rad = 0.3f;
 	m_isFind = false;
 	m_isFindplayer = false;
 

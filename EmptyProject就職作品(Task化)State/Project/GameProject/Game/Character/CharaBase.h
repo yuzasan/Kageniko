@@ -6,7 +6,6 @@ class NavNode;
 //キャラクターのベース
 class CharaBase :public Task {
 protected:
-	bool m_isGround;
 	NavNode* m_navNode;
 public:
 	//コンストラクタ
@@ -17,7 +16,7 @@ public:
 	NavNode* GetNavNode() const;
 
 	//更新
-	void Uptate();
+	void Update();
 
 	// コリジョン描画
 	void RenderCol();

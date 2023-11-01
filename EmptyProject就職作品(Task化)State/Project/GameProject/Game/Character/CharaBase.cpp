@@ -15,7 +15,7 @@ NavNode* CharaBase::GetNavNode() const
 	return m_navNode;
 }
 
-void CharaBase::Uptate()
+void CharaBase::Update()
 {
 	// “–‚½‚è”»’èƒJƒvƒZƒ‹‚Ìİ’è
 	m_lineS = m_pos + CVector3D(0, 1.0f - m_rad, 0);
