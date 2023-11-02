@@ -6,8 +6,8 @@ class PlayerCamera;
 
 class Player : public CharaBase {
 private:
-	//モデルオブジェクト
-	CModelA3M m_model;
+	CModelA3M m_model;		//モデルデータ
+	CVector3D m_moveDir;	//移動方向
 	CVector3D m_rot_target;
 	//Task* mp_camera;
 	PlayerCamera* mp_camera;
@@ -15,15 +15,31 @@ private:
 	Task* mp_isenemy;
 	Task* mp_tyukan;
 	Task* mp_fellbox;
-	//移動速度
-	//const float move_speed = 0.1f;
-	const float move_speed = 0.2f;
-	//const float move_speed = 0.3f;
 	//色
 	int m_gauge;
-	//int cnt = 0;
-	//中間座標
-	CVector3D m_tyukan;
+	CVector3D m_tyukan;		//中間座標
+	float m_elapsedTime;	//待機経過時間
+
+	//アニメーション番号
+	enum class AnimId 
+	{
+		Idle,	//待機
+		Walk,	//歩き
+	};
+
+	//状態
+	enum class State
+	{
+		Move,		//移動状態
+		Invisible,	//透明状態	
+	};
+	State m_state;	//現在の状態
+
+	//移動状態の処理
+	void StateMove();
+	//透明状態の処理
+	void StateInvisible();
+
 public:
 	//bool m_isFind;
 	Player(const CVector3D& pos);

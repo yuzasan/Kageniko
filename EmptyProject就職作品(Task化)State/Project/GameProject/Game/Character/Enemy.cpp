@@ -11,7 +11,7 @@
 
 
 //歩き速度
-#define WALK_SPEED 10.0f//4.8f//2.4f
+#define WALK_SPEED 5.0f//4.8f//2.4f
 //追跡速度
 //#define CHASE_SPEED 0.05f
 //回転速度
@@ -21,9 +21,9 @@
 //目的地との間距離
 #define SPACE 1.0f
 //重力
-#define G 0.8f
+//#define G 0.8f
 //最大重力
-#define MAX_G 0.001f
+//#define MAX_G 0.001f
 //移動先
 #define MOVE_RANGE_MIN -6.0f//-13.0f
 #define MOVE_RANGE_MAX 6.0f//13.0f
@@ -441,13 +441,19 @@ void Enemy::Update()
 	// プレイヤーの向き反映
 	m_rot.y = atan2f(m_dir.x, m_dir.z);
 
-	m_vec.x *= G;
+	/*m_vec.x *= G;
 	if (abs(m_vec.x) < MAX_G)m_vec.x = 0;
 	m_vec.z *= G;
-	if (abs(m_vec.z) < MAX_G)m_vec.z = 0;
+	if (abs(m_vec.z) < MAX_G)m_vec.z = 0;*/
 
-	m_vec.y -= GRAVITY;
-	m_pos.y += m_vec.y;
+	if (m_vec.y < -10.0f) {//m_vec.y < -0.26f
+
+	}
+	else {
+		m_vec.y -= GRAVITY;
+	}
+
+	//m_pos.y += m_vec.y;
 	m_pos += m_vec * CFPS::GetDeltaTime();
 
 	//カプセル更新

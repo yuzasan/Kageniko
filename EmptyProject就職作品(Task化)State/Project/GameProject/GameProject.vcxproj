@@ -28,6 +28,7 @@
     <ClInclude Include="Game\Stage\HideBox.h" />
     <ClInclude Include="Game\Stage\Item.h" />
     <ClInclude Include="Game\Stage\MoveBox.h" />
+    <ClInclude Include="Game\Stage\NoiseBox.h" />
     <ClInclude Include="Game\Stage\RotateBox.h" />
     <ClInclude Include="Game\Stage\Stage.h" />
     <ClInclude Include="Game\Stage\TyukanBox.h" />
@@ -57,6 +58,7 @@
     <ClCompile Include="Game\Stage\HideBox.cpp" />
     <ClCompile Include="Game\Stage\Item.cpp" />
     <ClCompile Include="Game\Stage\MoveBox.cpp" />
+    <ClCompile Include="Game\Stage\NoiseBox.cpp" />
     <ClCompile Include="Game\Stage\RotateBox.cpp" />
     <ClCompile Include="Game\Stage\Stage.cpp" />
     <ClCompile Include="Game\Stage\TyukanBox.cpp" />

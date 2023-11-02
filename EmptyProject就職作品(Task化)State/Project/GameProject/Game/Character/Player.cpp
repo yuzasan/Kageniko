@@ -10,8 +10,22 @@
 #include "../../Navigation/NavNode.h"
 #include "../../Navigation/NavManeger.h"
 
+//歩き速度
+#define WALK_SPEED 10.0f;
+//回転速度
+#define ROTATE_SPEED 15.0f
+//ジャンプ速度
+#define JUMP_SPEED 8.0f
+//大ジャンプ速度
+#define	HIGH_JUMP_SPEED 10.0f
+//待機時間
+#define IDLE_TIME 3.0f
+
 Player::Player(const CVector3D& pos) :CharaBase(TaskType::ePlayer)
 	,mp_camera(nullptr)
+	,m_moveDir(0.0f,0.0f,0.0f)
+	,m_elapsedTime(0.0f)
+	,m_state(State::Move)
 {
 	m_model = COPY_RESOURCE("Ninja", CModelA3M);
 	m_pos = m_tyukan = pos;
@@ -40,7 +54,117 @@ Player::~Player() {
 
 }
 
+//移動状態の処理
+void Player::StateMove() {
+	//移動速度をリセット
+	m_vec.x = 0.0f;
+	m_vec.z = 0.0f;
+
+	//入力方向のベクトルを取得
+	CVector3D inputDir = CVector3D::zero;
+	if (HOLD(CInput::eLeft))	inputDir.x = 1.0f;
+	if (HOLD(CInput::eRight))	inputDir.x = -1.0f;
+	if (HOLD(CInput::eUp))		inputDir.z = 1.0f;
+	if (HOLD(CInput::eDown))	inputDir.z = -1.0f;
+
+	//キーが入力されていれば、
+	if (inputDir.LengthSq() > 0.1f) {
+		if (mp_camera->GetModel() == 0) {
+			//カメラの向きに合わせた、移動ベクトルを求める
+			CMatrix camMtx = CMatrix::MRotation(mp_camera->m_rot);
+			m_moveDir = camMtx * inputDir;
+			m_moveDir.y = 0.0f;
+			m_moveDir.Normalize();
+		}
+		else {
+			m_moveDir = CVector3D::Leap(m_moveDir, inputDir.GetNormalize(), 0.25f);
+		}
+		//プレイヤーの向きを徐々に移動方向へ向ける
+		m_dir = CVector3D::Sleap(m_dir, m_moveDir, ROTATE_SPEED * CFPS::GetDeltaTime());
+		//プレイヤーの向き反映
+		m_rot.y = atan2f(m_dir.x, m_dir.z);
+
+		//ジャンプ
+		if (m_isGround) {
+			if (HOLD(CInput::eButton5)) {
+				m_time += CFPS::GetDeltaTime();
+			}
+			else {
+				//3秒以上Spaceキー長押しで大ジャンプ
+				if (m_time >= 1) {//if (m_time >= 3) {
+					m_vec.y = HIGH_JUMP_SPEED;
+					m_isGround = false;
+				}
+				else if (m_time != 0) {
+					m_vec.y = JUMP_SPEED;
+					m_isGround = false;
+				}
+				m_time = 0;
+			}
+		}
+
+		if (PUSH(CInput::eMouseL) && !mp_isenemy->m_isFindplayer) {//if (HOLD(CInput::eMouseL)) {
+			Shot();
+		}
+		//移動速度を取得
+		float moveSpeed = WALK_SPEED;
+
+		//移動方向と移動速度から移動ベクトルを求める
+		CVector3D moveVec = m_moveDir * moveSpeed;
+		m_vec = CVector3D(moveVec.x, m_vec.y, moveVec.z);
+		//移動アニメーション再生
+		m_model.ChangeAnimation((int)AnimId::Walk);
+	}
+	//キーが入力されていない
+	else {
+		//待機アニメーション再生
+		m_model.ChangeAnimation((int)AnimId::Idle);
+	}
+
+	//ジャンプ
+	if (m_isGround) {
+		if (HOLD(CInput::eButton5)) {
+			m_time += CFPS::GetDeltaTime();
+		}
+		else {
+			//3秒以上Spaceキー長押しで大ジャンプ
+			if (m_time >= 1) {//if (m_time >= 3) {
+				m_vec.y += HIGH_JUMP_SPEED;
+				m_isGround = false;
+			}
+			else if (m_time != 0) {
+				m_vec.y += JUMP_SPEED;
+				m_isGround = false;
+			}
+			m_time = 0;
+		}
+	}
+
+	/*if (!mp_isenemy) {
+		mp_isenemy = TaskManeger::FindObject(TaskType::eEnemy);
+	}*/
+	if (PUSH(CInput::eMouseL) && !mp_isenemy->m_isFindplayer) {//if (HOLD(CInput::eMouseL)) {
+		Shot();
+	}
+
+}
+
+//透明状態
+void Player::StateInvisible() {
+	m_pos = CVector3D(0.0f, 10000.0f, 0.0f);
+	//待機時間待ち
+	if (m_elapsedTime < IDLE_TIME) {
+		m_elapsedTime += CFPS::GetDeltaTime();
+	}
+	else {
+		m_elapsedTime = 0.0f;
+		m_pos = m_tyukan;
+		m_state = State::Move;
+	}
+}
+
 void Player::Update() {
+	/*
 	CVector3D key_dir(0, 0, 0);
 	//カメラの方向ベクトル
 	CVector3D cam_dir = CCamera::GetCurrent()->GetDir();
@@ -78,27 +202,6 @@ void Player::Update() {
 	}
 	m_model.UpdateAnimation();
 
-	//
-	////★角度の補間
-	////角度差分を求める（目標値-現在値）
-	////角度差分を-π(-180)～π(180)の範囲に整える
-	//float a = Utility::NormalizeAngle(m_rot_target.y - m_rot.y);
-	//if (abs(a) > DtoR(120)) {
-	//	//後ろに向くならUターン処理の方が良い
-	//}
-	//
-	////一定量回転による角度補間
-	//float rot_speed = DtoR(5);
-	//if (a > rot_speed)
-	//	m_rot.y += rot_speed;
-	//else if (a < -rot_speed)
-	//	m_rot.y -= rot_speed;
-	//else
-	//	m_rot.y += a;
-	//
-	////補間後は-π(-180)～π(180)の範囲に角度を整える
-	//m_rot.y = Utility::NormalizeAngle(m_rot.y);
-	//
 	if (m_isGround) {
 		if (HOLD(CInput::eButton5)) {
 			m_time += CFPS::GetDeltaTime();
@@ -123,32 +226,41 @@ void Player::Update() {
 	if (PUSH(CInput::eMouseL) && !mp_isenemy->m_isFindplayer) {//if (HOLD(CInput::eMouseL)) {
 		Shot();
 	}
+	*/
 
-	//敵をみつけたら2秒後に解除
-	/*if (m_isFind) {
-		cnt++;
-		if (cnt >= 120) {
-			m_isFind = false;
-			cnt = 0;
-		}
-	}*/
+	if (!mp_isenemy) {
+		mp_isenemy = TaskManeger::FindObject(TaskType::eEnemy);
+	}
 
-	//if (PUSH(CInput::eButton5)) m_vec.y = 0.3f;
+	//メインカメラ取得
+	if (!mp_camera) {
+		mp_camera = dynamic_cast<PlayerCamera*>(TaskManeger::FindObject(TaskType::eCamera));
+	}
 
+	//現在の状態に合わせて、処理を切り替える
+	switch (m_state)
+	{
+	//移動状態
+	case State::Move:
+		StateMove();
+		break;
+	//透明状態
+	case State::Invisible:
+		StateInvisible();
+		break;
+	}
 
-	if (m_vec.y < -0.26f) {
+	//重力落下
+	if (m_vec.y < -10.0f) {//m_vec.y < -0.26f
 
 	}
 	else {
 		m_vec.y -= GRAVITY;
 	}
-	//m_pos.y += m_vec.y;
-	m_pos += m_vec;
+	//移動
+	m_pos += m_vec * CFPS::GetDeltaTime();
 
 	//カプセル
-	//float height = 1.8f;
-	//float height = 0.9f;	//現在
-	//float height = 0.9f/2;
 	float height = 0.5f;
 	m_lineS = m_pos + CVector3D(0, height - m_rad, 0);
 	m_lineE = m_pos + CVector3D(0, m_rad, 0);
@@ -162,10 +274,10 @@ void Player::Update() {
 
 	NavNode* node = NavManeger::Instance()->GetNearNavNode(m_navNode);
 
-	DebugPrint::Print("P:%f, %f, %f", m_pos.x, m_pos.y, m_pos.z);
+	//DebugPrint::Print("P:%f, %f, %f", m_pos.x, m_pos.y, m_pos.z);
 	if (node != nullptr){
 		CVector3D npos = node->GetPos();
-		DebugPrint::Print("N:%f, %f, %f", npos.x, npos.y, npos.z);
+		//DebugPrint::Print("N:%f, %f, %f", npos.x, npos.y, npos.z);
 	}
 
 	//デバッグ表示
@@ -329,21 +441,23 @@ void Player::Collision(Task* b) {
 	break;
 	case TaskType::eEnemy:
 	{
-		////敵の判定
-		//CVector3D c1, dir1, c2, dir2;
-		//float dist;
-		//if (CCollision::CollisionCapsule(m_lineS, m_lineE, m_rad,
-		//	b->m_lineS, b->m_lineE, b->m_rad,
-		//	&dist, &c1, &dir1, &c2, &dir2)) {
-		//	float s = (m_rad + b->m_rad) - dist;
-		//	b->m_pos += dir1 * s * 0.3f;
-		//	b->m_lineS += dir1 * s * 0.3f;
-		//	b->m_lineE += dir1 * s * 0.3f;
-		//	m_pos += dir2 * s * 0.7f;
-		//	m_lineS += dir2 * s * 0.7f;
-		//	m_lineE += dir2 * s * 0.7f;
-
-		//}
+		//敵の判定
+		CVector3D c1, dir1, c2, dir2;
+		float dist;
+		if (CCollision::CollisionCapsule(m_lineS, m_lineE, m_rad,
+			b->m_lineS, b->m_lineE, b->m_rad,
+			&dist, &c1, &dir1, &c2, &dir2)) {
+			/*
+			float s = (m_rad + b->m_rad) - dist;
+			b->m_pos += dir1 * s * 0.3f;
+			b->m_lineS += dir1 * s * 0.3f;
+			b->m_lineE += dir1 * s * 0.3f;
+			m_pos += dir2 * s * 0.7f;
+			m_lineS += dir2 * s * 0.7f;
+			m_lineE += dir2 * s * 0.7f;*/
+			new BlackOut();
+			m_state = State::Invisible;
+		}
 	}
 	break;
 	case TaskType::eTyukanBox:

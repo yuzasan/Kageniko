@@ -12,6 +12,7 @@ enum class TaskType {
 	eMoveBox,		//移動ボックス
 	eHideBox,		//隠れボックス
 	eTyukanBox,		//中間ボックス
+	eNoiseBox,		//物音ボックス
 	eEnemyManager,	//敵管理
 	eAppearPoint,	//移動点
 	ePlayer,		//プレイヤー
