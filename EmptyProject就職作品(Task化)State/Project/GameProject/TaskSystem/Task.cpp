@@ -2,15 +2,20 @@
 #include "TaskManeger.h"
 
 //コンストラクタ
-Task::Task(TaskType type)
+Task::Task(TaskType type, bool dontKill)
 	: m_type(type)
 	, m_isKill(false)
+	, m_dontKill(dontKill)
 	, m_attack_no(0)
 	, m_hit_no(0)
 	, m_isFind(false)
 	, m_isFindplayer(false)
 	, m_isGround(true)
 	, m_isHide(false)
+	, m_pos(0.0f, 0.0f, 0.0f)
+	, m_rot(0.0f, 0.0f, 0.0f)
+	, m_dir(0.0f, 0.0f, 1.0f)
+	, m_vec(0.0f, 0.0f, 0.0f)
 	, m_rad(0.0f)
 	, m_time(0.0f)
 {

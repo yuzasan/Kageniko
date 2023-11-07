@@ -1,7 +1,7 @@
 #pragma once
 
 //タスクの種類
-//上から順番に更新、描画される
+//上から順番に更新、描画される、削除
 enum class TaskType {
 	//3D
 	eCamera,		//メインカメラ
@@ -13,10 +13,10 @@ enum class TaskType {
 	eHideBox,		//隠れボックス
 	eTyukanBox,		//中間ボックス
 	eNoiseBox,		//物音ボックス
-	eEnemyManager,	//敵管理
 	eAppearPoint,	//移動点
 	ePlayer,		//プレイヤー
 	eEnemy,			//敵
+	eEnemyManager,	//敵管理
 	ePlayer_Attack,	//プレイヤー攻撃
 	eEnemy_Attack,	//敵攻撃
 	eBullet,		//弾
@@ -45,6 +45,8 @@ public:
 	CVector3D	m_vec;		//移動ベクトル
 	CVector3D	m_dir;		//前方向
 
+	CVector2D m_pos2D;
+
 	//球、カプセル用
 	float		m_rad;		//半径
 	//カプセル用
@@ -63,8 +65,9 @@ public:
 	int m_hit_no;			//攻撃ヒット側番号
 	int m_attack_no;		//攻撃番号
 	bool m_isKill;			//削除フラグ
+	bool m_dontKill;		//削除しないフラグ
 	//コンストラクタ
-	Task(TaskType type);
+	Task(TaskType type, bool dontKill = false);
 	//デストラクタ
 	virtual ~Task();
 

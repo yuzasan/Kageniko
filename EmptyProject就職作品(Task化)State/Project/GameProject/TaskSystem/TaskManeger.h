@@ -13,6 +13,8 @@ private:
 	static TaskList m_taskList;
 
 public:
+	~TaskManeger();
+
 	//インスタンス取得
 	static TaskManeger* Instance();
 	//インスタンス破棄

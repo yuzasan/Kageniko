@@ -15,9 +15,9 @@
 //回転速度
 #define ROTATE_SPEED 15.0f
 //ジャンプ速度
-#define JUMP_SPEED 8.0f
+#define JUMP_SPEED 10.0f
 //大ジャンプ速度
-#define	HIGH_JUMP_SPEED 10.0f
+#define	HIGH_JUMP_SPEED 16.0f
 //待機時間
 #define IDLE_TIME 3.0f
 
@@ -26,6 +26,8 @@ Player::Player(const CVector3D& pos) :CharaBase(TaskType::ePlayer)
 	,m_moveDir(0.0f,0.0f,0.0f)
 	,m_elapsedTime(0.0f)
 	,m_state(State::Move)
+	,m_viewAngle(30.0f)
+	,m_viewLength(10.0f)
 {
 	m_model = COPY_RESOURCE("Ninja", CModelA3M);
 	m_pos = m_tyukan = pos;
@@ -106,6 +108,7 @@ void Player::StateMove() {
 		if (PUSH(CInput::eMouseL) && !mp_isenemy->m_isFindplayer) {//if (HOLD(CInput::eMouseL)) {
 			Shot();
 		}
+
 		//移動速度を取得
 		float moveSpeed = WALK_SPEED;
 
@@ -228,6 +231,10 @@ void Player::Update() {
 	}
 	*/
 
+	if (!mp_enemy) {
+		mp_enemy = dynamic_cast<Enemy*>(TaskManeger::FindObject(TaskType::eEnemy));
+	}
+
 	if (!mp_isenemy) {
 		mp_isenemy = TaskManeger::FindObject(TaskType::eEnemy);
 	}
@@ -255,7 +262,7 @@ void Player::Update() {
 
 	}
 	else {
-		m_vec.y -= GRAVITY;
+		m_vec.y -= GRAVITY * CFPS::GetDeltaTime();
 	}
 	//移動
 	m_pos += m_vec * CFPS::GetDeltaTime();
@@ -332,6 +339,56 @@ void Player::NoEnemyRender()
 		//Utility::DrawLine(m_pos + CVector3D(0, 1.5f, 0), m_pos + CVector3D(0, 1.5f, 0) + dir * range, CVector4D(1, 0, 1, 1), range);
 		Utility::DrawLine(m_pos + CVector3D(0, 0.75f, 0), m_pos + CVector3D(0, 0.75f, 0) + dir * range, CVector4D(1, 0, 1, 1), range);
 	}
+}
+
+bool Player::IsFoundEnemy() const
+{
+	CVector3D enemyPos = mp_enemy->m_pos;
+
+	// 敵からプレイヤーまでのベクトルを求める
+	CVector3D vec = enemyPos - m_pos;
+
+	// 敵の正面ベクトル と 敵からプレイヤーまでのベクトル で
+	// 内積を取って角度を求める
+	float dot = CVector3D::Dot(m_dir, vec.GetNormalize());
+	// 求めた角度(内積)が視野角度内か判断する
+	if (dot < cos(DtoR(m_viewAngle))) return false;
+
+	// 敵からプレイヤーまでの距離を求める
+	float length = vec.Length();
+	// 求めた距離が視野距離内か判断する
+	if (length > m_viewLength) return false;
+
+	// 最後に自身からプレイヤーまでの間に
+	// 遮蔽物がないか判定する
+	if (!IsSearchEnemy()) return false;
+	return true;
+}
+
+//現在地から敵がいるか
+bool Player::IsSearchEnemy() const
+{
+	CVector3D enemyPos = mp_enemy->m_pos;
+	CVector3D vec = enemyPos - m_pos;
+	// 現在位置からプレイヤーまでの距離を求める
+	float dist = vec.Length();
+
+	// プレイヤーの位置までのレイと壁との衝突判定を行う
+	CVector3D start = m_pos;
+	CVector3D end = enemyPos;
+	start.y = 1.0f;
+	end.y = 1.0f;
+	CVector3D hitPos, hitNormal;
+	if (Stage::CollisionRay(start, end, &hitPos, &hitNormal))
+	{
+		float hitDist = (hitPos - start).Length();
+		if (dist > hitDist) return false;
+	}
+
+	// 壁と衝突していないもしくは、
+	// 衝突位置がプレイヤーより奥の位置であるならば、
+	// 視線が通っているので、プレイヤーが見える状態
+	return true;
 }
 
 void Player::Shot(){
@@ -441,23 +498,17 @@ void Player::Collision(Task* b) {
 	break;
 	case TaskType::eEnemy:
 	{
+		/*
 		//敵の判定
 		CVector3D c1, dir1, c2, dir2;
 		float dist;
 		if (CCollision::CollisionCapsule(m_lineS, m_lineE, m_rad,
 			b->m_lineS, b->m_lineE, b->m_rad,
 			&dist, &c1, &dir1, &c2, &dir2)) {
-			/*
-			float s = (m_rad + b->m_rad) - dist;
-			b->m_pos += dir1 * s * 0.3f;
-			b->m_lineS += dir1 * s * 0.3f;
-			b->m_lineE += dir1 * s * 0.3f;
-			m_pos += dir2 * s * 0.7f;
-			m_lineS += dir2 * s * 0.7f;
-			m_lineE += dir2 * s * 0.7f;*/
 			new BlackOut();
 			m_state = State::Invisible;
 		}
+		*/
 	}
 	break;
 	case TaskType::eTyukanBox:

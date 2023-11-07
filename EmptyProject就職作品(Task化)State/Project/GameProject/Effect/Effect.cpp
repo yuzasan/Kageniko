@@ -1,5 +1,5 @@
 #include "Effect.h"
-
+#include "../Game/Character/Player.h"
 Effect::Effect(const char* model, const CVector3D& pos, float scale, bool builbord, int time) :Task(TaskType::eEffect)
 	,m_scale(scale)
 	,m_builbord(builbord)
@@ -17,7 +17,6 @@ void Effect::Update()
 {
 	if (m_time > 0) m_time -= CFPS::GetDeltaTime();
 	if (m_time == 0) Kill();
-
 }
 
 void Effect::Render()
@@ -35,4 +34,26 @@ void Effect::Render()
 	}
 	glDepthMask(GL_TRUE);
 	CLight::SetLighting(true);
+}
+
+//Effect2D—p
+Effect2D::Effect2D(const char* img, const CVector2D& pos):Task(TaskType::eUI)
+{
+	m_pos2D = pos;
+	m_img = COPY_RESOURCE(img, CImage);
+}
+
+Effect2D::~Effect2D()
+{
+}
+
+void Effect2D::Update()
+{
+
+}
+
+void Effect2D::LateRender2D()
+{
+	m_img.SetPos(m_pos2D);
+	m_img.Draw();
 }

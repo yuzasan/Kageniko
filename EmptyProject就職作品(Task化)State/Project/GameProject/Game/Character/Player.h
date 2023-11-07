@@ -3,22 +3,24 @@
 #include "../../TaskSystem/Task.h"
 #include "../../TaskSystem/TaskManeger.h"
 class PlayerCamera;
+class Enemy;
 
 class Player : public CharaBase {
 private:
-	CModelA3M m_model;		//モデルデータ
-	CVector3D m_moveDir;	//移動方向
+	CModelA3M m_model;			//モデルデータ
+	CVector3D m_moveDir;		//移動方向
 	CVector3D m_rot_target;
 	//Task* mp_camera;
 	PlayerCamera* mp_camera;
-	Task* mp_enemy;
+	Enemy* mp_enemy;
 	Task* mp_isenemy;
 	Task* mp_tyukan;
 	Task* mp_fellbox;
-	//色
-	int m_gauge;
-	CVector3D m_tyukan;		//中間座標
-	float m_elapsedTime;	//待機経過時間
+	float m_viewAngle;			//視野角度
+	float m_viewLength;			//視野距離
+	int m_gauge;				//色
+	CVector3D m_tyukan;			//中間座標
+	float m_elapsedTime;		//待機経過時間
 
 	//アニメーション番号
 	enum class AnimId 
@@ -41,6 +43,7 @@ private:
 	void StateInvisible();
 
 public:
+	bool m_isSearch;	//探索範囲にいるかどうか
 	//bool m_isFind;
 	Player(const CVector3D& pos);
 	~Player();
@@ -50,6 +53,10 @@ public:
 	/// enemy以外の描画処理
 	/// </summary>
 	void NoEnemyRender();
+	// 敵を見つけたかどうか
+	bool IsFoundEnemy() const;
+	//現在地から敵がいるか
+	bool IsSearchEnemy() const;
 	void Shot();
 	//デバッグ処理
 	void Debug();

@@ -29,6 +29,7 @@ EnemyManager::EnemyManager():Task(TaskType::eEnemyManager){
 //デストラクタ
 EnemyManager::~EnemyManager()
 {
+	ms_instance = nullptr;
 }
 
 //インスタンスを取得

@@ -4,6 +4,24 @@ std::list<Task*> TaskManeger::m_taskList;
 //TaskManegerのインスタンス
 TaskManeger* TaskManeger::ms_instance = nullptr;
 
+TaskManeger::~TaskManeger()
+{
+	//Taskの削除処理
+	TaskList::iterator it = m_taskList.begin();
+	while (it != m_taskList.end()) {
+		//Taskの状態を取得
+		Task* deleteTask = *it;
+
+		//次のタスクへ進行しておく
+		it++;
+
+		//削除フラグが立っていたら、タスクを削除
+		//（リストからのRemove処理はTaskのデストラクタで呼ばれる）
+		delete deleteTask;
+	}
+	m_taskList.clear();
+}
+
 TaskManeger* TaskManeger::Instance()
 {
 	//インスタンスが存在しなければ、新しく生成する
@@ -47,6 +65,7 @@ void TaskManeger::Remove(Task* task){
 void TaskManeger::KillALL(){
 	//全ての削除フラグをONにする
 	for (auto& b : m_taskList) {
+		if (b->m_dontKill) continue;
 		b->Kill();
 	}
 }

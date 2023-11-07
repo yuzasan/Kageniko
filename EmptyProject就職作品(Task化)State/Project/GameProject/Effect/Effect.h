@@ -1,6 +1,7 @@
 #pragma once
 #include "../TaskSystem/Task.h"
 #include "../../TaskSystem/TaskManeger.h"
+class Player;
 class Effect :public Task {
 private:
 	CModelObj m_model;
@@ -12,4 +13,14 @@ public:
 	~Effect();
 	void Update();
 	void Render();
+};
+
+class Effect2D :public Task {
+private:
+	CImage m_img;
+public:
+	Effect2D(const char* img, const CVector2D& pos);
+	~Effect2D();
+	void Update();
+	void LateRender2D();
 };

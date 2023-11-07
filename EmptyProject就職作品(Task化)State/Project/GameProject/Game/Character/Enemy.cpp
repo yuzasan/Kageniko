@@ -255,7 +255,6 @@ void Enemy::StateLost() {
 		}
 		//プレイヤーが視線の通らないところにいる
 		else {
-			//new Effect("Fukidasi", m_pos + CVector3D(0, 2.5, -1), 1.0f, true, 120);
 			//目的地まで移動
 			if (MoveTo(m_nextNode->GetPos())) {
 				if (m_nextNode != m_lostNode) {
@@ -272,6 +271,7 @@ void Enemy::StateLost() {
 	}
 	//目的地まで移動が終われば、
 	else {
+		new Effect("Fukidasi", m_pos + CVector3D(0, 2.5, -1), 1.0f, true, 60);
 		//待機状態へ移行
 		m_state = State::Idle;
 	}
@@ -450,7 +450,7 @@ void Enemy::Update()
 
 	}
 	else {
-		m_vec.y -= GRAVITY;
+		m_vec.y -= GRAVITY * CFPS::GetDeltaTime();
 	}
 
 	//m_pos.y += m_vec.y;

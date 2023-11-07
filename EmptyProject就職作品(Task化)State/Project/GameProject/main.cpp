@@ -40,7 +40,8 @@ void Load() {
 	//Sleep(1000 * 5);
 	//吹き出し「なんだ猫か」
 	ADD_RESOURCE("Fukidasi", CModel::CreateModel("Effect/Fukidasi/Fukidasi.obj"));
-
+	//猫の手画像
+	ADD_RESOURCE("Nekonote", CImage::CreateImage("Effect/Cathand/blackcatbackhand.png"));
 }
 
 void MainLoop(void) {
@@ -156,7 +157,7 @@ void Init(void)
 	CInput::SetButton(0, CInput::eMouseC, VK_MBUTTON);
 
 	//マウス非表示
-	//	CInput::ShowCursor(false);
+		CInput::ShowCursor(false);
 	//	CInput::SetMouseInside(true);
 	CInput::Update();
 	CInput::Update();
@@ -214,6 +215,7 @@ void Init(void)
 
 void Release()
 {
+	TaskManeger::ClearInstance();
 	CShader::ClearInstance();
 	CInput::ClearInstance();
 	CLoadThread::ClearInstance();
