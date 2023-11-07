@@ -158,7 +158,15 @@ void CInput::Update() {
 
  void CInput::UpdateClipCursor(int f) {
 	 if (f && m_mouse_inside) {
-		 ClipCursor(&GL::window_rect);
+		 RECT r =
+		 {
+			 GL::window_rect.left,
+			 GL::window_rect.top,
+			 GL::window_rect.right,
+			 GL::window_rect.bottom - 128,
+
+		 };
+		 ClipCursor(&r);
 	 } else {
 		 ClipCursor(NULL);
 	 }

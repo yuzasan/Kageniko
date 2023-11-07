@@ -45,8 +45,6 @@ public:
 	CVector3D	m_vec;		//移動ベクトル
 	CVector3D	m_dir;		//前方向
 
-	CVector2D m_pos2D;
-
 	//球、カプセル用
 	float		m_rad;		//半径
 	//カプセル用

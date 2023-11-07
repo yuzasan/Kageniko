@@ -36,10 +36,13 @@ void Effect::Render()
 	CLight::SetLighting(true);
 }
 
+#define WIDE 1300
+#define HIGH 690
+
 //Effect2D—p
-Effect2D::Effect2D(const char* img, const CVector2D& pos):Task(TaskType::eUI)
+Effect2D::Effect2D(const char* img):Task(TaskType::eUI)
+	,mp_player(nullptr)
 {
-	m_pos2D = pos;
 	m_img = COPY_RESOURCE(img, CImage);
 }
 
@@ -49,11 +52,16 @@ Effect2D::~Effect2D()
 
 void Effect2D::Update()
 {
-
+	if (!mp_player) {
+		mp_player= dynamic_cast<Player*>(TaskManeger::FindObject(TaskType::ePlayer));
+	}
+	if (!mp_player->m_isSearch) {
+		Kill();
+	}
 }
 
-void Effect2D::LateRender2D()
+void Effect2D::LateRender()
 {
-	m_img.SetPos(m_pos2D);
+	m_img.SetPos(WIDE, HIGH);
 	m_img.Draw();
 }

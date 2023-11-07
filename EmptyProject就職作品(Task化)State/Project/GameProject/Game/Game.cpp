@@ -26,11 +26,11 @@ Game::Game():Task(TaskType::eScene){
 	Base::Add(new PlayerCamera());
 	Base::Add(new FieldCamera());*/
 
-	new Player(CVector3D(0, 0, 8));
+	new Player(CVector3D(0, 1, 8));
 	//new EnemyManager();
-	new Enemy(CVector3D(0, 0, 0));
-	new Enemy(CVector3D(0, 0, 0));
-	new Enemy(CVector3D(0, 0, 0));
+	new Enemy(CVector3D(0, 1, 0));
+	new Enemy(CVector3D(0, 1, 0));
+	new Enemy(CVector3D(0, 1, 0));
 	new Stage();
 	new PlayerCamera();
 	new FieldCamera();
@@ -168,7 +168,8 @@ Game::Game():Task(TaskType::eScene){
 		CVector3D(130.0f, 2.0f, 130.0f)		//size
 	);
 
-	new Effect2D("Nekonote", CVector2D(1500.0f, 800.0f));
+	//new Effect2D("Nekonote");
+	CFPS::Wait();
 }
 
 Game::~Game()

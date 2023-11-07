@@ -26,8 +26,9 @@ Player::Player(const CVector3D& pos) :CharaBase(TaskType::ePlayer)
 	,m_moveDir(0.0f,0.0f,0.0f)
 	,m_elapsedTime(0.0f)
 	,m_state(State::Move)
-	,m_viewAngle(30.0f)
-	,m_viewLength(10.0f)
+	,m_viewAngle(35.0f)
+	,m_viewLength(3.0f)
+	,m_isSearch(true)
 {
 	m_model = COPY_RESOURCE("Ninja", CModelA3M);
 	m_pos = m_tyukan = pos;
@@ -105,8 +106,14 @@ void Player::StateMove() {
 			}
 		}
 
-		if (PUSH(CInput::eMouseL) && !mp_isenemy->m_isFindplayer) {//if (HOLD(CInput::eMouseL)) {
-			Shot();
+		if (IsFoundEnemy()) {
+			if (m_isSearch) {
+				new Effect2D("Nekonote");
+			}
+			if (PUSH(CInput::eMouseL) && !mp_isenemy->m_isFindplayer) {//if (HOLD(CInput::eMouseL)) {
+				Shot();
+				m_isSearch = false;
+			}
 		}
 
 		//移動速度を取得
@@ -146,8 +153,14 @@ void Player::StateMove() {
 	/*if (!mp_isenemy) {
 		mp_isenemy = TaskManeger::FindObject(TaskType::eEnemy);
 	}*/
-	if (PUSH(CInput::eMouseL) && !mp_isenemy->m_isFindplayer) {//if (HOLD(CInput::eMouseL)) {
-		Shot();
+	if (IsFoundEnemy()) {
+		if (m_isSearch) {
+			new Effect2D("Nekonote");
+		}
+		if (PUSH(CInput::eMouseL) && !mp_isenemy->m_isFindplayer) {//if (HOLD(CInput::eMouseL)) {
+			Shot();
+			m_isSearch = false;
+		}
 	}
 
 }
@@ -230,6 +243,8 @@ void Player::Update() {
 		Shot();
 	}
 	*/
+	// 視野範囲のカラー(初期色は緑)
+	color = CVector4D(0.0f, 1.0f, 0.0f, 0.75f);
 
 	if (!mp_enemy) {
 		mp_enemy = dynamic_cast<Enemy*>(TaskManeger::FindObject(TaskType::eEnemy));
@@ -294,51 +309,33 @@ void Player::Update() {
 void Player::Render() {
 	m_model.SetPos(m_pos);
 	m_model.SetRot(m_rot);
-	//m_model.SetRot(0, mp_camera->m_rot.y, 0);
-	//m_model.BindFrameMatrix(5, CMatrix::MRotation(mp_camera->m_rot));
-	//m_model.SetScale(0.01f, 0.01f, 0.01f);
-	//m_model.SetScale(0.005f, 0.005f, 0.005f);	//現在
-	//m_model.SetScale(0.005f/2, 0.005f/2, 0.005f/2);
 	m_model.SetScale(1.0f, 1.0f, 1.0f);
 	m_model.Render();
 	//プレイヤーカプセルの表示
 	//Utility::DrawCapsule(m_lineS, m_lineE, m_rad, CVector4D(1, 0, 0, 1));
-	//射程
-	const float range = 1.0f;//100.0f  8.0f
-	//CVector3D r = mp_camera->m_rot;
-	CVector3D r = CVector3D(mp_camera->m_rot.x,m_rot.y,m_rot.z);//m_rot
-	//射線の方向(プレイヤー前方向)
-	CVector3D dir = CMatrix::MRotation(r).GetFront();
-	if(PUSH(CInput::eMouseL) && !mp_isenemy->m_isFindplayer) {//if(HOLD(
-		//Utility::DrawLine(m_pos + CVector3D(0, 1.5f, 0), m_pos + CVector3D(0, 1.5f, 0) + dir * range, CVector4D(1, 0, 1, 1), range);
-		Utility::DrawLine(m_pos + CVector3D(0, 0.75f, 0), m_pos + CVector3D(0, 0.75f, 0) + dir * range, CVector4D(1, 0, 1, 1), range);
-	}
-	
+	//回転値から方向ベクトルを計算
+	CVector3D dir(CVector3D(sin(m_rot.y), 0, cos(m_rot.y)));
+	//扇の見た目
+	CMatrix m;
+	m.LookAt(m_pos + CVector3D(0, 0.5f, 0), m_pos + CVector3D(0, 0.1f, 0) + dir * m_viewLength, CVector3D(0, 1, 0));
+	Utility::DrawSector(m, -DtoR(m_viewAngle), DtoR(m_viewAngle), m_viewLength, color);
 }
 
 void Player::NoEnemyRender()
 {
 	m_model.SetPos(m_pos);
 	m_model.SetRot(m_rot);
-	//m_model.SetRot(0, mp_camera->m_rot.y, 0);
-	//m_model.BindFrameMatrix(5, CMatrix::MRotation(mp_camera->m_rot));
-	//m_model.SetScale(0.01f, 0.01f, 0.01f);
-	//m_model.SetScale(0.005f, 0.005f, 0.005f);	//現在
-	//m_model.SetScale(0.005f / 2, 0.005f / 2, 0.005f / 2);
 	m_model.SetScale(1.0f, 1.0f, 1.0f);
 	m_model.Render();
 	//プレイヤーカプセルの表示
 	//Utility::DrawCapsule(m_lineS, m_lineE, m_rad, CVector4D(1, 0, 0, 1));
-	//射程
-	const float range = 1.0f;//100.0f  8.0f
-	//CVector3D r = mp_camera->m_rot;
-	CVector3D r = CVector3D(mp_camera->m_rot.x, m_rot.y, m_rot.z);//m_rot
-	//射線の方向(プレイヤー前方向)
-	CVector3D dir = CMatrix::MRotation(r).GetFront();
-	if (PUSH(CInput::eMouseL) && !mp_isenemy->m_isFindplayer) {//if(HOLD(
-		//Utility::DrawLine(m_pos + CVector3D(0, 1.5f, 0), m_pos + CVector3D(0, 1.5f, 0) + dir * range, CVector4D(1, 0, 1, 1), range);
-		Utility::DrawLine(m_pos + CVector3D(0, 0.75f, 0), m_pos + CVector3D(0, 0.75f, 0) + dir * range, CVector4D(1, 0, 1, 1), range);
-	}
+	
+	//回転値から方向ベクトルを計算
+	CVector3D dir(CVector3D(sin(m_rot.y), 0, cos(m_rot.y)));
+	//扇の見た目
+	CMatrix m;
+	m.LookAt(m_pos + CVector3D(0, 0.5f, 0), m_pos + CVector3D(0, 0.1f, 0) + dir * m_viewLength, CVector3D(0, 1, 0));
+	Utility::DrawSector(m, -DtoR(m_viewAngle), DtoR(m_viewAngle), m_viewLength, color);
 }
 
 bool Player::IsFoundEnemy() const
@@ -362,6 +359,7 @@ bool Player::IsFoundEnemy() const
 	// 最後に自身からプレイヤーまでの間に
 	// 遮蔽物がないか判定する
 	if (!IsSearchEnemy()) return false;
+	
 	return true;
 }
 
@@ -392,20 +390,23 @@ bool Player::IsSearchEnemy() const
 }
 
 void Player::Shot(){
-	//射程
-	const float range = 1.0f;//100.0f  8.0f
+	if (IsFoundEnemy()) {
+		mp_enemy->m_isFind = true;
+	}
+	else {
+		if (mp_enemy != nullptr) {
+			mp_enemy->m_isFind = false;
+		}
+	}
+	/*
 	//CVector3D r = mp_camera->m_rot;
 	CVector3D r = CVector3D(mp_camera->m_rot.x, m_rot.y, m_rot.z);//m_rot
 	//射線の方向(プレイヤー前方向)
 	CVector3D dir = CMatrix::MRotation(r).GetFront();
 	//始点
-	//CVector3D lineS = mp_camera->m_pos;
-	//CVector3D lineS = m_pos + CVector3D(0, 1.5f, 0);
 	CVector3D lineS = m_pos + CVector3D(0, 0.75f, 0);
 	//終点
-	//CVector3D lineE = mp_camera->m_pos + dir * range;
-	//CVector3D lineE = m_pos + CVector3D(0, 1.5f, 0) + dir * range;
-	CVector3D lineE = m_pos + CVector3D(0, 0.75f, 0) + dir * range;
+	CVector3D lineE = m_pos + CVector3D(0, 0.75f, 0) + dir * m_viewLength;
 
 	//最も近いオブジェクトへの距離
 	float dist = FLT_MAX;
@@ -461,6 +462,7 @@ void Player::Shot(){
 			mp_enemy->m_isFind = false;
 		}
 	}
+	*/
 }
 
 void Player::Collision(Task* b) {

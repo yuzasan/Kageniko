@@ -41,7 +41,7 @@ void Load() {
 	//吹き出し「なんだ猫か」
 	ADD_RESOURCE("Fukidasi", CModel::CreateModel("Effect/Fukidasi/Fukidasi.obj"));
 	//猫の手画像
-	ADD_RESOURCE("Nekonote", CImage::CreateImage("Effect/Cathand/blackcatbackhand.png"));
+	ADD_RESOURCE("Nekonote", CImage::CreateImage("Effect/Cathand/blackcatbackhand45.png"));
 }
 
 void MainLoop(void) {
@@ -158,7 +158,7 @@ void Init(void)
 
 	//マウス非表示
 		CInput::ShowCursor(false);
-	//	CInput::SetMouseInside(true);
+		CInput::SetMouseInside(true);
 	CInput::Update();
 	CInput::Update();
 
@@ -254,6 +254,7 @@ static void PosCallback(GLFWwindow* _window, int x, int y) {
 static void FocusCallback(GLFWwindow* _window, int f) {
 	CInput::UpdateClipCursor(f);
 	GL::focus = f;
+	CFPS::Wait();
 }
 
 static void error_callback(int error, const char* description)

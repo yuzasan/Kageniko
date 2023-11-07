@@ -18,9 +18,10 @@ public:
 class Effect2D :public Task {
 private:
 	CImage m_img;
+	Player* mp_player;
 public:
-	Effect2D(const char* img, const CVector2D& pos);
+	Effect2D(const char* img);
 	~Effect2D();
 	void Update();
-	void LateRender2D();
+	void LateRender();
 };
