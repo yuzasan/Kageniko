@@ -24,6 +24,7 @@ std::list<SearchNode> EnemyManager::ms_searchNodes =
 //コンストラクタ
 EnemyManager::EnemyManager():Task(TaskType::eEnemyManager){
 	//TaskManeger::Instance()->Add(this);
+	
 }
 
 //デストラクタ

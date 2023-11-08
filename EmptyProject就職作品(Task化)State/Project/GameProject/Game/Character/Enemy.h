@@ -5,6 +5,7 @@
 class Player;
 class NavNode;
 class SearchNode;
+class NoiseBox;
 
 class Enemy : public CharaBase {
 	//視野の角度
@@ -18,6 +19,7 @@ public:
 	};*/
 private:
 	Player* mp_player;				//プレイヤー
+	NoiseBox* mp_noise;				//物音BOX
 	Task* mp_field;					//ステージ
 	CModelA3M m_model;				//モデル
 	CVector3D m_moveDir;			//移動方向
@@ -44,10 +46,10 @@ private:
 	//状態
 	enum class State
 	{
-		Idle,	//待機
-		Move,	//移動
-		Chase,	//追跡
-		Lost,	//プレイヤーを見失った
+		Idle,		//待機
+		Move,		//移動
+		Chase,		//追跡
+		Lost,		//プレイヤーを見失った
 	};
 	State m_state;	//現在の状態
 

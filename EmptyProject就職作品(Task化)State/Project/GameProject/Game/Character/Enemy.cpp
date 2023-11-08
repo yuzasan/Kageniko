@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "Player.h"
+#include "NoiseBox.h"
 #include "../Stage/Item.h"
 #include "../Stage/Stage.h"
 #include "../GameData/GameData.h"
@@ -30,6 +31,7 @@
 
 Enemy::Enemy(const CVector3D& pos):CharaBase(TaskType::eEnemy)
 	,mp_player(nullptr)
+	,mp_noise(nullptr)
 	,mp_field(nullptr)
 	,m_moveDir(0.0f,0.0f,0.0f)
 	,m_movePos(0.0f,0.0f,0.0f)
@@ -94,7 +96,11 @@ void Enemy::StateIdle()
 
 		//次に探索するノードを取得
 		SearchNode* node = EnemyManager::Instance()->GetNextSearchNode();
-		if (node != nullptr) {
+		if (mp_noise->m_isNoise && !mp_noise->m_isNoisemove) {
+			m_moveNode = NavManeger::Instance()->GetNearNavNode(mp_noise->m_pos);
+			mp_noise->m_isNoisemove = true;
+		}
+		else if (node != nullptr) {
 			//探索ノードに一番近いノードを目的地とする
 			m_searchNode = node;
 			m_searchNode->enemy = this;
@@ -407,6 +413,12 @@ SearchNode* Enemy::GetSearchNode() const
 
 void Enemy::Update()
 {
+	//物音BOX取得
+	if (!mp_noise)
+	{
+		mp_noise = dynamic_cast<NoiseBox*>(TaskManeger::FindObject(TaskType::eNoiseBox));
+	}
+
 	// 視野範囲のカラー(初期色は緑)
 	color = CVector4D(0.0f, 1.0f, 0.0f, 0.75f);
 

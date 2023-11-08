@@ -80,8 +80,8 @@
     <ClInclude Include="Game\Character\CharaBase.h">
       <Filter>Game\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Stage\NoiseBox.h">
-      <Filter>Game\Stage</Filter>
+    <ClInclude Include="Game\Character\NoiseBox.h">
+      <Filter>Game\Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -164,8 +164,8 @@
     <ClCompile Include="Game\Character\CharaBase.cpp">
       <Filter>Game\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Stage\NoiseBox.cpp">
-      <Filter>Game\Stage</Filter>
+    <ClCompile Include="Game\Character\NoiseBox.cpp">
+      <Filter>Game\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

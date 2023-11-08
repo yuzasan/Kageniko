@@ -3,6 +3,7 @@
 #include "Character/Player.h"
 #include "Character/Enemy.h"
 #include "Character/EnemyManager.h"
+#include "Character/NoiseBox.h"
 #include "Character/PlayerCamera.h"
 #include "Camera/FieldCamera.h"
 #include "GameData/GameData.h"
@@ -166,6 +167,13 @@ Game::Game():Task(TaskType::eScene){
 		CVector3D(0.0f, -30.0f, 0.0f),	//pos
 		CVector3D(0.0f, 0.0f, 0.0f),	//rot
 		CVector3D(130.0f, 2.0f, 130.0f)		//size
+	);
+
+	new NoiseBox
+	(
+		CVector3D(5.0f, 0.0f, 10.0f),	//pos
+		CVector3D(0.0f, 0.0f, 0.0f),	//rot
+		CVector3D(1.0f, 2.0f, 1.0f)		//size
 	);
 
 	//new Effect2D("Nekonote");
