@@ -53,6 +53,16 @@ Game::Game():Task(TaskType::eScene){
 
 	new MoveBox
 	(
+		CVector3D(-30.0f, 1.0f, 20.0f),
+		CVector3D(0.0f, 0.0f, 0.0f),
+		CVector3D(5.0f, 1.0f, 4.0f),
+		CVector3D(0.0f, 1.0f, 0.0f),
+		CVector3D(0.0f, 10.0f, 0.0f),
+		moveTime, intervalTime, 0, 0, true
+	);
+
+	new MoveBox
+	(
 		CVector3D(-11.0f, 13.0f, 10.0f),
 		CVector3D(0.0f, 0.0f, 0.0f),
 		CVector3D(2.0f, 2.0f, 1.0f),

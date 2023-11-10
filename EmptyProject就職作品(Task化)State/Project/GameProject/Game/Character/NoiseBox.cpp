@@ -41,10 +41,11 @@ void NoiseBox::Update()
 		mp_player = dynamic_cast<Player*>(TaskManeger::FindObject(TaskType::ePlayer));
 	}
 	//敵取得
-	if (!mp_enemy)
-	{
-		mp_enemy = dynamic_cast<Enemy*>(TaskManeger::FindObject(TaskType::eEnemy));
-	}
+	//if (!mp_enemy)
+	//{
+	//	//複数いる場合最初の一体だけポインターを持つ
+	//	mp_enemy = dynamic_cast<Enemy*>(TaskManeger::FindObject(TaskType::eEnemy));
+	//}
 }
 
 void NoiseBox::Render()
@@ -75,11 +76,14 @@ void NoiseBox::Collision(Task* b) {
 		//■OBBとカプセル
 		float dist;
 		CVector3D axis;
-		if (CCollision::CollisionOBBCapsule(m_obb, mp_enemy->m_lineS, mp_enemy->m_lineE, mp_enemy->m_rad, &axis, &dist)) {
-			if (m_isNoise) {
-				m_isNoise = false;
-				m_isNoisemove = false;
-				Kill();
+		Enemy* enemy = dynamic_cast<Enemy*>(b);
+		if (enemy != nullptr) {
+			if (CCollision::CollisionOBBCapsule(m_obb, enemy->m_lineS, enemy->m_lineE, enemy->m_rad, &axis, &dist)) {
+				if (m_isNoise) {
+					m_isNoise = false;
+					m_isNoisemove = false;
+					Kill();
+				}
 			}
 		}
 	}

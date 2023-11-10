@@ -28,7 +28,7 @@ Player::Player(const CVector3D& pos) :CharaBase(TaskType::ePlayer)
 	,m_state(State::Move)
 	,m_viewAngle(35.0f)
 	,m_viewLength(3.0f)
-	,m_isSearch(true)
+	,m_isSearch(false)
 {
 	m_model = COPY_RESOURCE("Ninja", CModelA3M);
 	m_pos = m_tyukan = pos;
@@ -107,6 +107,7 @@ void Player::StateMove() {
 		}
 
 		if (IsFoundEnemy()) {
+			m_isSearch = true;
 			if (m_isSearch) {
 				new Effect2D("Nekonote");
 			}
@@ -114,6 +115,9 @@ void Player::StateMove() {
 				Shot();
 				m_isSearch = false;
 			}
+		}
+		else {
+			m_isSearch = false;
 		}
 
 		//移動速度を取得
@@ -153,7 +157,17 @@ void Player::StateMove() {
 	/*if (!mp_isenemy) {
 		mp_isenemy = TaskManeger::FindObject(TaskType::eEnemy);
 	}*/
+	//if (IsFoundEnemy()) {
+	//	if (m_isSearch) {
+	//		new Effect2D("Nekonote");
+	//	}
+	//	if (PUSH(CInput::eMouseL) && !mp_isenemy->m_isFindplayer) {//if (HOLD(CInput::eMouseL)) {
+	//		Shot();
+	//		m_isSearch = false;
+	//	}
+	//}
 	if (IsFoundEnemy()) {
+		m_isSearch = true;
 		if (m_isSearch) {
 			new Effect2D("Nekonote");
 		}
@@ -161,6 +175,9 @@ void Player::StateMove() {
 			Shot();
 			m_isSearch = false;
 		}
+	}
+	else {
+		m_isSearch = false;
 	}
 
 }
@@ -303,7 +320,7 @@ void Player::Update() {
 	}
 
 	//デバッグ表示
-	//Debug();
+	Debug();
 }
 
 void Player::Render() {

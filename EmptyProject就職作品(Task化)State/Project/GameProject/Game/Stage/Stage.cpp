@@ -151,6 +151,7 @@ void Stage::Render()
 
 void Stage::NoEnemyRender()
 {
+	if (CShadow::GetInstance()->GetState() == CShadow::eShadow)return;
 	/*m_model.SetScale(1, 1, 1);
 	m_model.Render();*/
 	m_model->SetScale(1, 1, 1);
