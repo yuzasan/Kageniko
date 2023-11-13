@@ -51,12 +51,22 @@ void NoiseBox::Update()
 void NoiseBox::Render()
 {
 	if (CShadow::GetInstance()->GetState() == CShadow::eShadow)return;
-	Utility::DrawOBB(m_obb, CVector4D(0.25f, 1.0f, 0.25f, 1));
+	if (m_isNoise) {
+		Utility::DrawOBB(m_obb, CVector4D(1.0f, 0.25f, 0.25f, 1));
+	}
+	else {
+		Utility::DrawOBB(m_obb, CVector4D(0.25f, 1.0f, 0.25f, 1));
+	}
 }
 
 void NoiseBox::NoEnemyRender()
 {
-	Utility::DrawOBB(m_obb, CVector4D(0.25f, 1.0f, 0.25f, 1));
+	if (m_isNoise) {
+		Utility::DrawOBB(m_obb, CVector4D(1.0f, 0.25f, 0.25f, 1));
+	}
+	else {
+		Utility::DrawOBB(m_obb, CVector4D(0.25f, 1.0f, 0.25f, 1));
+	}
 }
 
 void NoiseBox::Collision(Task* b) {

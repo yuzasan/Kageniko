@@ -222,6 +222,7 @@ void Game::Update()
 BlackOut::BlackOut() :Task(TaskType::eUI)
 	, m_gauge(0)
 	,m_num(0)
+	,m_alpha(0.0f)
 {
 	m_time = 0;
 }
@@ -231,28 +232,38 @@ BlackOut::~BlackOut(){
 }
 
 void BlackOut::LateUpdate() {
-	CVector4D color = CVector4D(0.0f, 0.0f, 0.0f, 1.0f);
-	switch (m_num) {
-	case 0:
-		if (m_gauge <= 1080) {
-			m_time++;
-			m_gauge = 20.0f * (float)m_time;//m_gauge = (257.0f / 3.0f * (float)m_time);
-		}
-		else {
-			m_num = 1;
-		}
-		break;
-	case 1:
-		if (m_gauge >= 0) {
-			m_time--;
-			m_gauge = 20.0f * (float)m_time;//m_gauge = (257.0f / 3.0f * (float)m_time);
-		}
-		else {
-			m_num = 2;
-		}
-		break;
-	case 2:
+	m_time += 1.5f;
+	if (m_time <= 90) {
+		m_alpha = sinf(DtoR(m_time));
+	}
+	else {
 		Kill();
 	}
-	Utility::DrawQuad(CVector2D(0, 0), CVector2D(1920, m_gauge), color);
+	CVector4D color = CVector4D(0.0f, 0.0f, 0.0f, m_alpha);
+	//CVector4D color = CVector4D(0.0f, 0.0f, 0.0f, 1.0f);
+	//switch (m_num) {
+	//case 0:
+	//	if (m_gauge <= 1080) {
+	//		m_time++;
+	//		m_gauge = 20.0f * (float)m_time;//m_gauge = (257.0f / 3.0f * (float)m_time);
+	//	}
+	//	else {
+	//		m_num = 1;
+	//	}
+	//	break;
+	//case 1:
+	//	if (m_gauge >= 0) {
+	//		m_time--;
+	//		m_gauge = 20.0f * (float)m_time;//m_gauge = (257.0f / 3.0f * (float)m_time);
+	//	}
+	//	else {
+	//		m_num = 2;
+	//	}
+	//	break;
+	//case 2:
+	//	Kill();
+	//}
+	//Utility::DrawQuad(CVector2D(0, 0), CVector2D(1920, m_gauge), color);
+
+	Utility::DrawQuad(CVector2D(0, 0), CVector2D(1920, 1080), color);
 }

@@ -18,7 +18,7 @@ Title::~Title(){
 	new Game();
 }
 
-void Title::Update()
+void Title::Update() 
 {	//ロード終了チェック
 	if (CLoadThread::GetInstance()->CheckEnd()) {
 		//完了している

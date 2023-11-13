@@ -55,8 +55,10 @@ void Effect2D::Update()
 	if (!mp_player) {
 		mp_player= dynamic_cast<Player*>(TaskManeger::FindObject(TaskType::ePlayer));
 	}
-	if (!mp_player->m_isSearch) {
-		Kill();
+	if (mp_player != nullptr) {
+		if (!mp_player->m_isSearch) {
+			Kill();
+		}
 	}
 }
 

@@ -55,10 +55,10 @@ public:
 	/// </summary>
 	void NoEnemyRender();
 	// 敵を見つけたかどうか
-	bool IsFoundEnemy() const;
+	bool IsFoundEnemy(Enemy* e) const;
 	//現在地から敵がいるか
-	bool IsSearchEnemy() const;
-	void Shot();
+	bool IsSearchEnemy(Enemy* e) const;
+	void Shot(Enemy* e);
 	//デバッグ処理
 	void Debug();
 	void Collision(Task* b);

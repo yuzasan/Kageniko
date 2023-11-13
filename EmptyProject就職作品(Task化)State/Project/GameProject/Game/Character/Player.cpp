@@ -87,39 +87,6 @@ void Player::StateMove() {
 		//プレイヤーの向き反映
 		m_rot.y = atan2f(m_dir.x, m_dir.z);
 
-		//ジャンプ
-		if (m_isGround) {
-			if (HOLD(CInput::eButton5)) {
-				m_time += CFPS::GetDeltaTime();
-			}
-			else {
-				//3秒以上Spaceキー長押しで大ジャンプ
-				if (m_time >= 1) {//if (m_time >= 3) {
-					m_vec.y = HIGH_JUMP_SPEED;
-					m_isGround = false;
-				}
-				else if (m_time != 0) {
-					m_vec.y = JUMP_SPEED;
-					m_isGround = false;
-				}
-				m_time = 0;
-			}
-		}
-
-		if (IsFoundEnemy()) {
-			m_isSearch = true;
-			if (m_isSearch) {
-				new Effect2D("Nekonote");
-			}
-			if (PUSH(CInput::eMouseL) && !mp_isenemy->m_isFindplayer) {//if (HOLD(CInput::eMouseL)) {
-				Shot();
-				m_isSearch = false;
-			}
-		}
-		else {
-			m_isSearch = false;
-		}
-
 		//移動速度を取得
 		float moveSpeed = WALK_SPEED;
 
@@ -153,33 +120,6 @@ void Player::StateMove() {
 			m_time = 0;
 		}
 	}
-
-	/*if (!mp_isenemy) {
-		mp_isenemy = TaskManeger::FindObject(TaskType::eEnemy);
-	}*/
-	//if (IsFoundEnemy()) {
-	//	if (m_isSearch) {
-	//		new Effect2D("Nekonote");
-	//	}
-	//	if (PUSH(CInput::eMouseL) && !mp_isenemy->m_isFindplayer) {//if (HOLD(CInput::eMouseL)) {
-	//		Shot();
-	//		m_isSearch = false;
-	//	}
-	//}
-	if (IsFoundEnemy()) {
-		m_isSearch = true;
-		if (m_isSearch) {
-			new Effect2D("Nekonote");
-		}
-		if (PUSH(CInput::eMouseL) && !mp_isenemy->m_isFindplayer) {//if (HOLD(CInput::eMouseL)) {
-			Shot();
-			m_isSearch = false;
-		}
-	}
-	else {
-		m_isSearch = false;
-	}
-
 }
 
 //透明状態
@@ -263,13 +203,13 @@ void Player::Update() {
 	// 視野範囲のカラー(初期色は緑)
 	color = CVector4D(0.0f, 1.0f, 0.0f, 0.75f);
 
-	if (!mp_enemy) {
+	/*if (!mp_enemy) {
 		mp_enemy = dynamic_cast<Enemy*>(TaskManeger::FindObject(TaskType::eEnemy));
-	}
+	}*/
 
-	if (!mp_isenemy) {
+	/*if (!mp_isenemy) {
 		mp_isenemy = TaskManeger::FindObject(TaskType::eEnemy);
-	}
+	}*/
 
 	//メインカメラ取得
 	if (!mp_camera) {
@@ -355,9 +295,9 @@ void Player::NoEnemyRender()
 	Utility::DrawSector(m, -DtoR(m_viewAngle), DtoR(m_viewAngle), m_viewLength, color);
 }
 
-bool Player::IsFoundEnemy() const
+bool Player::IsFoundEnemy(Enemy* e) const
 {
-	CVector3D enemyPos = mp_enemy->m_pos;
+	CVector3D enemyPos = e->m_pos;
 
 	// 敵からプレイヤーまでのベクトルを求める
 	CVector3D vec = enemyPos - m_pos;
@@ -375,15 +315,15 @@ bool Player::IsFoundEnemy() const
 
 	// 最後に自身からプレイヤーまでの間に
 	// 遮蔽物がないか判定する
-	if (!IsSearchEnemy()) return false;
+	if (!IsSearchEnemy(e)) return false;
 	
 	return true;
 }
 
 //現在地から敵がいるか
-bool Player::IsSearchEnemy() const
+bool Player::IsSearchEnemy(Enemy* e) const
 {
-	CVector3D enemyPos = mp_enemy->m_pos;
+	CVector3D enemyPos = e->m_pos;
 	CVector3D vec = enemyPos - m_pos;
 	// 現在位置からプレイヤーまでの距離を求める
 	float dist = vec.Length();
@@ -406,80 +346,15 @@ bool Player::IsSearchEnemy() const
 	return true;
 }
 
-void Player::Shot(){
-	if (IsFoundEnemy()) {
-		mp_enemy->m_isFind = true;
+void Player::Shot(Enemy* e){
+	if (IsFoundEnemy(e)) {
+		e->m_isFind = true;
 	}
 	else {
-		if (mp_enemy != nullptr) {
-			mp_enemy->m_isFind = false;
+		if (e != nullptr) {
+			e->m_isFind = false;
 		}
 	}
-	/*
-	//CVector3D r = mp_camera->m_rot;
-	CVector3D r = CVector3D(mp_camera->m_rot.x, m_rot.y, m_rot.z);//m_rot
-	//射線の方向(プレイヤー前方向)
-	CVector3D dir = CMatrix::MRotation(r).GetFront();
-	//始点
-	CVector3D lineS = m_pos + CVector3D(0, 0.75f, 0);
-	//終点
-	CVector3D lineE = m_pos + CVector3D(0, 0.75f, 0) + dir * m_viewLength;
-
-	//最も近いオブジェクトへの距離
-	float dist = FLT_MAX;
-	//射線との衝突点
-	CVector3D hit_field_point;
-	//衝突したステージオブジェクト
-	Stage* hit_field = nullptr;
-	if (Stage* s = dynamic_cast<Stage*>(TaskManeger::FindObject(TaskType::eField))) {
-		//接触面の法線は(使わない)
-		CVector3D n;
-		if (s->GetModel()->CollisionRay(&hit_field_point, &n, lineS, lineE)) {
-			//発射位置から接触面への距離
-			dist = (hit_field_point - lineS).LengthSq();
-			//接触したステージを更新
-			hit_field = s;
-		}
-	}
-	//接触した敵
-	Enemy* hit_enemy = nullptr;
-	//全敵を探索
-	auto list = TaskManeger::FindObjects(TaskType::eEnemy);
-	for (auto b : list) {
-		if (Enemy* e = dynamic_cast<Enemy*>(b)) {
-			//射線との衝突地点
-			CVector3D c;
-			//弾の線分で敵との判定を行う
-			if (e->CollisionLine(lineS, lineE, dir, &c) > 0) {
-				//発射位置から最も近い敵を調べる
-				float l = (c - lineS).LengthSq();
-				if (dist > l) {
-					dist = l;
-					hit_enemy = e;
-				}
-			}
-		}
-	}
-	//最も近い敵に当たる
-	if (hit_enemy) {
-		mp_enemy = hit_enemy;
-		//m_isFind = true;
-		mp_enemy->m_isFind = true;
-		//printf("当たった\n");
-	}
-	//ステージに当たる
-	else if (hit_field) {
-		//m_isFind = false;
-		if (mp_enemy != nullptr) {
-			mp_enemy->m_isFind = false;
-		}
-	}
-	else {
-		if (mp_enemy != nullptr) {
-			mp_enemy->m_isFind = false;
-		}
-	}
-	*/
 }
 
 void Player::Collision(Task* b) {
@@ -517,6 +392,22 @@ void Player::Collision(Task* b) {
 	break;
 	case TaskType::eEnemy:
 	{
+		Enemy* enemy = dynamic_cast<Enemy*>(b);
+		if (enemy != nullptr) {
+			if (IsFoundEnemy(enemy)) {
+				m_isSearch = true;
+				if (m_isSearch) {
+					new Effect2D("Nekonote");
+				}
+				if (PUSH(CInput::eMouseL) && !enemy->m_isFindplayer) {//if (HOLD(CInput::eMouseL)) {
+					Shot(enemy);
+					m_isSearch = false;
+				}
+			}
+			else {
+				m_isSearch = false;
+			}
+		}
 		/*
 		//敵の判定
 		CVector3D c1, dir1, c2, dir2;

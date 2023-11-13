@@ -15,6 +15,7 @@ class BlackOut : public Task {
 public:
 	int m_gauge;	//c•
 	int m_num;		//”Ô†
+	float m_alpha;
 	BlackOut();
 	~BlackOut();
 	void LateUpdate();
