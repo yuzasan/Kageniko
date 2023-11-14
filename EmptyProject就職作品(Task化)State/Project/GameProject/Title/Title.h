@@ -7,6 +7,9 @@ class Title :public Task {
 	CImage m_img;
 	//•¶Žš
 	CFont m_title_text;
+	int m_cnt;
+	float m_time;
+	bool m_isOn;
 
 	enum class Step{
 		Start,
@@ -14,6 +17,10 @@ class Title :public Task {
 		End,
 	};
 	Step m_step;
+
+	void StepFirst();
+	void StepSecond();
+	void StepLast();
 public:
 	Title();
 	~Title();

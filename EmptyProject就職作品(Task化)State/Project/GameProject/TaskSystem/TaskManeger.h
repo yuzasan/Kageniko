@@ -13,6 +13,7 @@ private:
 	static TaskList m_taskList;
 
 public:
+	//デストラクタ
 	~TaskManeger();
 
 	//インスタンス取得

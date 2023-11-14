@@ -277,7 +277,7 @@ void Enemy::StateLost() {
 	}
 	//目的地まで移動が終われば、
 	else {
-		new Effect("Fukidasi", m_pos + CVector3D(0, 2.5, -1), 1.0f, true, 60);
+		new Effect("Fukidasi", m_pos + CVector3D(0, 2.5, -1), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, false, 60);
 		//待機状態へ移行
 		m_state = State::Idle;
 	}

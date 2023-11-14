@@ -42,6 +42,13 @@ void Load() {
 	ADD_RESOURCE("Fukidasi", CModel::CreateModel("Effect/Fukidasi/Fukidasi.obj"));
 	//猫の手画像
 	ADD_RESOURCE("Nekonote", CImage::CreateImage("Effect/Cathand/blackcatbackhand45.png"));
+
+	//タイトル読み込み
+	ADD_RESOURCE("Title", CImage::CreateImage("Title/Title.png"));
+	ADD_RESOURCE("FusumaL", CModel::CreateModel("Effect/Load/FusumaL.obj"));
+	ADD_RESOURCE("FusumaR", CModel::CreateModel("Effect/Load/FusumaR.obj"));
+
+	new Title();
 }
 
 void MainLoop(void) {
@@ -172,7 +179,10 @@ void Init(void)
 	CLight::SetFogParam(CVector4D(1, 1, 1, 1), 700, 800);
 
 	//カメラ初期化
-	CCamera::GetCamera()->LookAt(CVector3D(5, 5, 5),
+	/*CCamera::GetCamera()->LookAt(CVector3D(5, 5, 5),
+		CVector3D(0, 0, 0),
+		CVector3D(0.0, 1.0, 0.0));*/
+	CCamera::GetCamera()->LookAt(CVector3D(0, 0, 10),
 		CVector3D(0, 0, 0),
 		CVector3D(0.0, 1.0, 0.0));
 
@@ -200,12 +210,14 @@ void Init(void)
 	ADD_RESOURCE("Stage", CModel::CreateModel("Field/Test/testField6.obj", 1, 1, 1));
 	*/
 
-	//タイトル読み込み
-	ADD_RESOURCE("Title", CImage::CreateImage("Title/Title.png"));
-	ADD_RESOURCE("FusumaL", CModel::CreateModel("Effect/Load/FusumaL.obj"));
-	ADD_RESOURCE("FusumaR", CModel::CreateModel("Effect/Load/FusumaR.obj"));
-	
-	new Title();
+	////タイトル読み込み
+	//ADD_RESOURCE("Title", CImage::CreateImage("Title/Title.png"));
+	//ADD_RESOURCE("FusumaL", CModel::CreateModel("Effect/Load/FusumaL.obj"));
+	//ADD_RESOURCE("FusumaR", CModel::CreateModel("Effect/Load/FusumaR.obj"));
+	//ADD_RESOURCE("fusumaL", CImage::CreateImage("Effect/Load/fusumaL.png"));
+	//ADD_RESOURCE("fusumaR", CImage::CreateImage("Effect/Load/fusumaR.png"));
+	//
+	//new Title();
 
 	CLoadThread::GetInstance()->LoadStart(Load);
 	
