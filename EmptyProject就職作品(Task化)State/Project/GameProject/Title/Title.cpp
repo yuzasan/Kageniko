@@ -1,9 +1,10 @@
 #include "Title.h"
 #include "../Game/Game.h"
+#include "Effect/Effect.h"
 //#include "../Base/Base.h"
 
 Title::Title():Task(TaskType::eScene), m_title_text("C:\\Windows\\Fonts\\msgothic.ttc", 64) {
-	m_img = COPY_RESOURCE("Title", CImage);
+	//m_img = COPY_RESOURCE("Title", CImage);
 }
 
 Title::~Title(){
@@ -19,7 +20,8 @@ Title::~Title(){
 }
 
 void Title::Update() 
-{	//ロード終了チェック
+{	
+	//ロード終了チェック
 	if (CLoadThread::GetInstance()->CheckEnd()) {
 		//完了している
 		//左クリック
@@ -31,7 +33,7 @@ void Title::Update()
 
 void Title::Render()
 {
-	m_img.Draw();
+	//m_img.Draw();
 	if (CLoadThread::GetInstance()->CheckEnd()) {
 		//完了している
 		//文字表示

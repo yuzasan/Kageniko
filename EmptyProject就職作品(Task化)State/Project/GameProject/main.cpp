@@ -202,6 +202,8 @@ void Init(void)
 
 	//É^ÉCÉgÉãì«Ç›çûÇ›
 	ADD_RESOURCE("Title", CImage::CreateImage("Title/Title.png"));
+	ADD_RESOURCE("FusumaL", CModel::CreateModel("Effect/Load/FusumaL.obj"));
+	ADD_RESOURCE("FusumaR", CModel::CreateModel("Effect/Load/FusumaR.obj"));
 	
 	new Title();
 

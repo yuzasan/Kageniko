@@ -7,6 +7,13 @@ class Title :public Task {
 	CImage m_img;
 	//•¶Žš
 	CFont m_title_text;
+
+	enum class Step{
+		Start,
+		Mid,
+		End,
+	};
+	Step m_step;
 public:
 	Title();
 	~Title();
