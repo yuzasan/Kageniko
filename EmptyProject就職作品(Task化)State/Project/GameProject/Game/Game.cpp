@@ -136,11 +136,11 @@ Game::Game():Task(TaskType::eScene){
 
 	new MoveBox
 	(
-		CVector3D(26.0f, 20.0f, -2.0f),
+		CVector3D(26.0f, 1.0f, -2.0f),
 		CVector3D(0.0f, 0.0f, 0.0f),
 		CVector3D(3.0f, 1.0f, 3.0f),
-		CVector3D(26.0f, 20.0f, 0.0f),
-		CVector3D(33.0f, 20.0f, 0.0f),
+		CVector3D(26.0f, 1.0f, 0.0f),
+		CVector3D(33.0f, 1.0f, 0.0f),
 		moveTime, intervalTime, 1, 0, true
 	);
 
@@ -198,6 +198,7 @@ Game::~Game()
 	//タイトルシーンへ
 	//Base::Add(new Title());
 	GameData::m_item = 0;
+	GameData::m_isdownflg = false;
 	//タイトルシーンへ
 	new Title();
 }

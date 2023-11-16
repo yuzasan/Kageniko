@@ -1,4 +1,5 @@
 #include "MoveBox.h"
+#include "../Gamedata/GameData.h"
 
 MoveBox::MoveBox(const CVector3D& pos, const CVector3D& rot, const CVector3D& size,
 	const CVector3D& startPos, const CVector3D& endPos,
@@ -14,11 +15,17 @@ MoveBox::MoveBox(const CVector3D& pos, const CVector3D& rot, const CVector3D& si
 	, m_isEnable(isStart)
 	, m_isReverse(false)
 	, m_elapsedTime(0.0f)
+	, m_isMoveflg(false)
 {
 	m_pos = pos;
 	m_rot = rot;
 	m_boxSize = size;
 	m_obb = COBB(
+		m_pos,
+		m_rot,
+		m_boxSize
+	);
+	m_obb_old = COBB(
 		m_pos,
 		m_rot,
 		m_boxSize
@@ -80,7 +87,8 @@ void MoveBox::UpdateMove()
 	case 0://y軸（上下）
 		if (m_cnt % 2 == 0) {
 			if (m_pos.y <= m_endPos.y) {
-				m_pos.y += 0.1f;
+				//m_pos.y += MOVE_SPEED;
+				m_pos.y += MOVE_SPEED * CFPS::GetDeltaTime();
 				m_obb = COBB(
 					m_pos,
 					m_rot,
@@ -99,14 +107,20 @@ void MoveBox::UpdateMove()
 		}
 		else {
 			if (m_pos.y >= m_startPos.y) {
-				m_pos.y -= 0.1f;
+				GameData::m_isdownflg = true;
+				//m_pos.y -= MOVE_SPEED;
+				m_pos.y -= MOVE_SPEED * CFPS::GetDeltaTime();
 				m_obb = COBB(
 					m_pos,
 					m_rot,
 					m_boxSize
 				);
+				if (GameData::m_isdownflg && m_isMoveflg) {
+					mp_player->m_pos.y -= MOVE_SPEED * CFPS::GetDeltaTime();
+				}
 			}
 			else {
+				GameData::m_isdownflg = false;
 				m_obb = COBB(
 					m_pos,
 					m_rot,
@@ -120,14 +134,20 @@ void MoveBox::UpdateMove()
 	case 1://x軸（左右）
 		if (m_cnt % 2 == 0) {
 			if (m_pos.x <= m_endPos.x) {
-				m_pos.x += 0.1f;
+				GameData::m_isleftflg = true;
+				//m_pos.x += MOVE_SPEED;
+				m_pos.x += MOVE_SPEED * CFPS::GetDeltaTime();
 				m_obb = COBB(
 					m_pos,
 					m_rot,
 					m_boxSize
 				);
+				if (GameData::m_isleftflg && m_isMoveflg) {
+					mp_player->m_pos.x += MOVE_SPEED * CFPS::GetDeltaTime();
+				}
 			}
 			else {
+				GameData::m_isleftflg = false;
 				m_obb = COBB(
 					m_pos,
 					m_rot,
@@ -139,14 +159,20 @@ void MoveBox::UpdateMove()
 		}
 		else {
 			if (m_pos.x >= m_startPos.x) {
-				m_pos.x -= 0.1f;
+				GameData::m_isrightflg = true;
+				//m_pos.x -= MOVE_SPEED;
+				m_pos.x -= MOVE_SPEED * CFPS::GetDeltaTime();
 				m_obb = COBB(
 					m_pos,
 					m_rot,
 					m_boxSize
 				);
+				if (GameData::m_isrightflg && m_isMoveflg) {
+					mp_player->m_pos.x -= MOVE_SPEED * CFPS::GetDeltaTime();
+				}
 			}
 			else {
+				GameData::m_isrightflg = false;
 				m_obb = COBB(
 					m_pos,
 					m_rot,
@@ -160,14 +186,20 @@ void MoveBox::UpdateMove()
 	case 2://z軸（前後）
 		if (m_cnt % 2 == 0) {
 			if (m_pos.z <= m_endPos.z) {
-				m_pos.z += 0.1f;
+				GameData::m_isforwardflg = true;
+				//m_pos.z += MOVE_SPEED;
+				m_pos.z += MOVE_SPEED * CFPS::GetDeltaTime();
 				m_obb = COBB(
 					m_pos,
 					m_rot,
 					m_boxSize
 				);
+				if (GameData::m_isforwardflg && m_isMoveflg) {
+					mp_player->m_pos.z += MOVE_SPEED * CFPS::GetDeltaTime();
+				}
 			}
 			else {
+				GameData::m_isforwardflg = false;
 				m_obb = COBB(
 					m_pos,
 					m_rot,
@@ -179,14 +211,20 @@ void MoveBox::UpdateMove()
 		}
 		else {
 			if (m_pos.z >= m_startPos.z) {
-				m_pos.z -= 0.1f;
+				GameData::m_isbackflg = true;
+				//m_pos.z -= MOVE_SPEED;
+				m_pos.z -= MOVE_SPEED * CFPS::GetDeltaTime();
 				m_obb = COBB(
 					m_pos,
 					m_rot,
 					m_boxSize
 				);
+				if (GameData::m_isbackflg && m_isMoveflg) {
+					mp_player->m_pos.z -= MOVE_SPEED * CFPS::GetDeltaTime();
+				}
 			}
 			else {
+				GameData::m_isbackflg = false;
 				m_obb = COBB(
 					m_pos,
 					m_rot,
@@ -221,6 +259,8 @@ void MoveBox::UpdateInterval()
 //更新処理
 void MoveBox::Update()
 {
+	//m_obb_old = m_obb;
+	
 	/*
 	m_pos.y += 0.1f;
 	m_obb = COBB(
@@ -287,7 +327,22 @@ void MoveBox::Collision(Task* b) {
 		//■OBBとカプセル
 		float dist;
 		CVector3D axis;
+		//if (CCollision::CollisionOBBCapsule(m_obb_old, mp_player->m_lineS, mp_player->m_lineE, mp_player->m_rad, &axis, &dist)) {
+		//	if (axis.y > 0.5f) {
+		//		//面が上向き→地面が当たった
+		//		//重力落下速度を0に戻す
+		//		if (mp_player->m_vec.y < 0) {
+		//			mp_player->m_vec.y = 0;
+		//			mp_player->m_isGround = true;
+		//		}
+		//	}
+		//	//押し戻し
+		//	float s = mp_player->m_rad - dist;
+		//	mp_player->m_pos += axis * s;
+		//}
+
 		if (CCollision::CollisionOBBCapsule(m_obb, mp_player->m_lineS, mp_player->m_lineE, mp_player->m_rad, &axis, &dist)) {
+			m_isMoveflg = true;
 			if (axis.y > 0.5f) {
 				//面が上向き→地面が当たった
 				//重力落下速度を0に戻す
@@ -299,6 +354,9 @@ void MoveBox::Collision(Task* b) {
 			//押し戻し
 			float s = mp_player->m_rad - dist;
 			mp_player->m_pos += axis * s;
+		}
+		else {
+			m_isMoveflg = false;
 		}
 	}
 	break;

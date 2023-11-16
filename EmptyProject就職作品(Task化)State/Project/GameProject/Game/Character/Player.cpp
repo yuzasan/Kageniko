@@ -11,7 +11,7 @@
 #include "../../Navigation/NavManeger.h"
 
 //歩き速度
-#define WALK_SPEED 10.0f;
+#define WALK_SPEED 10.0f
 //回転速度
 #define ROTATE_SPEED 15.0f
 //ジャンプ速度
@@ -20,6 +20,8 @@
 #define	HIGH_JUMP_SPEED 16.0f
 //待機時間
 #define IDLE_TIME 3.0f
+
+#define UP_SPEED 10.0f
 
 Player::Player(const CVector3D& pos) :CharaBase(TaskType::ePlayer)
 	,mp_camera(nullptr)
@@ -110,11 +112,21 @@ void Player::StateMove() {
 		else {
 			//3秒以上Spaceキー長押しで大ジャンプ
 			if (m_time >= 1) {//if (m_time >= 3) {
-				m_vec.y += HIGH_JUMP_SPEED;
+				//if (GameData::m_isdownflg) {
+					//m_vec.y += HIGH_JUMP_SPEED + UP_SPEED;
+				//}
+				//else {
+					m_vec.y += HIGH_JUMP_SPEED;
+				//}
 				m_isGround = false;
 			}
 			else if (m_time != 0) {
-				m_vec.y += JUMP_SPEED;
+				//if (GameData::m_isdownflg) {
+					//m_vec.y += JUMP_SPEED + UP_SPEED;
+				//}
+				//else {
+					m_vec.y += JUMP_SPEED;
+				//}
 				m_isGround = false;
 			}
 			m_time = 0;

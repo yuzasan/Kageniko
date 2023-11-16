@@ -25,6 +25,7 @@ private:
 	float m_elapsedTime;
 	int m_yxz;//m_number
 	int m_cnt;
+	bool m_isMoveflg;
 public:
 	MoveBox(const CVector3D& pos, const CVector3D& rot, const CVector3D& size,
 		const CVector3D& startPos, const CVector3D& endPos,

@@ -52,6 +52,7 @@ public:
 	CVector3D	m_lineE;	//線分終点
 	//OBB用
 	COBB m_obb;				//Box
+	COBB m_obb_old;
 	float m_time;			//時間経過
 	bool m_isGround;		//着地フラグ
 	bool m_isHide;			//HideBoxに隠れているか
