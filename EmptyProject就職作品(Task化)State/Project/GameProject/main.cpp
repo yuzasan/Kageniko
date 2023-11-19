@@ -14,6 +14,7 @@
 #include "Game/Stage/Item.h"
 #include "Game/Stage/Stage.h"
 #include "Debug/DebugPrint.h"
+#include "Debug/DebugProfiler.h"
 #include "Title/Title.h"
 #include "Effect/Effect.h"
 #include "Navigation/NavManeger.h"
@@ -72,30 +73,48 @@ void MainLoop(void) {
 	}
 	
 	//全Taskの更新
+	DebugProfiler::StartTimer("Update");
 	TaskManeger::Instance()->Update();
+	DebugProfiler::EndTimer("Update");
 	//全Taskの当たり判定
+	DebugProfiler::StartTimer("Collision");
 	TaskManeger::Instance()->Collision();
+	DebugProfiler::EndTimer("Collision");
 	//影の描画
 	CShadow::GetInstance()->Render([]() {
 		//全Taskの描画
+		DebugProfiler::StartTimer("Render");
 		TaskManeger::Instance()->Render();
+		DebugProfiler::EndTimer("Render");
 		//全Taskの更新後描画
+		DebugProfiler::StartTimer("LateRender");
 		TaskManeger::Instance()->LateRender();
+		DebugProfiler::EndTimer("LateRender");
 	});
 
 	//全Taskの更新後更新
+	DebugProfiler::StartTimer("LateUpdate");
 	TaskManeger::Instance()->LateUpdate();
+	DebugProfiler::EndTimer("LateUpdate");
 	//全Taskの2Dを描画
+	DebugProfiler::StartTimer("Render2D");
 	TaskManeger::Instance()->Render2D();
+	DebugProfiler::EndTimer("Render2D");
 	//描画後の2Dを描画
+	DebugProfiler::StartTimer("LateRender2D");
 	TaskManeger::Instance()->LateRender2D();
+	DebugProfiler::EndTimer("LateRender2D");
 
-	// デバッグ表示がオンであれば、
-	if (g_isRenderDebug)
-	{
-		// 経路探索関連の描画
-		NavManeger::Instance()->Render();
-	}
+
+	//// デバッグ表示がオンであれば、
+	//if (g_isRenderDebug)
+	//{
+	//	// 経路探索関連の描画
+	//	DebugProfiler::StartTimer("NavMgrRender");
+	//	NavManeger::Instance()->Render();
+	//	DebugProfiler::EndTimer("NavMgrRender");
+
+	//}
 
 	/*
 	//世界の軸を表示
@@ -126,7 +145,8 @@ void MainLoop(void) {
 
 		FONT_T()->Draw(1500, 1000, 1, 0, 0, buf);
 	}
-
+	// 計測結果の描画
+	DebugProfiler::Print();
 }
 void Init(void)
 {
@@ -224,6 +244,8 @@ void Init(void)
 	//影描画機能を生成
 	CShadow::CreateInscance(20.0f, 20.0f, 2048, 2048);
 
+	// 計測結果の描画
+	DebugProfiler::Print();
 }
 
 

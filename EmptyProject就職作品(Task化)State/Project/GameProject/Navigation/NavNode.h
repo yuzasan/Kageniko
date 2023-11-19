@@ -1,10 +1,12 @@
 #pragma once
 #include <list>
 #include <GLLibrary/CVector.h>
+#include "../../TaskSystem/Task.h"
+#include "../../TaskSystem/TaskManeger.h"
 class NavManeger;
 
 //経路探索用ノードクラス
-class NavNode {
+class NavNode : public Task {
 	friend NavManeger;
 
 public:

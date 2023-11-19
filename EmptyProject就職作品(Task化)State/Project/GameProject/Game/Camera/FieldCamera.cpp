@@ -12,6 +12,10 @@ FieldCamera::FieldCamera() :Task(TaskType::eFieldCamera) {
 	mp_player = TaskManeger::FindObject(TaskType::ePlayer);
 }
 
+FieldCamera::~FieldCamera()
+{
+}
+
 void FieldCamera::Update(){
 	{
 		rendring = true;

@@ -17,6 +17,7 @@ private:
 	const float cam_speed = 0.002f;
 public:
 	PlayerCamera();
+	~PlayerCamera();
 	void Update();
 	void Render();
 	void Collision(Task* b);

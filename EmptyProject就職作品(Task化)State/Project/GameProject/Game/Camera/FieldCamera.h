@@ -14,6 +14,7 @@ public:
 	//static‚Í•Ê‚Ì‚Æ‚±‚ë‚©‚çQÆ‚Å‚«‚é
 	static bool rendring;
 	FieldCamera();
+	~FieldCamera();
 	void Update();
 	void Render();
 	void LateUpdate();

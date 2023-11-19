@@ -6,8 +6,8 @@
 #define FIND_NODE_DISTANCE 50.0f
 
 //コンストラクタ
-NavNode::NavNode(const CVector3D& pos, NodeType type)
-	:m_no(0)
+NavNode::NavNode(const CVector3D& pos, NodeType type) :Task(TaskType::eNavNode)
+	,m_no(0)
 	,m_type(type)
 	,m_cost(-1.0f)
 	,m_nextNodeToGoal(nullptr)
@@ -111,6 +111,7 @@ void NavNode::SetNodeColor(const CVector3D& color)
 //デバッグ用：ノードの描画処理
 void NavNode::Render()
 {
+	if (!g_isRenderDebug)return;
 	//地面と重ならないように少し上に上げる値
 	float offsetY = 0.01;
 	int nodeNo = m_no;

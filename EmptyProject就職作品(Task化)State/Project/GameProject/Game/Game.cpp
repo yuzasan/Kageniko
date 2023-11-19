@@ -214,7 +214,7 @@ void Game::Update()
 		Utility::DrawLine(CVector3D(-5, 0, i * 1.0f), CVector3D(5, 0, i * 1.0f), CVector4D(0.2, 0.2, 0.2, 1));
 		Utility::DrawLine(CVector3D(i * 1.0f, 0, -5), CVector3D(i * 1.0f, 0, 5), CVector4D(0.2, 0.2, 0.2, 1));
 	}
-	if (GameData::m_item == 1) {
+	if (GameData::m_item >= 1) {
 		//SetKill();
 		Kill();
 	}

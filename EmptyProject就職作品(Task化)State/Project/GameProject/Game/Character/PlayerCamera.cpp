@@ -10,6 +10,13 @@ PlayerCamera::PlayerCamera() :Task(TaskType::eCamera) {
 	mp_player = TaskManeger::FindObject(TaskType::ePlayer);
 }
 
+PlayerCamera::~PlayerCamera()
+{
+	CCamera::GetCamera()->LookAt(CVector3D(0, 0, 10),
+		CVector3D(0, 0, 0),
+		CVector3D(0.0, 1.0, 0.0));
+}
+
 void PlayerCamera::Update() {
 
 }

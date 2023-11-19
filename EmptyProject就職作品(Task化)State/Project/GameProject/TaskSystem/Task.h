@@ -16,9 +16,11 @@ enum class TaskType {
 	eAppearPoint,	//移動点
 	ePlayer,		//プレイヤー
 	eEnemy,			//敵
+	eNavNode,		//ノード
 	eEnemyManager,	//敵管理
 	ePlayer_Attack,	//プレイヤー攻撃
 	eEnemy_Attack,	//敵攻撃
+	eNavManeger,	//ノード管理
 	eBullet,		//弾
 	eEffect,		//エフェクト
 	eItem,			//アイテム

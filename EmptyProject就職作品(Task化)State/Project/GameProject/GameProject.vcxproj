@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClInclude Include="Base\Base.h" />
     <ClInclude Include="Debug\DebugPrint.h" />
+    <ClInclude Include="Debug\DebugProfiler.h" />
     <ClInclude Include="Effect\Effect.h" />
     <ClInclude Include="Game\Camera\FieldCamera.h" />
     <ClInclude Include="Game\Character\CharaBase.h" />
@@ -43,6 +44,7 @@
   <ItemGroup>
     <ClCompile Include="Base\Base.cpp" />
     <ClCompile Include="Debug\DebugPrint.cpp" />
+    <ClCompile Include="Debug\DebugProfiler.cpp" />
     <ClCompile Include="Effect\Effect.cpp" />
     <ClCompile Include="Game\Camera\FieldCamera.cpp" />
     <ClCompile Include="Game\Character\CharaBase.cpp" />

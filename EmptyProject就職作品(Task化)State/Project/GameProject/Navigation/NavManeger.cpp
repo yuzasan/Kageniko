@@ -18,8 +18,8 @@ NavManeger* NavManeger::Instance()
 }
 
 //コンストラクタ
-NavManeger::NavManeger()
-	:m_addNodeCount(0)
+NavManeger::NavManeger() :Task(TaskType::eNavManeger)
+	,m_addNodeCount(0)
 	,m_isRender(false)
 	,m_routeStartNode(nullptr)
 {
@@ -36,6 +36,7 @@ NavManeger::~NavManeger()
 		delete del;
 	}
 	m_nodes.clear();
+	ms_instance = nullptr;
 }
 
 //全ノードの状態をリセット
@@ -233,6 +234,7 @@ int NavManeger::FindConnectNavNodes(NavNode* node, float distance)
 //全ノードを描画
 void NavManeger::Render()
 {
+	if (!g_isRenderDebug)return;
 	//リスト内ノードを全て描画
 	for (NavNode* node : m_nodes) {
 		node->Render();

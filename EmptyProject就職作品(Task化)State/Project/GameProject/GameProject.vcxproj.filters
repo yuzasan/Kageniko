@@ -83,6 +83,9 @@
     <ClInclude Include="Game\Character\NoiseBox.h">
       <Filter>Game\Character</Filter>
     </ClInclude>
+    <ClInclude Include="Debug\DebugProfiler.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -166,6 +169,9 @@
     </ClCompile>
     <ClCompile Include="Game\Character\NoiseBox.cpp">
       <Filter>Game\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\DebugProfiler.cpp">
+      <Filter>Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
