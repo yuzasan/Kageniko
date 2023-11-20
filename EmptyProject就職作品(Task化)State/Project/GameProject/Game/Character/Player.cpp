@@ -163,6 +163,7 @@ void Player::StateInvisible() {
 }
 
 void Player::Update() {
+	m_model.UpdateAnimation();
 	/*
 	CVector3D key_dir(0, 0, 0);
 	//カメラの方向ベクトル
@@ -292,7 +293,8 @@ void Player::Update() {
 void Player::Render() {
 	m_model.SetPos(m_pos);
 	m_model.SetRot(m_rot);
-	m_model.SetScale(1.0f, 1.0f, 1.0f);
+	//m_model.SetScale(1.0f, 1.0f, 1.0f);
+	m_model.SetScale(0.003f, 0.003f, 0.003f);
 	m_model.Render();
 	//プレイヤーカプセルの表示
 	//Utility::DrawCapsule(m_lineS, m_lineE, m_rad, CVector4D(1, 0, 0, 1));
@@ -308,7 +310,8 @@ void Player::NoEnemyRender()
 {
 	m_model.SetPos(m_pos);
 	m_model.SetRot(m_rot);
-	m_model.SetScale(1.0f, 1.0f, 1.0f);
+	//m_model.SetScale(1.0f, 1.0f, 1.0f);
+	m_model.SetScale(0.003f, 0.003f, 0.003f);
 	m_model.Render();
 	//プレイヤーカプセルの表示
 	//Utility::DrawCapsule(m_lineS, m_lineE, m_rad, CVector4D(1, 0, 0, 1));

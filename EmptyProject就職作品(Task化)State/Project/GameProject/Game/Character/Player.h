@@ -29,6 +29,9 @@ private:
 	{
 		Idle,	//待機
 		Walk,	//歩き
+		Jump,	//ジャンプ
+		Naku,	//鳴く
+		Eat,	//食べる
 	};
 
 	//状態

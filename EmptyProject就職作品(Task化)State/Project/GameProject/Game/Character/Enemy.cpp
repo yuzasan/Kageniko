@@ -50,7 +50,8 @@ Enemy::Enemy(const CVector3D& pos):CharaBase(TaskType::eEnemy)
 
 	mp_player = dynamic_cast<Player*>(TaskManeger::FindObject(TaskType::ePlayer));
 	//mp_hidebox = Base::FindObject(BaseType::eHideBox);
-	m_model = COPY_RESOURCE("Golem", CModelA3M);
+	//m_model = COPY_RESOURCE("Golem", CModelA3M);
+	m_model = COPY_RESOURCE("Samurai", CModelA3M);
 	m_modelobj = COPY_RESOURCE("Tenohira", CModelObj);
 	m_pos = pos;
 	m_dir = CVector3D(0.0f, 0.0f, 1.0f);
