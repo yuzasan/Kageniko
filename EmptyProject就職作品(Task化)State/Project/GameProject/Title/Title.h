@@ -10,6 +10,7 @@ class Title :public Task {
 	int m_cnt;
 	float m_time;
 	bool m_isOn;
+	float fuwafuwa_r = 0;
 
 	enum class Step{
 		Start,
@@ -21,6 +22,7 @@ class Title :public Task {
 	void StepFirst();
 	void StepSecond();
 	void StepLast();
+	void FuwaFuwa();
 public:
 	Title();
 	~Title();

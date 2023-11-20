@@ -33,6 +33,7 @@
     <ClInclude Include="Game\Stage\RotateBox.h" />
     <ClInclude Include="Game\Stage\Stage.h" />
     <ClInclude Include="Game\Stage\TyukanBox.h" />
+    <ClInclude Include="Game\UI\UI.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="Navigation\NavManeger.h" />
     <ClInclude Include="Navigation\NavNode.h" />
@@ -64,6 +65,7 @@
     <ClCompile Include="Game\Stage\RotateBox.cpp" />
     <ClCompile Include="Game\Stage\Stage.cpp" />
     <ClCompile Include="Game\Stage\TyukanBox.cpp" />
+    <ClCompile Include="Game\UI\UI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Navigation\NavManeger.cpp" />
     <ClCompile Include="Navigation\NavNode.cpp" />

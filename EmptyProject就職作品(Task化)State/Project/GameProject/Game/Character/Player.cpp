@@ -5,10 +5,12 @@
 #include "../Stage/Stage.h"
 #include "../Gamedata/GameData.h"
 #include "Game/Game.h"
+#include "../UI/UI.h"
 #include "Debug/DebugPrint.h"
 #include "Effect/Effect.h"
 #include "../../Navigation/NavNode.h"
 #include "../../Navigation/NavManeger.h"
+#include "../Stage/FellBox.h"
 
 //歩き速度
 #define WALK_SPEED 10.0f
@@ -19,7 +21,7 @@
 //大ジャンプ速度
 #define	HIGH_JUMP_SPEED 16.0f
 //待機時間
-#define IDLE_TIME 3.0f
+#define IDLE_TIME 2.0f
 
 #define UP_SPEED 10.0f
 
@@ -31,6 +33,7 @@ Player::Player(const CVector3D& pos) :CharaBase(TaskType::ePlayer)
 	,m_viewAngle(35.0f)
 	,m_viewLength(3.0f)
 	,m_isSearch(false)
+	,m_isDie(false)
 {
 	m_model = COPY_RESOURCE("Ninja", CModelA3M);
 	m_pos = m_tyukan = pos;
@@ -136,14 +139,25 @@ void Player::StateMove() {
 
 //透明状態
 void Player::StateInvisible() {
-	m_pos = CVector3D(0.0f, 10000.0f, 0.0f);
+	//移動速度をリセット
+	m_vec.x = 0.0f;
+	m_vec.z = 0.0f;
 	//待機時間待ち
-	if (m_elapsedTime < IDLE_TIME) {
+	if (m_elapsedTime < IDLE_TIME || Fade::IsFade()) {
+		if (m_elapsedTime > 0.85f) {
+			m_pos = CVector3D(0.0f, 10000.0f, 0.0f);
+		}
 		m_elapsedTime += CFPS::GetDeltaTime();
+		/*m_isFindplayer = false;
+		m_isHide = true;*/
 	}
 	else {
+		
+		Fade::FadeIn();
 		m_elapsedTime = 0.0f;
+		//m_isHide = false;
 		m_pos = m_tyukan;
+		//m_isDie = false;
 		m_state = State::Move;
 	}
 }
@@ -272,7 +286,7 @@ void Player::Update() {
 	}
 
 	//デバッグ表示
-	Debug();
+	//Debug();
 }
 
 void Player::Render() {
@@ -448,13 +462,18 @@ void Player::Collision(Task* b) {
 	break;
 	case TaskType::eFellBox:
 	{
-		mp_fellbox = TaskManeger::FindObject(TaskType::eFellBox);
-		//■OBBとカプセル
-		float dist;
-		CVector3D axis;
-		if (CCollision::CollisionOBBCapsule(mp_fellbox->m_obb, m_lineS, m_lineE, m_rad, &axis, &dist)) {
-			new BlackOut();
-			m_pos = m_tyukan;
+		if (m_state != State::Invisible) {
+			//mp_fellbox = TaskManeger::FindObject(TaskType::eFellBox);
+			FellBox* fellbox = dynamic_cast<FellBox*>(b);
+			//■OBBとカプセル
+			float dist;
+			CVector3D axis;
+			if (CCollision::CollisionOBBCapsule(fellbox->m_obb, m_lineS, m_lineE, m_rad, &axis, &dist)) {
+				Fade::FadeOut();
+				//m_isDie = true;
+				m_state = State::Invisible;
+				//m_pos = m_tyukan;
+			}
 		}
 	}
 	break;

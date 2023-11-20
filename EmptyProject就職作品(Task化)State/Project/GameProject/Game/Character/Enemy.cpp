@@ -51,7 +51,7 @@ Enemy::Enemy(const CVector3D& pos):CharaBase(TaskType::eEnemy)
 	mp_player = dynamic_cast<Player*>(TaskManeger::FindObject(TaskType::ePlayer));
 	//mp_hidebox = Base::FindObject(BaseType::eHideBox);
 	m_model = COPY_RESOURCE("Golem", CModelA3M);
-	
+	m_modelobj = COPY_RESOURCE("Tenohira", CModelObj);
 	m_pos = pos;
 	m_dir = CVector3D(0.0f, 0.0f, 1.0f);
 	m_moveDir = m_dir;
@@ -477,7 +477,7 @@ void Enemy::Update()
 	CharaBase::Update();
 
 	//デバッグ表示
-	Debug();
+	//sDebug();
 }
 
 void Enemy::Render()
@@ -503,7 +503,10 @@ void Enemy::Render()
 	//if (mp_player->m_isFind && !IsFoundPlayer()) {
 	if (m_isTouch) {//m_isFind && !IsFoundPlayer()
 		//Utility::DrawCapsule(m_lineS, m_lineE, m_rad, CVector4D(1, 0, 1, 1));
-		Utility::DrawCube(m_pos + CVector3D(0, 2, 0), CVector3D(1, 0, 1), CVector4D(1, 0, 1, 1));
+		//Utility::DrawCube(m_pos + CVector3D(0, 2, 0), CVector3D(1, 0, 1), CVector4D(1, 0, 1, 1));
+		m_modelobj.SetPos(m_pos + CVector3D(0, 2, 0));
+		m_modelobj.SetRot(CVector3D(0, 1, 0));
+		m_modelobj.Render();
 	}
 	else {
 		//敵カプセルの表示
@@ -611,7 +614,10 @@ void Enemy::LateRender() {
 		//if (mp_player->m_isFind && !IsFoundPlayer()) {
 		if (m_isTouch) {//m_isFind && !IsFoundPlayer()
 			//Utility::DrawCapsule(m_lineS, m_lineE, m_rad, CVector4D(1, 0, 1, 1));
-			Utility::DrawCube(m_pos + CVector3D(0, 2, 0), CVector3D(1, 0, 1), CVector4D(1, 0, 1, 1));
+			//Utility::DrawCube(m_pos + CVector3D(0, 2, 0), CVector3D(1, 0, 1), CVector4D(1, 0, 1, 1));
+			m_modelobj.SetPos(m_pos + CVector3D(0, 2, 0));
+			m_modelobj.SetRot(CVector3D(0, 1, 0));
+			m_modelobj.Render();
 		}
 		else {
 			//敵カプセルの表示

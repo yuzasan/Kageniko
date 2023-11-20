@@ -4,6 +4,7 @@
 #include "../../TaskSystem/TaskManeger.h"
 class PlayerCamera;
 class Enemy;
+class FellBox;
 
 class Player : public CharaBase {
 private:
@@ -45,6 +46,7 @@ private:
 
 public:
 	bool m_isSearch;	//’Tõ”ÍˆÍ‚É‚¢‚é‚©‚Ç‚¤‚©
+	bool m_isDie;			//€‚ñ‚Å‚¢‚é‚©‚Ç‚¤‚©
 	//bool m_isFind;
 	Player(const CVector3D& pos);
 	~Player();

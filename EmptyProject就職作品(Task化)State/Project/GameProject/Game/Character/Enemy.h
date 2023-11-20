@@ -22,6 +22,7 @@ private:
 	NoiseBox* mp_noise;				//物音BOX
 	Task* mp_field;					//ステージ
 	CModelA3M m_model;				//モデル
+	CModelObj m_modelobj;				//モデル
 	CVector3D m_moveDir;			//移動方向
 	CVector3D m_movePos;			//移動先座標
 	NavNode* m_moveNode;			//移動目的地のノード

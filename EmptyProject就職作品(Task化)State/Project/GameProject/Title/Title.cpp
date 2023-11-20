@@ -40,6 +40,11 @@ void Title::StepLast()
 	}
 }
 
+void Title::FuwaFuwa() {
+	//完了している
+	fuwafuwa_r += CFPS::GetDeltaTime();
+}
+
 Title::Title():Task(TaskType::eScene), m_title_text("C:\\Windows\\Fonts\\msgothic.ttc", 64)
 	,m_step(Step::End)
 	,m_cnt(0)
@@ -92,9 +97,11 @@ void Title::Update()
 void Title::Render()
 {
 	if (m_isOn)m_img.Draw();
+	
 	if (CLoadThread::GetInstance()->CheckEnd()) {
-		//完了している
+		FuwaFuwa();
 		//文字表示
-		m_title_text.Draw(800, 800, 0, 0, 0, "左クリック");
+		//m_title_text.Draw(800, 800 - abs(sin(fuwafuwa_r)) * 64, 0, 0, 0, "左クリック");
+		m_title_text.Draw(800, 900 - abs(sin(fuwafuwa_r)) * 64, 0, 0, 0, "左クリック");
 	}
 }

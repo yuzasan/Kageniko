@@ -29,6 +29,7 @@ enum class TaskType {
 	//2D
 	eUI,			//UI
 	eScene,			//シーン
+	eFade,			//フェード
 	eDebug,			//デバッグ
 
 	eStart2D=eUI,	//=の部分から2D

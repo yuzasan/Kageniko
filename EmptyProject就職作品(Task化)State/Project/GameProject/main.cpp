@@ -43,6 +43,8 @@ void Load() {
 	ADD_RESOURCE("Fukidasi", CModel::CreateModel("Effect/Fukidasi/Fukidasi.obj"));
 	//”L‚ÌŽè‰æ‘œ
 	ADD_RESOURCE("Nekonote", CImage::CreateImage("Effect/Cathand/blackcatbackhand45.png"));
+	//”L‚ÌŽè‚Ì•½‰æ‘œ
+	ADD_RESOURCE("Tenohira", CModel::CreateModel("Effect/Cathand/Tenohira.obj"));
 
 	//ƒ^ƒCƒgƒ‹“Ç‚Ýž‚Ý
 	ADD_RESOURCE("Title", CImage::CreateImage("Title/Title.png"));
@@ -146,7 +148,7 @@ void MainLoop(void) {
 		FONT_T()->Draw(1500, 1000, 1, 0, 0, buf);
 	}
 	// Œv‘ªŒ‹‰Ê‚Ì•`‰æ
-	DebugProfiler::Print();
+	//DebugProfiler::Print();
 }
 void Init(void)
 {

@@ -86,6 +86,9 @@
     <ClInclude Include="Debug\DebugProfiler.h">
       <Filter>Debug</Filter>
     </ClInclude>
+    <ClInclude Include="Game\UI\UI.h">
+      <Filter>Game\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -173,6 +176,9 @@
     <ClCompile Include="Debug\DebugProfiler.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
+    <ClCompile Include="Game\UI\UI.cpp">
+      <Filter>Game\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
@@ -216,6 +222,9 @@
     </Filter>
     <Filter Include="Navigation">
       <UniqueIdentifier>{45507fb9-672f-4b47-b7e2-ec33c7c728e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\UI">
+      <UniqueIdentifier>{fb1dc2d5-3a3a-4c63-9d59-fdb08355c67b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
