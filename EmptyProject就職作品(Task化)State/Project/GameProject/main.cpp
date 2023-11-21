@@ -43,6 +43,8 @@ void Load() {
 	//Sleep(1000 * 5);
 	//吹き出し「なんだ猫か」
 	ADD_RESOURCE("Fukidasi", CModel::CreateModel("Effect/Fukidasi/Fukidasi.obj"));
+	//吹き出し「にゃ～」
+	ADD_RESOURCE("Nya", CModel::CreateModel("Effect/Fukidasi/nya.obj"));
 	//猫の手画像
 	ADD_RESOURCE("Nekonote", CImage::CreateImage("Effect/Cathand/blackcatbackhand45.png"));
 	//猫の手の平画像

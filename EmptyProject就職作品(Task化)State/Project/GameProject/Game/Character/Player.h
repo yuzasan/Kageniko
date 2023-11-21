@@ -49,7 +49,7 @@ private:
 
 public:
 	bool m_isSearch;	//’Tõ”ÍˆÍ‚É‚¢‚é‚©‚Ç‚¤‚©
-	bool m_isDie;			//€‚ñ‚Å‚¢‚é‚©‚Ç‚¤‚©
+	bool m_isBark;			//–Â‚¢‚Ä‚¢‚é‚©‚Ç‚¤‚©
 	//bool m_isFind;
 	Player(const CVector3D& pos);
 	~Player();

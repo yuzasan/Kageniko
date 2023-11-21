@@ -33,7 +33,7 @@ Player::Player(const CVector3D& pos) :CharaBase(TaskType::ePlayer)
 	,m_viewAngle(35.0f)
 	,m_viewLength(3.0f)
 	,m_isSearch(false)
-	,m_isDie(false)
+	,m_isBark(false)
 {
 	m_model = COPY_RESOURCE("Ninja", CModelA3M);
 	m_pos = m_tyukan = pos;
@@ -105,6 +105,17 @@ void Player::StateMove() {
 	else {
 		//待機アニメーション再生
 		m_model.ChangeAnimation((int)AnimId::Idle);
+	}
+
+	//鳴く	Cキー
+	if (PUSH(CInput::eButton3)) {
+		new Effect("Nya", m_pos + CVector3D(-1, 0.8, -0.3), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 0.5f, 0.0f, 1.0f, 0.0f, 0, true, false, 30);
+		//鳴くアニメーション再生
+		m_model.ChangeAnimation((int)AnimId::Naku);
+		/*m_isBark = true;
+		if (m_model.isAnimationEnd((int)AnimId::Naku)) {
+			m_isBark = false;
+		}*/
 	}
 
 	//ジャンプ
