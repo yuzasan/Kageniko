@@ -13,7 +13,9 @@
 #include "../Stage/FellBox.h"
 
 //歩き速度
-#define WALK_SPEED 10.0f
+#define WALK_SPEED 5.0f//10.0f
+//忍び速度
+#define SILENT_WALK_SPEED 3.0f//10.0f
 //回転速度
 #define ROTATE_SPEED 15.0f
 //ジャンプ速度
@@ -93,11 +95,18 @@ void Player::StateMove() {
 		m_rot.y = atan2f(m_dir.x, m_dir.z);
 
 		//移動速度を取得
-		float moveSpeed = WALK_SPEED;
-
-		//移動方向と移動速度から移動ベクトルを求める
-		CVector3D moveVec = m_moveDir * moveSpeed;
-		m_vec = CVector3D(moveVec.x, m_vec.y, moveVec.z);
+		if (HOLD(CInput::eButton11)) {
+			float moveSpeed = SILENT_WALK_SPEED;
+			//移動方向と移動速度から移動ベクトルを求める
+			CVector3D moveVec = m_moveDir * moveSpeed;
+			m_vec = CVector3D(moveVec.x, m_vec.y, moveVec.z);
+		}
+		else {
+			float moveSpeed = WALK_SPEED;
+			//移動方向と移動速度から移動ベクトルを求める
+			CVector3D moveVec = m_moveDir * moveSpeed;
+			m_vec = CVector3D(moveVec.x, m_vec.y, moveVec.z);
+		}
 		//移動アニメーション再生
 		m_model.ChangeAnimation((int)AnimId::Walk);
 	}
@@ -122,6 +131,7 @@ void Player::StateMove() {
 	if (m_isGround) {
 		if (HOLD(CInput::eButton5)) {
 			m_time += CFPS::GetDeltaTime();
+			m_model.ChangeAnimation((int)AnimId::Jump);
 		}
 		else {
 			//3秒以上Spaceキー長押しで大ジャンプ

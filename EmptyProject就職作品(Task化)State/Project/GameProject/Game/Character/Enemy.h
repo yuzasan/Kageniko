@@ -30,8 +30,9 @@ private:
 	NavNode* m_lostNode;			//プレイヤーを見失った場所に配置したノード
 	SearchNode* m_searchNode;		//探索中のノード
 	CVector4D color;
-	float m_elapsedTime;	//待機経過時間
-	CVector3D m_pos_old;
+	float m_elapsedTime;			//待機経過時間
+	CVector3D m_pos_old;			//前の位置
+	float m_emotion;				//感情
 	
 	CVector3D m_rot_target;
 	//const CourseData* mp_cource;	//通る道
@@ -72,7 +73,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="pos">出現位置</param>
-	Enemy(const CVector3D& pos);
+	Enemy(const CVector3D& pos,float emotion);
 	//デストラクタ
 	~Enemy();
 	/// <summary>

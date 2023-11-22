@@ -12,7 +12,7 @@
 
 
 //歩き速度
-#define WALK_SPEED 5.0f//4.8f//2.4f
+#define WALK_SPEED 2.5f//5.0f//4.8f//2.4f
 //追跡速度
 //#define CHASE_SPEED 0.05f
 //回転速度
@@ -29,7 +29,7 @@
 #define MOVE_RANGE_MIN -6.0f//-13.0f
 #define MOVE_RANGE_MAX 6.0f//13.0f
 
-Enemy::Enemy(const CVector3D& pos):CharaBase(TaskType::eEnemy)
+Enemy::Enemy(const CVector3D& pos, float emotion):CharaBase(TaskType::eEnemy)
 	,mp_player(nullptr)
 	,mp_noise(nullptr)
 	,mp_field(nullptr)
@@ -44,6 +44,7 @@ Enemy::Enemy(const CVector3D& pos):CharaBase(TaskType::eEnemy)
 	,m_isWall(false)
 	,m_nextNode(nullptr)
 	,m_lostNode(nullptr)
+	,m_emotion(emotion)
 {
 	//敵の管理クラスのリストに自身を追加
 	EnemyManager::Instance()->Add(this);
@@ -169,13 +170,18 @@ void Enemy::StateMove()
 	}
 	
 	//プレイヤーを見つけたら、強制的に追跡状態へ
-	if (IsFoundPlayer()) {
+	if (IsFoundPlayer()&&m_emotion > 0.5f) {
 		m_state = State::Chase;
 	}
 }
 
 void Enemy::StateChase()
 {
+	/*if (m_emotion <= 0.5f) {
+		m_state = State::Move;
+		return;
+	}*/
+	color = CVector4D(1.0f, 0.0f, 0.0f, 1.0f);
 	//前進アニメーション
 	m_model.ChangeAnimation((int)AnimId::Walk);
 
@@ -346,7 +352,7 @@ bool Enemy::IsLookPlayer() const {
 //指定座標への移動処理
 bool Enemy::MoveTo(const CVector3D& target) {
 
-	float moveSpeed = WALK_SPEED;
+	float moveSpeed = WALK_SPEED * m_emotion;
 
 	CVector3D vec = target - m_pos;
 	vec.y = 0.0f;
@@ -437,7 +443,7 @@ void Enemy::Update()
 		// 追跡状態
 	case State::Chase:
 		StateChase();
-		color = CVector4D(1.0f, 0.0f, 0.0f, 1.0f);
+		//color = CVector4D(1.0f, 0.0f, 0.0f, 1.0f);
 		break;
 		//プレイヤーを見失った
 	case State::Lost:
