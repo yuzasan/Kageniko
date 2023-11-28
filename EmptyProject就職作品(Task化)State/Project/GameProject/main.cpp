@@ -40,6 +40,8 @@ void Load() {
 	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Castle/MoriyamaKiryou3bai.obj", 20, 10, 20));
 	//ステージの読み込み
 	ADD_RESOURCE("Stage", CModel::CreateModel("Field/Test/TestField11.obj", 20, 10, 20));
+	//ステージの読み込み
+	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Test/test.obj", 20, 10, 20));
 	//Sleep(1000 * 5);
 	//吹き出し「なんだ猫か」
 	ADD_RESOURCE("Fukidasi", CModel::CreateModel("Effect/Fukidasi/Fukidasi.obj"));
