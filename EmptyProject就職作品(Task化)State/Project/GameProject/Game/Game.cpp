@@ -6,6 +6,7 @@
 #include "Character/NoiseBox.h"
 #include "Character/PlayerCamera.h"
 #include "Camera/FieldCamera.h"
+#include "Camera/EventCamera.h"
 #include "GameData/GameData.h"
 #include "Stage/MoveBox.h"
 #include "Stage/RotateBox.h"
@@ -36,7 +37,7 @@ Game::Game():Task(TaskType::eScene){
 	new Stage();
 	new PlayerCamera();
 	new FieldCamera();
-
+	//new EventCamera();
 	//フィールドに配置する床を生成
 	float ratio = 1.0f;
 	float moveTime = 5.0f * ratio;//float moveTime = 5.0f * ratio;
@@ -90,6 +91,7 @@ Game::Game():Task(TaskType::eScene){
 		CVector3D(-11.0f, 0.0f, 0.0f),
 		CVector3D(-9.0f, 0.0f, 0.0f),
 		moveTime, intervalTime, 1, 1, true
+
 	);
 
 	new MoveBox

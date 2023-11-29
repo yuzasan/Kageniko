@@ -73,10 +73,11 @@ void FieldCamera::Render(){
 		//カメラを元の状態に戻す
 		*CCamera::GetCurrent() = back;
 		rendring = false;
+
+		Utility::DrawQuad(CVector2D(0, 0), CVector2D(258, 258), CVector4D(0.0f, 0.0f, 0.0f, 1.0f));
+		//レンダーターゲットのテクスチャ―を簡易表示
+		CTextureFrame::Draw(0, 0, 256, 256, texture_frame_mini_map->GetTexture());
 	}
-	Utility::DrawQuad(CVector2D(0, 0), CVector2D(258, 258), CVector4D(0.0f, 0.0f, 0.0f, 1.0f));
-	//レンダーターゲットのテクスチャ―を簡易表示
-	CTextureFrame::Draw(0, 0, 256, 256, texture_frame_mini_map->GetTexture());
 }
 
 void FieldCamera::LateUpdate(){

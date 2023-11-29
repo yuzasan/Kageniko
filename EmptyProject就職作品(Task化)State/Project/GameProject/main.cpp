@@ -184,6 +184,7 @@ void Init(void)
 	CInput::SetButton(0, CInput::eButton5, VK_SPACE);
 	CInput::SetButton(0, CInput::eButton10, VK_RETURN);
 	CInput::SetButton(0, CInput::eButton11, VK_SHIFT);
+	CInput::SetButton(0, CInput::eButton12, 'K');
 	CInput::SetButton(0, CInput::eUp, 'W');
 	CInput::SetButton(0, CInput::eDown, 'S');
 	CInput::SetButton(0, CInput::eLeft, 'A');
@@ -198,13 +199,13 @@ void Init(void)
 	CInput::Update();
 	CInput::Update();
 
-
 	//ライト設定
 	CLight::SetType(0, CLight::eLight_Direction);
 	CLight::SetPos(0, CVector3D(0, 200, 200));
 	CLight::SetDir(0, CVector3D(-1, -2, 1).GetNormalize());
 	CLight::SetColor(0, CVector3D(0.2f, 0.2f, 0.2f), CVector3D(0.8f, 0.8f, 0.8f));
 
+	//霧のようになる(フォグ)				,手前5,奥20
 	CLight::SetFogParam(CVector4D(1, 1, 1, 1), 700, 800);
 
 	//カメラ初期化

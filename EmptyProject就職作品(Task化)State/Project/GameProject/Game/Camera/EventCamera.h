@@ -2,7 +2,7 @@
 #include "../../TaskSystem/Task.h"
 #include "../../TaskSystem/TaskManeger.h"
 
-class EnentCamera : public Task {
+class EventCamera : public Task {
 private:
 	//モデルオブジェクト
 	CVector3D eventcam_at;
@@ -10,8 +10,10 @@ private:
 	//回転速度係数
 	const float cam_speed = 0.002f;
 public:
-	EnentCamera();
-	~EnentCamera();
+	//staticは別のところから参照できる
+	static bool eventrendring;
+	EventCamera();
+	~EventCamera();
 	void Update();
 	void Render();
 };

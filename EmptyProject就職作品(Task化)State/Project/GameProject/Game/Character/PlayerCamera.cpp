@@ -1,8 +1,8 @@
 #include "PlayerCamera.h"
 #include "Player.h"
 #include "../Camera/FieldCamera.h"
+#include "../Camera/EventCamera.h"
 #include "../Stage/Stage.h"
-
 
 PlayerCamera::PlayerCamera() :Task(TaskType::eCamera) {
 	cam_at = CVector3D(0, 0, 0);
@@ -22,6 +22,7 @@ void PlayerCamera::Update() {
 }
 
 void PlayerCamera::Render() {
+	if (EventCamera::eventrendring)return;
 	if (FieldCamera::rendring)return;
 	if (CShadow::GetInstance()->GetState() == CShadow::eShadow)return;
 	//’Ž‹“_‚Ü‚Å‚Ì‹——£
@@ -46,6 +47,7 @@ void PlayerCamera::Render() {
 	cam_pos = cam_at + CMatrix::MRotation(m_rot).GetFront() * -cam_dist;
 
 	CCamera::GetCurrent()->LookAt(cam_pos, cam_at, CVector3D(0, 1, 0));
+
 }
 
 void PlayerCamera::Collision(Task* b) {
