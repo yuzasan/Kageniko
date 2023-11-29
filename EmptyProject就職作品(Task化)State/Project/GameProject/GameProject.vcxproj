@@ -15,6 +15,7 @@
     <ClInclude Include="Debug\DebugPrint.h" />
     <ClInclude Include="Debug\DebugProfiler.h" />
     <ClInclude Include="Effect\Effect.h" />
+    <ClInclude Include="Game\Camera\EventCamera.h" />
     <ClInclude Include="Game\Camera\FieldCamera.h" />
     <ClInclude Include="Game\Character\CharaBase.h" />
     <ClInclude Include="Game\Character\Enemy.h" />
@@ -47,6 +48,7 @@
     <ClCompile Include="Debug\DebugPrint.cpp" />
     <ClCompile Include="Debug\DebugProfiler.cpp" />
     <ClCompile Include="Effect\Effect.cpp" />
+    <ClCompile Include="Game\Camera\EventCamera.cpp" />
     <ClCompile Include="Game\Camera\FieldCamera.cpp" />
     <ClCompile Include="Game\Character\CharaBase.cpp" />
     <ClCompile Include="Game\Character\Enemy.cpp" />

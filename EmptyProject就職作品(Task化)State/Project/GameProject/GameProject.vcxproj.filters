@@ -89,6 +89,9 @@
     <ClInclude Include="Game\UI\UI.h">
       <Filter>Game\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Camera\EventCamera.h">
+      <Filter>Game\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -178,6 +181,9 @@
     </ClCompile>
     <ClCompile Include="Game\UI\UI.cpp">
       <Filter>Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Camera\EventCamera.cpp">
+      <Filter>Game\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

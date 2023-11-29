@@ -17,6 +17,39 @@ FieldCamera::~FieldCamera()
 }
 
 void FieldCamera::Update(){
+	//{
+	//	rendring = true;
+	//	//--■別始点からのゲーム画面描画---------
+	//	//現在のカメラをコピー
+	//	CCamera back = *CCamera::GetCurrent();
+
+	//	//キャラクター上面からのカメラ	下に向いている
+	//	//CCamera::GetCurrent()->SetTranseRot(mp_player->m_pos + CVector3D(0, 10, 0), CVector3D(DtoR(90), 0, 0));
+	//	CCamera::GetCurrent()->SetTranseRot(mp_player->m_pos + CVector3D(0, 15, 0), CVector3D(DtoR(90), 0, 0));
+
+	//	//描画先の画面サイズが横512:縦512のためアスペクト比は1.0f
+	//	CCamera::GetCurrent()->Perspective(DtoR(60), 1.0f, 1.0f, 1000.0f);
+
+	//	//影を消去
+	//	CShadow::GetInstance()->GetRenderTarget()->ClearBuffer();
+
+	//	texture_frame_mini_map->BeginDraw();
+
+	//	//Base::RenderALL();
+	//	//Base::NoEnemyRenderALL();
+	//	//Base::LateRenderALL();
+
+	//	TaskManeger::Instance()->NoEnemyRender();
+	//	TaskManeger::Instance()->LateRender();
+	//	texture_frame_mini_map->EndDraw();
+	//	//カメラを元の状態に戻す
+	//	*CCamera::GetCurrent() = back;
+	//	rendring = false;
+	//}
+}
+
+void FieldCamera::Render(){
+	//if (CShadow::GetInstance()->GetState() == CShadow::eShadow)return;
 	{
 		rendring = true;
 		//--■別始点からのゲーム画面描画---------
@@ -24,7 +57,6 @@ void FieldCamera::Update(){
 		CCamera back = *CCamera::GetCurrent();
 
 		//キャラクター上面からのカメラ	下に向いている
-		//CCamera::GetCurrent()->SetTranseRot(mp_player->m_pos + CVector3D(0, 10, 0), CVector3D(DtoR(90), 0, 0));
 		CCamera::GetCurrent()->SetTranseRot(mp_player->m_pos + CVector3D(0, 15, 0), CVector3D(DtoR(90), 0, 0));
 
 		//描画先の画面サイズが横512:縦512のためアスペクト比は1.0f
@@ -35,10 +67,6 @@ void FieldCamera::Update(){
 
 		texture_frame_mini_map->BeginDraw();
 
-		//Base::RenderALL();
-		//Base::NoEnemyRenderALL();
-		//Base::LateRenderALL();
-
 		TaskManeger::Instance()->NoEnemyRender();
 		TaskManeger::Instance()->LateRender();
 		texture_frame_mini_map->EndDraw();
@@ -46,14 +74,13 @@ void FieldCamera::Update(){
 		*CCamera::GetCurrent() = back;
 		rendring = false;
 	}
-}
-
-void FieldCamera::Render(){
-	//if (CShadow::GetInstance()->GetState() == CShadow::eShadow)return;
+	Utility::DrawQuad(CVector2D(0, 0), CVector2D(258, 258), CVector4D(0.0f, 0.0f, 0.0f, 1.0f));
+	//レンダーターゲットのテクスチャ―を簡易表示
+	CTextureFrame::Draw(0, 0, 256, 256, texture_frame_mini_map->GetTexture());
 }
 
 void FieldCamera::LateUpdate(){
-	Utility::DrawQuad(CVector2D(0,0), CVector2D(258, 258), CVector4D(0.0f, 0.0f, 0.0f, 1.0f));
-	//レンダーターゲットのテクスチャ―を簡易表示
-	CTextureFrame::Draw(0, 0, 256, 256, texture_frame_mini_map->GetTexture());
+	//Utility::DrawQuad(CVector2D(0,0), CVector2D(258, 258), CVector4D(0.0f, 0.0f, 0.0f, 1.0f));
+	////レンダーターゲットのテクスチャ―を簡易表示
+	//CTextureFrame::Draw(0, 0, 256, 256, texture_frame_mini_map->GetTexture());
 }

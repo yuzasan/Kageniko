@@ -24,15 +24,18 @@ enum class TaskType {
 	eBullet,		//弾
 	eEffect,		//エフェクト
 	eItem,			//アイテム
-	eFieldCamera,	//ミニマップ
+	eEventCamera,	//イベントカメラ
+	//eFieldCamera,	//ミニマップ
 
 	//2D
+	eFieldCamera,	//ミニマップ
 	eUI,			//UI
 	eScene,			//シーン
 	eFade,			//フェード
 	eDebug,			//デバッグ
 
-	eStart2D=eUI,	//=の部分から2D
+	//eStart2D=eUI,	//=の部分から2D
+	eStart2D = eFieldCamera,	//=の部分から2D
 };
 
 //タスククラス

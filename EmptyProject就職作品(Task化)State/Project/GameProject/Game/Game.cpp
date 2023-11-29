@@ -27,7 +27,8 @@ Game::Game():Task(TaskType::eScene){
 	Base::Add(new PlayerCamera());
 	Base::Add(new FieldCamera());*/
 
-	new Player(CVector3D(0, 100, 8));//new Player(CVector3D(0, 1, 8));
+	//new Player(CVector3D(0, 100, 8));
+	new Player(CVector3D(0, 1, 8));
 	//new EnemyManager();
 	new Enemy(CVector3D(0, 1, 0),1.0f);
 	new Enemy(CVector3D(0, 1, 0),0.5f);
