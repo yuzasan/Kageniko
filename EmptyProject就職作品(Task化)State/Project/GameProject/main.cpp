@@ -37,9 +37,9 @@ void Load() {
 	//ADD_RESOURCE("Golem", CModel::CreateModel("Character/golem/golem.a3m"));
 	ADD_RESOURCE("Samurai", CModel::CreateModel("Character/Samurai/samurai.a3m"));
 	//ステージの読み込み
-	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Castle/MoriyamaKiryou3bai.obj", 20, 10, 20));
+	ADD_RESOURCE("Stage", CModel::CreateModel("Field/Castle/castle2.obj", 20, 10, 20));
 	//ステージの読み込み
-	ADD_RESOURCE("Stage", CModel::CreateModel("Field/Test/TestField11.obj", 20, 10, 20));
+	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Test/TestField11.obj", 20, 10, 20));
 	//ステージの読み込み
 	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Test/test.obj", 20, 10, 20));
 	//Sleep(1000 * 5);
