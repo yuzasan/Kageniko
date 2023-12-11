@@ -120,7 +120,7 @@ void Enemy::StateIdle()
 	}
 
 	//プレイヤーを見つけたら、強制的に追跡状態へ
-	if (IsFoundPlayer()) {
+	if (IsFoundPlayer() && m_emotion > 0.5f) {
 		m_state = State::Chase;
 	}
 }

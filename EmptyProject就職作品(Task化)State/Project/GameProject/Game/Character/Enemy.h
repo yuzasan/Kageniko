@@ -41,8 +41,26 @@ private:
 	//アニメーション番号
 	enum class AnimId
 	{
-		Idle,	//待機
-		Walk,	//歩き
+		Idle,			//ノーマル待機
+		Walk,			//ノーマル歩き
+		HappyIdle,		//うれしい待機
+		HappyIdle2,		//うれしい待機2
+		HappyWalk,		//うれしい歩き
+		BackSearch,		//後ろ警戒
+		BackSearch2,	//後ろ警戒2
+		WarningIdle,	//警戒待機
+		WarningIdle2,	//警戒待機2
+		WarningSearch,	//全方位警戒
+		CrossIdle,		//イライラ待機
+		CrossIdle2,		//イライラ待機2
+		CrossWalk,		//イライラ歩き
+		CrossWalk2,		//イライラ歩き2
+		Run,			//全力走り
+		Run2,			//走り
+		SadIdle,		//落ち込み待機
+		SadWalk,		//落ち込み歩き
+		SleepIdle,		//眠り待機
+		Sleeping,		//眠り
 	};
 
 	//状態

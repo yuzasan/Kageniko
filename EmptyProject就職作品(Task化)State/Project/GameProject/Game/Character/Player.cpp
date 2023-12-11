@@ -325,6 +325,19 @@ void Player::Render() {
 	CMatrix m;
 	m.LookAt(m_pos + CVector3D(0, 0.5f, 0), m_pos + CVector3D(0, 0.1f, 0) + dir * m_viewLength, CVector3D(0, 1, 0));
 	Utility::DrawSector(m, -DtoR(m_viewAngle), DtoR(m_viewAngle), m_viewLength, color);
+
+	CLight::SetType(0, CLight::eLight_Spot);
+	CLight::SetPos(0, m_pos + CVector3D(0, 0.5, 0));
+	CLight::SetDir(0, m_moveDir);
+	CLight::SetColor(0, CVector3D(0.1f, 0.1f, 0.1f), CVector3D(0.6f, 0.6f, 0.6f));
+	CLight::SetType(1, CLight::eLight_Spot);
+	CLight::SetPos(1, m_pos + CVector3D(0, 2, 0));
+	CLight::SetDir(1, CVector3D(0, -1, 0));
+	CLight::SetColor(1, CVector3D(0.1f, 0.1f, 0.1f), CVector3D(0.6f, 0.6f, 0.6f));
+	CLight::SetType(2, CLight::eLight_Spot);
+	CLight::SetPos(2, m_pos + CVector3D(0, 0, -2));
+	CLight::SetDir(2, -m_moveDir);
+	CLight::SetColor(2, CVector3D(0.1f, 0.1f, 0.1f), CVector3D(0.6f, 0.6f, 0.6f));
 }
 
 void Player::NoEnemyRender()
@@ -446,7 +459,7 @@ void Player::Collision(Task* b) {
 		if (enemy != nullptr) {
 			if (IsFoundEnemy(enemy)) {
 				m_isSearch = true;
-				if (m_isSearch) {
+				if (m_isSearch && !enemy->m_isTouch && !enemy->m_isFindplayer) {
 					new Effect2D("Nekonote");
 				}
 				if (PUSH(CInput::eMouseL) && !enemy->m_isFindplayer) {//if (HOLD(CInput::eMouseL)) {
