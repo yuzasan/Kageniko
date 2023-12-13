@@ -105,12 +105,12 @@ void TaskManeger::Render(){
 }
 
 //‘STask‚Ì2D‚ð•`‰æ
-void TaskManeger::Render2D()
+void TaskManeger::Draw()
 {
 	//‘STask‚ÌRenderŠÖ”‚ðŒÄ‚Ño‚·
 	for (Task* task : m_taskList) {
 		if (task->GetType() < TaskType::eStart2D)continue;
-		task->Render();
+		task->Draw();
 	}
 }
 
@@ -149,11 +149,11 @@ void TaskManeger::LateRender(){
 }
 
 //•`‰æŒã‚Ì2D‚ð•`‰æ
-void TaskManeger::LateRender2D()
+void TaskManeger::LateDraw()
 {
 	for (Task* task : m_taskList) {
 		if (task->GetType() < TaskType::eStart2D)continue;
-		task->LateRender();
+		task->LateDraw();
 	}
 }
 

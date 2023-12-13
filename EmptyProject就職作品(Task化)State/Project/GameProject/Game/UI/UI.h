@@ -16,5 +16,5 @@ public:
 	static void FadeIn();
 	static void FadeOut();
 	void LateUpdate();
-	void Render() override;//オーバーライドを付けると元の名前が変わるとエラーが出る
+	void Draw() override;//オーバーライドを付けると元の名前が変わるとエラーが出る
 };

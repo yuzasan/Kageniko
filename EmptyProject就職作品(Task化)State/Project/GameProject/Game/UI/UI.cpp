@@ -66,7 +66,7 @@ void Fade::LateUpdate(){
 	}
 }
 
-void Fade::Render(){
+void Fade::Draw(){
 	if (m_alpha == 0.0f)return;
 	CVector4D color = CVector4D(0.0f, 0.0f, 0.0f, m_alpha);
 	Utility::DrawQuad(CVector2D(0, 0), CVector2D(SCREEN_WIDTH, SCREEN_HEIGHT), color);

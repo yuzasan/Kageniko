@@ -34,7 +34,7 @@ public:
 	//全Taskを描画
 	void Render();
 	//全Taskの2Dを描画
-	void Render2D();
+	void Draw();
 	//全当たり判定
 	void Collision();
 	//全Enemy以外描画
@@ -42,7 +42,7 @@ public:
 	//更新後全描画
 	void LateRender();
 	//描画後2Dを描画
-	void LateRender2D();
+	void LateDraw();
 	//更新後全更新
 	void LateUpdate();
 

@@ -97,7 +97,7 @@ void Effect2D::Update()
 	}
 }
 
-void Effect2D::LateRender()
+void Effect2D::Draw()
 {
 	m_img.SetPos(WIDE, HIGH);
 	m_img.Draw();

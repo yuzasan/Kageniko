@@ -40,8 +40,10 @@ Player::Player(const CVector3D& pos) :CharaBase(TaskType::ePlayer)
 	m_model = COPY_RESOURCE("Ninja", CModelA3M);
 	m_pos = m_tyukan = pos;
 	//m_rad = 0.4f;
-	//m_rad = 0.2f;
-	m_rad = 0.4f;
+	m_rad = 0.2f;
+	//m_rad = 0.4f;
+	//m_height = 0.5f;
+	m_height = 0.2f;
 	m_time = 0;
 	m_isGround = true;
 	m_isHide = false;
@@ -288,8 +290,7 @@ void Player::Update() {
 	m_pos += m_vec * CFPS::GetDeltaTime();
 
 	//カプセル
-	float height = 0.5f;
-	m_lineS = m_pos + CVector3D(0, height - m_rad, 0);
+	m_lineS = m_pos + CVector3D(0, m_height - m_rad, 0);
 	m_lineE = m_pos + CVector3D(0, m_rad, 0);
 
 	if (PUSH(CInput::eMouseR)){
@@ -318,7 +319,7 @@ void Player::Render() {
 	m_model.SetScale(0.003f, 0.003f, 0.003f);
 	m_model.Render();
 	//プレイヤーカプセルの表示
-	//Utility::DrawCapsule(m_lineS, m_lineE, m_rad, CVector4D(1, 0, 0, 1));
+	Utility::DrawCapsule(m_lineS, m_lineE, m_rad, CVector4D(1, 0, 0, 1));
 	//回転値から方向ベクトルを計算
 	CVector3D dir(CVector3D(sin(m_rot.y), 0, cos(m_rot.y)));
 	//扇の見た目
@@ -326,18 +327,19 @@ void Player::Render() {
 	m.LookAt(m_pos + CVector3D(0, 0.5f, 0), m_pos + CVector3D(0, 0.1f, 0) + dir * m_viewLength, CVector3D(0, 1, 0));
 	Utility::DrawSector(m, -DtoR(m_viewAngle), DtoR(m_viewAngle), m_viewLength, color);
 
+	/*CLight::SetType(1, CLight::eLight_Spot);
+	CLight::SetPos(1, m_pos + CVector3D(0, 2, 0));
+	CLight::SetDir(1, CVector3D(0, -1, 0));
+	CLight::SetColor(1, CVector3D(0.1f, 0.1f, 0.1f), CVector3D(0.6f, 0.6f, 0.6f));
 	CLight::SetType(0, CLight::eLight_Spot);
 	CLight::SetPos(0, m_pos + CVector3D(0, 0.5, 0));
 	CLight::SetDir(0, m_moveDir);
 	CLight::SetColor(0, CVector3D(0.1f, 0.1f, 0.1f), CVector3D(0.6f, 0.6f, 0.6f));
-	CLight::SetType(1, CLight::eLight_Spot);
-	CLight::SetPos(1, m_pos + CVector3D(0, 2, 0));
-	CLight::SetDir(1, CVector3D(0, -1, 0));
-	CLight::SetColor(1, CVector3D(0.1f, 0.1f, 0.1f), CVector3D(0.6f, 0.6f, 0.6f));
 	CLight::SetType(2, CLight::eLight_Spot);
 	CLight::SetPos(2, m_pos + CVector3D(0, 0, -2));
 	CLight::SetDir(2, -m_moveDir);
-	CLight::SetColor(2, CVector3D(0.1f, 0.1f, 0.1f), CVector3D(0.6f, 0.6f, 0.6f));
+	CLight::SetColor(2, CVector3D(0.1f, 0.1f, 0.1f), CVector3D(0.6f, 0.6f, 0.6f));*/
+	
 }
 
 void Player::NoEnemyRender()

@@ -94,7 +94,7 @@ void Title::Update()
 	}
 }
 
-void Title::Render()
+void Title::Draw()
 {
 	if (m_isOn)m_img.Draw();
 	

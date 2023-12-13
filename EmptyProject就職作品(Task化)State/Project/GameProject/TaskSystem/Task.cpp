@@ -58,6 +58,11 @@ void Task::Render() {
 
 }
 
+//2D•`‰æ
+void Task::Draw() {
+
+}
+
 //“–‚½‚è”»’è
 void Task::Collision(Task* b) {
 
@@ -68,12 +73,17 @@ void Task::NoEnemyRender(){
 
 }
 
-//XVŒã‚É•`‰æ
+//•`‰æŒã‚É•`‰æ
 void Task::LateRender(){
 
 }
 
-//XVŒã‚ÉXV
+//•`‰æŒã‚É2D•`‰æ
+void Task::LateDraw() {
+
+}
+
+//•`‰æŒã‚ÉXV
 void Task::LateUpdate(){
 
 }

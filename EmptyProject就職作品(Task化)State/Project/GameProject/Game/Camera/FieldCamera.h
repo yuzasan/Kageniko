@@ -16,6 +16,6 @@ public:
 	FieldCamera();
 	~FieldCamera();
 	void Update();
-	void Render();
+	void Draw();
 	void LateUpdate();
 };

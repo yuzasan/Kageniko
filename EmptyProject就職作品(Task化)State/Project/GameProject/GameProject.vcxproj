@@ -41,6 +41,7 @@
     <ClInclude Include="System\Transform.h" />
     <ClInclude Include="TaskSystem\Task.h" />
     <ClInclude Include="TaskSystem\TaskManeger.h" />
+    <ClInclude Include="Title\Choose.h" />
     <ClInclude Include="Title\Title.h" />
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +75,7 @@
     <ClCompile Include="System\Transform.cpp" />
     <ClCompile Include="TaskSystem\Task.cpp" />
     <ClCompile Include="TaskSystem\TaskManeger.cpp" />
+    <ClCompile Include="Title\Choose.cpp" />
     <ClCompile Include="Title\Title.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

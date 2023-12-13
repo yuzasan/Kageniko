@@ -48,7 +48,7 @@ void FieldCamera::Update(){
 	//}
 }
 
-void FieldCamera::Render(){
+void FieldCamera::Draw(){
 	//if (CShadow::GetInstance()->GetState() == CShadow::eShadow)return;
 	{
 		rendring = true;

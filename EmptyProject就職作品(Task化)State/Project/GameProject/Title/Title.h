@@ -27,5 +27,5 @@ public:
 	Title();
 	~Title();
 	void Update();
-	void Render();
+	void Draw();
 };

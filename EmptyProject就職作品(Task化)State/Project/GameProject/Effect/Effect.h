@@ -34,5 +34,5 @@ public:
 	Effect2D(const char* img);
 	~Effect2D();
 	void Update();
-	void LateRender();
+	void Draw();
 };

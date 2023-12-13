@@ -92,6 +92,9 @@
     <ClInclude Include="Game\Camera\EventCamera.h">
       <Filter>Game\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Title\Choose.h">
+      <Filter>Title</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -184,6 +187,9 @@
     </ClCompile>
     <ClCompile Include="Game\Camera\EventCamera.cpp">
       <Filter>Game\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Title\Choose.cpp">
+      <Filter>Title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

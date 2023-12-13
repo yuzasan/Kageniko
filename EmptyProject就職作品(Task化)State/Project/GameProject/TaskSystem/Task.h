@@ -53,6 +53,7 @@ public:
 
 	//球、カプセル用
 	float		m_rad;		//半径
+	float		m_height;	//高さ
 	//カプセル用
 	CVector3D	m_lineS;	//線分始点
 	CVector3D	m_lineE;	//線分終点
@@ -91,10 +92,14 @@ public:
 	virtual void Update();
 	//描画
 	virtual void Render();
+	//2D描画
+	virtual void Draw();
 	//enemy以外の描画処理
 	virtual void NoEnemyRender();
 	//描画後に描画
 	virtual void LateRender();
+	//描画後に2D描画
+	virtual void LateDraw();
 	//描画後に更新
 	virtual void LateUpdate();
 	//オブジェクト同士の当たり判定検証
