@@ -17,35 +17,37 @@ FieldCamera::~FieldCamera()
 }
 
 void FieldCamera::Update(){
-	//{
-	//	rendring = true;
-	//	//--■別始点からのゲーム画面描画---------
-	//	//現在のカメラをコピー
-	//	CCamera back = *CCamera::GetCurrent();
+	/*
+	{
+		rendring = true;
+		//--■別始点からのゲーム画面描画---------
+		//現在のカメラをコピー
+		CCamera back = *CCamera::GetCurrent();
 
-	//	//キャラクター上面からのカメラ	下に向いている
-	//	//CCamera::GetCurrent()->SetTranseRot(mp_player->m_pos + CVector3D(0, 10, 0), CVector3D(DtoR(90), 0, 0));
-	//	CCamera::GetCurrent()->SetTranseRot(mp_player->m_pos + CVector3D(0, 15, 0), CVector3D(DtoR(90), 0, 0));
+		//キャラクター上面からのカメラ	下に向いている
+		//CCamera::GetCurrent()->SetTranseRot(mp_player->m_pos + CVector3D(0, 10, 0), CVector3D(DtoR(90), 0, 0));
+		CCamera::GetCurrent()->SetTranseRot(mp_player->m_pos + CVector3D(0, 15, 0), CVector3D(DtoR(90), 0, 0));
 
-	//	//描画先の画面サイズが横512:縦512のためアスペクト比は1.0f
-	//	CCamera::GetCurrent()->Perspective(DtoR(60), 1.0f, 1.0f, 1000.0f);
+		//描画先の画面サイズが横512:縦512のためアスペクト比は1.0f
+		CCamera::GetCurrent()->Perspective(DtoR(60), 1.0f, 1.0f, 1000.0f);
 
-	//	//影を消去
-	//	CShadow::GetInstance()->GetRenderTarget()->ClearBuffer();
+		//影を消去
+		CShadow::GetInstance()->GetRenderTarget()->ClearBuffer();
 
-	//	texture_frame_mini_map->BeginDraw();
+		texture_frame_mini_map->BeginDraw();
 
-	//	//Base::RenderALL();
-	//	//Base::NoEnemyRenderALL();
-	//	//Base::LateRenderALL();
+		//Base::RenderALL();
+		//Base::NoEnemyRenderALL();
+		//Base::LateRenderALL();
 
-	//	TaskManeger::Instance()->NoEnemyRender();
-	//	TaskManeger::Instance()->LateRender();
-	//	texture_frame_mini_map->EndDraw();
-	//	//カメラを元の状態に戻す
-	//	*CCamera::GetCurrent() = back;
-	//	rendring = false;
-	//}
+		TaskManeger::Instance()->NoEnemyRender();
+		TaskManeger::Instance()->LateRender();
+		texture_frame_mini_map->EndDraw();
+		//カメラを元の状態に戻す
+		*CCamera::GetCurrent() = back;
+		rendring = false;
+	}
+	*/
 }
 
 void FieldCamera::Draw(){
@@ -60,7 +62,10 @@ void FieldCamera::Draw(){
 		CCamera::GetCurrent()->SetTranseRot(mp_player->m_pos + CVector3D(0, 15, 0), CVector3D(DtoR(90), 0, 0));
 
 		//描画先の画面サイズが横512:縦512のためアスペクト比は1.0f
-		CCamera::GetCurrent()->Perspective(DtoR(60), 1.0f, 1.0f, 1000.0f);
+		//CCamera::GetCurrent()->Perspective(DtoR(60), 1.0f, 1.0f, 1000.0f);
+		CRect rect = { -5,-5,5,5 };
+		//正射投影行列で設定
+		CCamera::GetCurrent()->Ortho(rect.m_left, rect.m_right, rect.m_top, rect.m_bottom, 1.0f, 1000.0f);
 
 		//影を消去
 		CShadow::GetInstance()->GetRenderTarget()->ClearBuffer();

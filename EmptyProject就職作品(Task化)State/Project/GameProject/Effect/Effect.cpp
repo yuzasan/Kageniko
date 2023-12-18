@@ -1,6 +1,7 @@
 #include "Effect.h"
 #include "../Game/Character/Player.h"
-Effect::Effect(const char* model, const CVector3D& pos, const CVector3D& vec, const CVector3D& accel, float scale, float change_scale, float alpha, float change_alpha, int blend, bool builbord, bool depth, int time) :Task(TaskType::eEffect)
+Effect::Effect(const char* model, const CVector3D& pos, const CVector3D& vec, const CVector3D& rot, const CVector3D& accel, float scale, float change_scale, float alpha, float change_alpha, int blend, bool builbord, bool depth, int time) :Task(TaskType::eEffect)
+	,m_rot_vec(rot)
 	,m_vec_accel(accel)
 	,m_scale(scale)
 	,m_scale_speed(change_scale)
@@ -11,6 +12,7 @@ Effect::Effect(const char* model, const CVector3D& pos, const CVector3D& vec, co
 	,m_depth(depth)
 	,m_time(time)
 {
+	mp_player = dynamic_cast<Player*>(TaskManeger::FindObject(TaskType::ePlayer));
 	m_pos = pos;
 	m_vec = vec;
 	m_model = COPY_RESOURCE(model, CModelObj);
@@ -24,7 +26,7 @@ void Effect::Update()
 {
 	m_vec += m_vec_accel;
 	m_pos += m_vec;
-	m_rot += m_rot_vec;
+	m_rot += m_rot_vec * CFPS::GetDeltaTime();
 	m_scale += m_scale_speed;
 	m_alpha += m_alpha_speed;
 	if (m_time > 0) m_time -= CFPS::GetDeltaTime();
@@ -48,8 +50,13 @@ void Effect::Render()
 		//加算ブレンドモードに
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 	}
-	//座標指定
-	m_model.SetPos(m_pos);
+	if (mp_player == nullptr) {
+		m_model.SetPos(m_pos);
+	}
+	else {
+		//座標指定
+		m_model.SetPos(mp_player->m_pos + m_pos);
+	}
 	//マテリアルのアルファ値設定
 	m_model.GetMaterial(0)->m_alpha = m_alpha;
 	//スケール設定

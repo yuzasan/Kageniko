@@ -60,7 +60,8 @@ Enemy::Enemy(const CVector3D& pos, float emotion):CharaBase(TaskType::eEnemy)
 
 	//m_rad = 0.8f / 2.0f;
 	//m_rad = 0.8f;
-	m_rad = 0.3f;
+	//m_rad = 0.3f;
+	m_rad = 0.2f;
 	m_isFind = false;
 	m_isFindplayer = false;
 
@@ -226,7 +227,8 @@ void Enemy::StateChase()
 		//プレイヤーの最終位置用のノードが既に存在するならば、
 		//プレイヤーの最終位置を更新
 		else {
-			m_lostNode->SetPos(playerNodePos);
+			CVector3D range = (playerNodePos - enemyNodePos).GetNormalize();
+			m_lostNode->SetPos(playerNodePos - range * 0.4f);
 		}
 		m_isFind = false;
 	}
@@ -284,7 +286,8 @@ void Enemy::StateLost() {
 	}
 	//目的地まで移動が終われば、
 	else {
-		new Effect("Fukidasi", m_pos + CVector3D(0, 2.5, -1), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, false, 60);
+		new Effect("Fukidasi",CVector3D(0, 2.5, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, false, 60);
+		//new Effect("Fukidasi", m_pos + CVector3D(0, 2.5, -1), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, false, 60);
 		//待機状態へ移行
 		m_state = State::Idle;
 	}

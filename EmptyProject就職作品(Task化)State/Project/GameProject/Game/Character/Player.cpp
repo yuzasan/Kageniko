@@ -120,7 +120,8 @@ void Player::StateMove() {
 
 	//鳴く	Cキー
 	if (PUSH(CInput::eButton3)) {
-		new Effect("Nya", m_pos + CVector3D(-1, 0.8, -0.3), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 0.5f, 0.0f, 1.0f, 0.0f, 0, true, false, 30);
+		new Effect("Nya",CVector3D(0, 0.8, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 0.5f, 0.0f, 1.0f, 0.0f, 0, true, false, 30);
+		//new Effect("Nya", m_pos + CVector3D(0, 0.8, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 0.5f, 0.0f, 1.0f, 0.0f, 0, true, false, 30);
 		//鳴くアニメーション再生
 		m_model.ChangeAnimation((int)AnimId::Naku);
 		/*m_isBark = true;
@@ -393,6 +394,8 @@ bool Player::IsSearchEnemy(Enemy* e) const
 	// 現在位置からプレイヤーまでの距離を求める
 	float dist = vec.Length();
 
+
+
 	// プレイヤーの位置までのレイと壁との衝突判定を行う
 	CVector3D start = m_pos;
 	CVector3D end = enemyPos;
@@ -466,6 +469,7 @@ void Player::Collision(Task* b) {
 				}
 				if (PUSH(CInput::eMouseL) && !enemy->m_isFindplayer) {//if (HOLD(CInput::eMouseL)) {
 					Shot(enemy);
+					
 					m_isSearch = false;
 				}
 			}

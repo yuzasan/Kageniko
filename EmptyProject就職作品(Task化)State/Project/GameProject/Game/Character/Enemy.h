@@ -66,10 +66,22 @@ private:
 	//状態
 	enum class State
 	{
-		Idle,		//待機
-		Move,		//移動
-		Chase,		//追跡
-		Lost,		//プレイヤーを見失った
+		Idle,			//待機
+		Move,			//移動
+		Chase,			//追跡
+		Lost,			//プレイヤーを見失った
+		/*
+		HappyIdle,		//うれしい待機
+		HappyWalk,		//うれしい歩き
+		BackSearch,		//後ろ警戒
+		WarningIdle,	//警戒待機
+		CrossIdle,		//イライラ待機
+		CrossWalk,		//イライラ歩き
+		SadIdle,		//落ち込み待機
+		SadWalk,		//落ち込み歩き
+		SleepIdle,		//眠り待機
+		Sleeping,		//眠り
+		*/
 	};
 	State m_state;	//現在の状態
 

@@ -50,7 +50,7 @@ void RotateBox::UpdateMove()
 		if (now_rot >= M_PI * 2.0f) now_rot -= M_PI * 2.0f;
 		m_obb = COBB(
 			m_pos,
-			CVector3D(now_rot, 0.0f, 0.0f),
+			CVector3D(m_rot.x + now_rot, 0.0f, 0.0f),
 			m_boxSize
 		);
 		break;
@@ -59,7 +59,7 @@ void RotateBox::UpdateMove()
 		if (now_rot >= M_PI * 2.0f) now_rot -= M_PI * 2.0f;
 		m_obb = COBB(
 			m_pos,
-			CVector3D(0.0f, now_rot, 0.0f),
+			CVector3D(0.0f, m_rot.y + now_rot, 0.0f),
 			m_boxSize
 		);
 		break;
@@ -68,7 +68,7 @@ void RotateBox::UpdateMove()
 		if (now_rot >= M_PI * 2.0f) now_rot -= M_PI * 2.0f;
 		m_obb = COBB(
 			m_pos,
-			CVector3D(0.0f, 0.0f, now_rot),
+			CVector3D(0.0f, 0.0f, m_rot.z + now_rot),
 			m_boxSize
 		);
 		break;
@@ -112,7 +112,7 @@ void RotateBox::Update()
 			if (now_rot >= M_PI * 2.0f) now_rot -= M_PI * 2.0f;
 			m_obb = COBB(
 				m_pos,
-				CVector3D(now_rot, 0.0f, 0.0f),
+				CVector3D(m_rot.x + now_rot, 0.0f, 0.0f),
 				m_boxSize
 			);
 			break;
@@ -122,7 +122,7 @@ void RotateBox::Update()
 			if (now_rot >= M_PI * 2.0f) now_rot -= M_PI * 2.0f;
 			m_obb = COBB(
 				m_pos,
-				CVector3D(0.0f, now_rot, 0.0f),
+				CVector3D(0.0f, m_rot.y + now_rot, 0.0f),
 				m_boxSize
 			);
 			break;
@@ -132,7 +132,7 @@ void RotateBox::Update()
 			if (now_rot >= M_PI * 2.0f) now_rot -= M_PI * 2.0f;
 			m_obb = COBB(
 				m_pos,
-				CVector3D(0.0f, 0.0f, now_rot),
+				CVector3D(0.0f, 0.0f, m_rot.z + now_rot),
 				m_boxSize
 			);
 			break;

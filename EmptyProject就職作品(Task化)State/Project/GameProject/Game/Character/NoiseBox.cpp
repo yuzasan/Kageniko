@@ -31,6 +31,11 @@ NoiseBox::NoiseBox(const CVector3D& pos, const CVector3D& rot, const CVector3D& 
 
 NoiseBox::~NoiseBox()
 {
+	//経路探索管理クラスのノードリストから取り除く
+	NavManeger::Instance()->RemoveNode(m_navNode);
+	NavNode* playerNode = mp_player->GetNavNode();
+	//自身とプレイヤーのノードの接続を切る
+	m_navNode->RemoveConnect(playerNode);
 }
 
 void NoiseBox::Update()

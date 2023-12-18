@@ -6,16 +6,16 @@
 
 void Choose::StepFirst()
 {
-	new Effect("FusumaR", CVector3D(-0.2f, -2, 0), CVector3D(0.2f, -0.2f, 0), CVector3D(0, 0, 0), 1.0f, 0.1f, 1.0f, 0.0f, 0, true, true, 120);
-	new Effect("FusumaL", CVector3D(0.2f, -2, 0), CVector3D(-0.2f, -0.2f, 0), CVector3D(0, 0, 0), 1.0f, 0.1f, 1.0f, 0.0f, 0, true, true, 120);
+	new Effect("FusumaR", CVector3D(-0.2f, -2, 0), CVector3D(0.2f, -0.2f, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.1f, 1.0f, 0.0f, 0, true, true, 120);
+	new Effect("FusumaL", CVector3D(0.2f, -2, 0), CVector3D(-0.2f, -0.2f, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.1f, 1.0f, 0.0f, 0, true, true, 120);
 	m_step = Step::Mid;
 }
 
 void Choose::StepSecond()
 {
 	if (m_cnt < 9) {
-		new Effect("FusumaR", CVector3D(0, -2, -1), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, true, 30);
-		new Effect("FusumaL", CVector3D(0, -2, -1), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, true, 30);
+		new Effect("FusumaR", CVector3D(0, -2, -1), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, true, 30);
+		new Effect("FusumaL", CVector3D(0, -2, -1), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, true, 30);
 	}
 	m_time += CFPS::GetDeltaTime();
 	if (m_time >= 0.5f) {
