@@ -66,6 +66,18 @@ private:
 	//状態
 	enum class State
 	{
+		Normal,		//通常
+		Happy,		//うれしい
+		Warning,	//警戒
+		Cross,		//イライラ
+		Sad,		//落ち込み
+		Sleep,		//眠り
+	};
+	State m_state;	//現在の状態
+
+	//行動
+	enum class Action
+	{
 		Idle,			//待機
 		Move,			//移動
 		Chase,			//追跡
@@ -83,16 +95,18 @@ private:
 		Sleeping,		//眠り
 		*/
 	};
-	State m_state;	//現在の状態
+	Action m_action;	//現在の行動状態
 
-	//待機状態の処理
-	void StateIdle();
-	//移動状態の処理
-	void StateMove();
-	//追跡状態の処理
-	void StateChase();
+	//通常行動の処理
+	void ActionIdle();
+	//移動行動の処理
+	void ActionMove();
+	//警戒行動の処理
+	void ActionSearch();
+	//追跡行動の処理
+	void ActionChase();
 	//プレイヤーを見失った状態の処理
-	void StateLost();
+	void ActionLost();
 
 public:
 	bool isFoll;

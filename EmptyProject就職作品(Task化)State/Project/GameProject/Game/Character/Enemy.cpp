@@ -37,7 +37,7 @@ Enemy::Enemy(const CVector3D& pos, float emotion):CharaBase(TaskType::eEnemy)
 	,m_movePos(0.0f,0.0f,0.0f)
 	,m_moveNode(nullptr)
 	,m_elapsedTime(0.0f)
-	,m_state(State::Idle)
+	,m_action(Action::Idle)
 	,isFoll(false)
 	,m_cntfoll(0)
 	,m_isTouch(false)
@@ -81,10 +81,34 @@ Enemy::~Enemy() {
 }
 
 //待機状態の処理
-void Enemy::StateIdle()
+void Enemy::ActionIdle()
 {
-	//待機アニメーション
-	m_model.ChangeAnimation((int)AnimId::Idle);
+	switch (m_state) {
+	case State::Sleep:
+		//スリープアニメーション
+		m_model.ChangeAnimation((int)AnimId::Sleeping);
+		break;
+	case State::Sad:
+		//落ち込みアニメーション
+		m_model.ChangeAnimation((int)AnimId::SadIdle);
+		break;
+	case State::Cross:
+		//イライラアニメーション
+		m_model.ChangeAnimation((int)AnimId::CrossIdle2);
+		break;
+	case State::Warning:
+		//警戒アニメーション
+		m_model.ChangeAnimation((int)AnimId::WarningSearch);
+		break;
+	case State::Normal:
+		//待機アニメーション
+		m_model.ChangeAnimation((int)AnimId::Idle);
+		break;
+	case State::Happy:
+		//うれしいアニメーション
+		m_model.ChangeAnimation((int)AnimId::HappyIdle2);
+		break;
+	}
 
 	m_vec.x = 0.0f;
 	m_vec.z = 0.0f;
@@ -117,20 +141,37 @@ void Enemy::StateIdle()
 			m_moveNode = NavManeger::Instance()->GetNearNavNode(m_movePos);
 		}
 		//移動状態へ移行
-		m_state = State::Move;
+		m_action = Action::Move;
 	}
 
 	//プレイヤーを見つけたら、強制的に追跡状態へ
-	if (IsFoundPlayer() && m_emotion > 0.5f) {
-		m_state = State::Chase;
+	//if (IsFoundPlayer() && m_emotion > 0.5f) {
+	if (IsFoundPlayer() && m_state != State::Happy) {
+		m_action = Action::Chase;
 	}
 }
 
 //移動状態の処理
-void Enemy::StateMove()
+void Enemy::ActionMove()
 {
-	//前進アニメーション
-	m_model.ChangeAnimation((int)AnimId::Walk);
+	switch (m_state) {
+	case State::Sad:
+		//待機アニメーション
+		m_model.ChangeAnimation((int)AnimId::SadWalk);
+		break;
+	case State::Cross:
+		//待機アニメーション
+		m_model.ChangeAnimation((int)AnimId::CrossWalk2);
+		break;
+	case State::Normal:
+		//待機アニメーション
+		m_model.ChangeAnimation((int)AnimId::Walk);
+		break;
+	case State::Happy:
+		//待機アニメーション
+		m_model.ChangeAnimation((int)AnimId::HappyWalk);
+		break;
+	}
 	if (m_isFind && !IsFoundPlayer()) {
 		isFoll = true;
 		m_isFind = false;
@@ -153,7 +194,7 @@ void Enemy::StateMove()
 					m_nextNode = nullptr;
 					//探索ノードが存在しない場合は、そのまま待機状態へ
 					if (m_searchNode == nullptr) {
-						m_state = State::Idle;
+						m_action = Action::Idle;
 					}
 				}
 			}
@@ -165,26 +206,50 @@ void Enemy::StateMove()
 				m_searchNode->prob = 0.0f;
 				m_searchNode->enemy = nullptr;
 				m_searchNode = nullptr;
-				m_state = State::Idle;
+				m_action = Action::Idle;
 			}
 		}
 	}
 	
 	//プレイヤーを見つけたら、強制的に追跡状態へ
-	if (IsFoundPlayer()&&m_emotion > 0.5f) {
-		m_state = State::Chase;
+	//if (IsFoundPlayer()&&m_emotion > 0.5f) {
+	if (IsFoundPlayer() && m_state != State::Happy) {
+		m_action = Action::Chase;
 	}
 }
 
-void Enemy::StateChase()
+void Enemy::ActionSearch() {
+	//回転値から方向ベクトルを計算
+	CVector3D dir(CVector3D(sin(m_rot.y), 0, cos(m_rot.y)));
+	m_model.ChangeAnimation((int)AnimId::WarningSearch);
+	// プレイヤーの向きを徐々に移動方向へ向ける
+	m_dir = CVector3D::Sleap(m_dir, dir + CVector3D(DtoR(180), 0, 0), ROTATE_SPEED * CFPS::GetDeltaTime());
+	// プレイヤーの向き反映
+	m_rot.y = atan2f(m_dir.x, m_dir.z);
+	if (m_model.isAnimationEnd()) {
+		m_action = Action::Idle;
+	}
+}
+
+void Enemy::ActionChase()
 {
 	/*if (m_emotion <= 0.5f) {
 		m_state = State::Move;
 		return;
 	}*/
 	color = CVector4D(1.0f, 0.0f, 0.0f, 1.0f);
-	//前進アニメーション
-	m_model.ChangeAnimation((int)AnimId::Walk);
+
+	switch (m_state)
+	{
+	case State::Cross:
+		//イライラ全力疾走アニメーション
+		m_model.ChangeAnimation((int)AnimId::Run);
+		break;
+	default:
+		//前進アニメーション
+		m_model.ChangeAnimation((int)AnimId::Walk);
+		break;
+	}
 
 	//各ノードの座標を取得
 	NavNode* playerNode = mp_player->GetNavNode();
@@ -228,7 +293,7 @@ void Enemy::StateChase()
 		//プレイヤーの最終位置を更新
 		else {
 			CVector3D range = (playerNodePos - enemyNodePos).GetNormalize();
-			m_lostNode->SetPos(playerNodePos - range * 0.4f);
+			m_lostNode->SetPos(playerNodePos - range * 0.5f);
 		}
 		m_isFind = false;
 	}
@@ -241,7 +306,7 @@ void Enemy::StateChase()
 		m_nextNode = navMgr->Navigate(enemyNode, m_lostNode);
 
 		//見失い状態へ移行
-		m_state = State::Lost;
+		m_action = Action::Lost;
 		return;
 	}
 
@@ -253,19 +318,19 @@ void Enemy::StateChase()
 	//次に移動すべきノードが存在しない場合は、
 	//待機状態へ移行
 	else {
-		m_state = State::Idle;
+		m_action = Action::Idle;
 	}
 }
 
 //プレイヤーを見失った状態の処理
-void Enemy::StateLost() {
+void Enemy::ActionLost() {
 	//目的地が存在する
 	if (m_nextNode != nullptr) {
 		//見失った場合は、視野範囲を無視して、
 		//プレイヤーまでの視線が通るかどうかで判定する
 		if (IsLookPlayer()) {
 			//追跡状態へ移行
-			m_state = State::Chase;
+			m_action = Action::Chase;
 			m_isFind = false;
 		}
 		//プレイヤーが視線の通らないところにいる
@@ -286,10 +351,10 @@ void Enemy::StateLost() {
 	}
 	//目的地まで移動が終われば、
 	else {
-		new Effect("Fukidasi",CVector3D(0, 2.5, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, false, 60);
-		//new Effect("Fukidasi", m_pos + CVector3D(0, 2.5, -1), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, false, 60);
+		//new Effect("Fukidasi",CVector3D(0, 2.5, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, false, 60);
+		new Effect("Fukidasi", m_pos + CVector3D(0, 2.5, -1), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, false, 60);
 		//待機状態へ移行
-		m_state = State::Idle;
+		m_action = Action::Idle;
 	}
 }
 
@@ -355,7 +420,7 @@ bool Enemy::IsLookPlayer() const {
 //指定座標への移動処理
 bool Enemy::MoveTo(const CVector3D& target) {
 
-	float moveSpeed = WALK_SPEED * m_emotion;
+	float moveSpeed = WALK_SPEED * (m_emotion/100);
 
 	CVector3D vec = target - m_pos;
 	vec.y = 0.0f;
@@ -432,25 +497,65 @@ void Enemy::Update()
 	// 視野範囲のカラー(初期色は緑)
 	color = CVector4D(0.0f, 1.0f, 0.0f, 0.75f);
 
+	if (m_emotion <= 0) {
+		m_state = State::Sleep;
+	}
+	else if (m_emotion <= 25) {
+		m_state = State::Sad;
+	}
+	else if (m_emotion <= 50) {
+		m_state = State::Warning;
+	}
+	else if (m_emotion <= 75) {
+		m_state = State::Normal;
+	}
+	else if (m_emotion <= 100) {
+		m_state = State::Happy;
+	}
+	else {
+		m_state = State::Cross;
+	}
+
+	/*
+	if (m_emotion <= 0) {
+		m_state = State::Sleep;
+	}
+	else if (m_emotion <= 25) {
+		m_state = State::Sad;
+	}
+	else if (m_emotion <= 50) {
+		m_state = State::Cross;
+	}
+	else if (m_emotion <= 75) {
+		m_state = State::Warning;
+	}
+	else if (m_emotion <= 100) {
+		m_state = State::Normal;
+	}
+	else{
+		m_state = State::Happy;
+	}
+	*/
+
 	// 現在の状態に合わせて、処理を切り替える
-	switch (m_state)
+	switch (m_action)
 	{
-		// 待機状態
-	case State::Idle:
-		StateIdle();
+		// 待機行動
+	case Action::Idle:
+		ActionIdle();
 		break;
-		// 移動状態
-	case State::Move:
-		StateMove();
+		// 移動行動
+	case Action::Move:
+		ActionMove();
 		break;
-		// 追跡状態
-	case State::Chase:
-		StateChase();
+		// 追跡行動
+	case Action::Chase:
+		ActionChase();
 		//color = CVector4D(1.0f, 0.0f, 0.0f, 1.0f);
 		break;
 		//プレイヤーを見失った
-	case State::Lost:
-		StateLost();
+	case Action::Lost:
+		ActionLost();
 		color = CVector4D(1.0f, 1.0f, 0.0f, 0.75f);
 		break;
 	}
@@ -639,13 +744,13 @@ void Enemy::LateRender() {
 
 void Enemy::Debug() {
 	DebugPrint::Print("Enemy座標 : X:%f , Y:%f , Z:%f", m_pos.x, m_pos.y, m_pos.z);
-	std::string state = "";
-	switch (m_state)
+	std::string action = "";
+	switch (m_action)
 	{
-	case Enemy::State::Idle: state = "待機"; break;
-	case Enemy::State::Move: state = "移動"; break;
-	case Enemy::State::Chase:state = "追跡"; break;
-	case Enemy::State::Lost:state = "見失った"; break;
+	case Enemy::Action::Idle: action = "待機"; break;
+	case Enemy::Action::Move: action = "移動"; break;
+	case Enemy::Action::Chase:action = "追跡"; break;
+	case Enemy::Action::Lost: action = "見失った"; break;
 	}
-	DebugPrint::Print("State:%s", state.c_str());
+	DebugPrint::Print("State:%s", action.c_str());
 }

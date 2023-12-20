@@ -50,13 +50,16 @@ void Effect::Render()
 		//加算ブレンドモードに
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 	}
-	if (mp_player == nullptr) {
-		m_model.SetPos(m_pos);
-	}
-	else {
-		//座標指定
-		m_model.SetPos(mp_player->m_pos + m_pos);
-	}
+	//座標指定
+	m_model.SetPos(m_pos);
+	//if (mp_player == nullptr) {
+	//	m_model.SetPos(m_pos);
+	//}
+	//else {
+	//	//座標指定
+	//	m_model.SetPos(mp_player->m_pos + m_pos);
+	//}
+	
 	//マテリアルのアルファ値設定
 	m_model.GetMaterial(0)->m_alpha = m_alpha;
 	//スケール設定

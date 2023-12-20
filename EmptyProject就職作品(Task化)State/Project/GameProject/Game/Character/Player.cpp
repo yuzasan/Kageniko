@@ -120,8 +120,8 @@ void Player::StateMove() {
 
 	//鳴く	Cキー
 	if (PUSH(CInput::eButton3)) {
-		new Effect("Nya",CVector3D(0, 0.8, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 0.5f, 0.0f, 1.0f, 0.0f, 0, true, false, 30);
-		//new Effect("Nya", m_pos + CVector3D(0, 0.8, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 0.5f, 0.0f, 1.0f, 0.0f, 0, true, false, 30);
+		//new Effect("Nya",CVector3D(0, 0.8, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 0.5f, 0.0f, 1.0f, 0.0f, 0, true, false, 30);
+		new Effect("Nya", m_pos + CVector3D(0, 0.8, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 0.5f, 0.0f, 1.0f, 0.0f, 0, true, false, 30);
 		//鳴くアニメーション再生
 		m_model.ChangeAnimation((int)AnimId::Naku);
 		/*m_isBark = true;

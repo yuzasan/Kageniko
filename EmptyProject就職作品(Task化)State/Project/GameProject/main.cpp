@@ -134,6 +134,8 @@ void MainLoop(void) {
 	}
 	*/
 
+	//fopen_s
+
 	//ロード終了チェック
 	if (CLoadThread::GetInstance()->CheckEnd()) {
 		//完了している
