@@ -34,6 +34,7 @@ Game::Game():Task(TaskType::eScene){
 	new Enemy(CVector3D(0, 1, 0),110.0f);
 	new Enemy(CVector3D(0, 1, 0),100.0f);
 	new Enemy(CVector3D(0, 1, 0),75.0f);
+	new Enemy(CVector3D(0, 1, 0),50.0f);
 	new Stage();
 	new PlayerCamera();
 	new FieldCamera();

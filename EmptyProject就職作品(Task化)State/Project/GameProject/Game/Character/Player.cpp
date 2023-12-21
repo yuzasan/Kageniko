@@ -134,7 +134,7 @@ void Player::StateMove() {
 	if (m_isGround) {
 		if (HOLD(CInput::eButton5)) {
 			m_time += CFPS::GetDeltaTime();
-			m_model.ChangeAnimation((int)AnimId::Jump);
+			m_model.ChangeAnimation((int)AnimId::Jump, false);
 		}
 		else {
 			//3秒以上Spaceキー長押しで大ジャンプ

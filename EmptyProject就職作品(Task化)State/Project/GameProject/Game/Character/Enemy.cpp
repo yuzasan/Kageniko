@@ -98,7 +98,7 @@ void Enemy::ActionIdle()
 		break;
 	case State::Warning:
 		//警戒アニメーション
-		m_model.ChangeAnimation((int)AnimId::WarningSearch);
+		m_model.ChangeAnimation((int)AnimId::Idle);
 		break;
 	case State::Normal:
 		//待機アニメーション
@@ -141,7 +141,13 @@ void Enemy::ActionIdle()
 			m_moveNode = NavManeger::Instance()->GetNearNavNode(m_movePos);
 		}
 		//移動状態へ移行
-		m_action = Action::Move;
+		//m_action = Action::Move;
+		if (m_state != State::Warning) {
+			m_action = Action::Move;
+		}
+		else {
+			m_action = Action::Search;
+		}
 	}
 
 	//プレイヤーを見つけたら、強制的に追跡状態へ
@@ -162,6 +168,10 @@ void Enemy::ActionMove()
 	case State::Cross:
 		//待機アニメーション
 		m_model.ChangeAnimation((int)AnimId::CrossWalk2);
+		break;
+	case State::Warning:
+		//警戒アニメーション
+		m_model.ChangeAnimation((int)AnimId::Walk);
 		break;
 	case State::Normal:
 		//待機アニメーション
@@ -219,15 +229,14 @@ void Enemy::ActionMove()
 }
 
 void Enemy::ActionSearch() {
-	//回転値から方向ベクトルを計算
-	CVector3D dir(CVector3D(sin(m_rot.y), 0, cos(m_rot.y)));
-	m_model.ChangeAnimation((int)AnimId::WarningSearch);
+	//Vector3D dir;
+	m_model.ChangeAnimation((int)AnimId::BackSearch,false);
 	// プレイヤーの向きを徐々に移動方向へ向ける
-	m_dir = CVector3D::Sleap(m_dir, dir + CVector3D(DtoR(180), 0, 0), ROTATE_SPEED * CFPS::GetDeltaTime());
-	// プレイヤーの向き反映
-	m_rot.y = atan2f(m_dir.x, m_dir.z);
+	//m_dir = CVector3D::Sleap(m_dir, -m_dir, (ROTATE_SPEED-14.9999f) * CFPS::GetDeltaTime());
+	//回転値から方向ベクトルを計算
+	//dir = CVector3D(CVector3D(sin(m_rot.y), 0, cos(m_rot.y)));
 	if (m_model.isAnimationEnd()) {
-		m_action = Action::Idle;
+		m_action = Action::Move;
 	}
 }
 
@@ -374,8 +383,16 @@ int Enemy::CollisionLine(const CVector3D& lineS, const CVector3D& lineE, const C
 }
 
 bool Enemy::IsFoundPlayer(){
-	//回転値から方向ベクトルを計算
-	CVector3D dir(CVector3D(sin(m_rot.y), 0, cos(m_rot.y)));
+	CVector3D dir;
+	if (m_state != State::Warning) {
+		//回転値から方向ベクトルを計算
+		//CVector3D dir(CVector3D(sin(m_rot.y), 0, cos(m_rot.y)));
+		dir = CVector3D(CVector3D(sin(m_rot.y), 0, cos(m_rot.y)));
+	}
+	else {
+		dir = CVector3D(CVector3D(sin(m_rot.y), 0, cos(m_rot.y)));
+		m_dir = dir;
+	}
 	// 角度(内積)と距離で視野範囲内か判定
 	CVector3D v1 = (mp_player->m_pos - m_pos);
 	float dot = CVector3D::Dot(dir, v1.GetNormalize());//vを正規化して内積
@@ -553,6 +570,9 @@ void Enemy::Update()
 		ActionChase();
 		//color = CVector4D(1.0f, 0.0f, 0.0f, 1.0f);
 		break;
+	case Action::Search:
+		ActionSearch();
+		break;
 		//プレイヤーを見失った
 	case Action::Lost:
 		ActionLost();
@@ -563,8 +583,10 @@ void Enemy::Update()
 	//アニメーション更新
 	m_model.UpdateAnimation();
 
-	// プレイヤーの向きを徐々に移動方向へ向ける
-	m_dir = CVector3D::Sleap(m_dir, m_moveDir, ROTATE_SPEED * CFPS::GetDeltaTime());
+	if (m_action != Action::Search) {
+		// プレイヤーの向きを徐々に移動方向へ向ける
+		m_dir = CVector3D::Sleap(m_dir, m_moveDir, ROTATE_SPEED * CFPS::GetDeltaTime());
+	}
 	// プレイヤーの向き反映
 	m_rot.y = atan2f(m_dir.x, m_dir.z);
 
@@ -674,13 +696,13 @@ void Enemy::Collision(Task* b)
 		if (CCollision::CollisionCapsule(m_lineS, m_lineE, m_rad,
 			b->m_lineS, b->m_lineE, b->m_rad,
 			&dist, &c1, &dir1, &c2, &dir2)) {
-			float s = (m_rad + b->m_rad) - dist;
+			/*float s = (m_rad + b->m_rad) - dist;
 			b->m_pos += dir1 * s * 0.5f;
 			b->m_lineS += dir1 * s * 0.5f;
 			b->m_lineE += dir1 * s * 0.5f;
 			m_pos += dir2 * s * 0.5f;
 			m_lineS += dir2 * s * 0.5f;
-			m_lineE += dir2 * s * 0.5f;
+			m_lineE += dir2 * s * 0.5f;*/
 
 		}
 	}

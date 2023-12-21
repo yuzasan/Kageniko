@@ -80,6 +80,7 @@ private:
 	{
 		Idle,			//待機
 		Move,			//移動
+		Search,			//警戒
 		Chase,			//追跡
 		Lost,			//プレイヤーを見失った
 		/*
