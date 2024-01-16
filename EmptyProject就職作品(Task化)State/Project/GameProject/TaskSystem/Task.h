@@ -6,6 +6,7 @@ enum class TaskType {
 	//3D
 	eCamera,		//メインカメラ
 	eField,			//フィールド
+	eFieldWatch,	//フィールド
 	eFellBox,		//デスゾーン
 	eBox,			//すり抜けボックス
 	eRotateBox,		//回転ボックス
@@ -13,6 +14,7 @@ enum class TaskType {
 	eHideBox,		//隠れボックス
 	eTyukanBox,		//中間ボックス
 	eNoiseBox,		//物音ボックス
+	eBreakBox,
 	eAppearPoint,	//移動点
 	ePlayer,		//プレイヤー
 	eEnemy,			//敵

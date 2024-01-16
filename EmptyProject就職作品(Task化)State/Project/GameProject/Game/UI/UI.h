@@ -18,3 +18,17 @@ public:
 	void LateUpdate();
 	void Draw() override;//オーバーライドを付けると元の名前が変わるとエラーが出る
 };
+
+class Timer : public Task {
+private:
+	CImage m_img;
+	CImage m_img2;
+public:
+	Timer();
+	~Timer();
+	int m_ang;
+	int m_ang2;
+	int m_time;
+	void Update() override;
+	void Draw() override;
+};

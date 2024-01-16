@@ -7,4 +7,6 @@ public:
 	static bool m_isrightflg;
 	static bool m_isforwardflg;
 	static bool m_isbackflg;
+	static bool m_isnoiseflg;
+	static bool m_islostflg;
 };

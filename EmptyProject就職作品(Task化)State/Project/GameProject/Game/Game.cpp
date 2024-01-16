@@ -16,10 +16,12 @@
 #include "Stage/FellBox.h"
 #include "Stage/Item.h"
 #include "Stage/Stage.h"
+#include "Stage/BreakBox.h"
 #include "Debug/DebugPrint.h"
 #include "../Title/Title.h"
 #include "TaskSystem/TaskManeger.h"
 #include "../Effect/Effect.h"
+#include "UI/UI.h"
 
 Game::Game():Task(TaskType::eScene){
 	/*Base::Add(new Player(CVector3D(0, 0, 8)));
@@ -28,23 +30,33 @@ Game::Game():Task(TaskType::eScene){
 	Base::Add(new PlayerCamera());
 	Base::Add(new FieldCamera());*/
 
-	new Player(CVector3D(0, 10, 20));
+	//new Player(CVector3D(0, 1.2f, 20));
+	new Player(CVector3D(0, 5.0f, 0));
+	//new Player(CVector3D(0, 10, 20));
 	//new Player(CVector3D(0, 1, 8));
 	//new EnemyManager();
-	new Enemy(CVector3D(0, 1, 0),110.0f);
-	new Enemy(CVector3D(0, 1, 0),100.0f);
-	new Enemy(CVector3D(0, 1, 0),75.0f);
-	new Enemy(CVector3D(0, 1, 0),50.0f);
+	new Enemy(CVector3D(3, 1, 20), 110.0f);
+	new Enemy(CVector3D(3, 1, -20), 100.0f);
+	new Enemy(CVector3D(20, 1, 3), 75.0f);
+	new Enemy(CVector3D(-20, 1, 3), 50.0f);
+	new Enemy(CVector3D(-20, 1, 20), 25.0f);
+	new Enemy(CVector3D(20, 1, -20), 5.0f);
+	new Enemy(CVector3D(-20, 1, 20), 5.0f);
+	new Enemy(CVector3D(20, 1, -20), 5.0f);
+	new Enemy(CVector3D(20, 1, 20), 5.0f);
+
+
 	new Stage();
 	new PlayerCamera();
 	new FieldCamera();
+	new Timer();
 	//new EventCamera();
 	//フィールドに配置する床を生成
 	float ratio = 1.0f;
 	float moveTime = 5.0f * ratio;//float moveTime = 5.0f * ratio;
 	float intervalTime = 1.0f * ratio;//float intervalTime = 1.0f * ratio;
 
-	new MoveBox
+	/*new MoveBox
 	(
 		CVector3D(-4.0f, 1.0f, 19.0f),
 		CVector3D(0.0f, 0.0f, 0.0f),
@@ -113,7 +125,7 @@ Game::Game():Task(TaskType::eScene){
 		CVector3D(-11.0f, 0.0f, 0.0f),
 		CVector3D(-9.0f, 0.0f, 0.0f),
 		moveTime, intervalTime, 1, 1, true
-	);
+	);*/
 
 	new RotateBox
 	(
@@ -190,11 +202,69 @@ Game::Game():Task(TaskType::eScene){
 		CVector3D(1.0f, 2.0f, 1.0f)		//size
 	);
 
+	//一つなら大丈夫
 	new NoiseBox
 	(
-		CVector3D(5.0f, 0.0f, 10.0f),	//pos
+		CVector3D(-7.0f, 0.0f, 1.0f),	//pos
 		CVector3D(0.0f, 0.0f, 0.0f),	//rot
 		CVector3D(1.0f, 2.0f, 1.0f)		//size
+	);
+
+	new BreakBox
+	(
+		CVector3D(-43.0f, 0.0f, 0.0f),	//pos
+		CVector3D(0.0f, 0.0f, 0.0f),	//rot
+		CVector3D(3.0f, 3.0f, 3.0f),	//size
+		4
+	);
+	new BreakBox
+	(
+		CVector3D(-43.0f, 0.0f, 43.0f),	//pos
+		CVector3D(0.0f, 0.0f, 0.0f),	//rot
+		CVector3D(3.0f, 3.0f, 3.0f),	//size
+		4
+	);
+	new BreakBox
+	(
+		CVector3D(0.0f, 0.0f, 43.0f),	//pos
+		CVector3D(0.0f, 0.0f, 0.0f),	//rot
+		CVector3D(3.0f, 3.0f, 3.0f),	//size
+		1
+	);
+	new BreakBox
+	(
+		CVector3D(43.0f, 0.0f, 43.0f),	//pos
+		CVector3D(0.0f, 0.0f, 0.0f),	//rot
+		CVector3D(3.0f, 3.0f, 3.0f),	//size
+		4
+	);
+	new BreakBox
+	(
+		CVector3D(43.0f, 0.0f, 0.0f),	//pos
+		CVector3D(0.0f, 0.0f, 0.0f),	//rot
+		CVector3D(3.0f, 3.0f, 3.0f),	//size
+		2
+	);
+	new BreakBox
+	(
+		CVector3D(43.0f, 0.0f, -43.0f),	//pos
+		CVector3D(0.0f, 0.0f, 0.0f),	//rot
+		CVector3D(3.0f, 3.0f, 3.0f),	//size
+		4
+	);
+	new BreakBox
+	(
+		CVector3D(0.0f, 0.0f, -43.0f),	//pos
+		CVector3D(0.0f, 0.0f, 0.0f),	//rot
+		CVector3D(3.0f, 3.0f, 3.0f),	//size
+		3
+	);
+	new BreakBox
+	(
+		CVector3D(-43.0f, 0.0f, -43.0f),	//pos
+		CVector3D(0.0f, 0.0f, 0.0f),	//rot
+		CVector3D(3.0f, 3.0f, 3.0f),	//size
+		4
 	);
 
 	//new Effect2D("Nekonote");
@@ -225,7 +295,7 @@ void Game::Update()
 		Utility::DrawLine(CVector3D(-5, 0, i * 1.0f), CVector3D(5, 0, i * 1.0f), CVector4D(0.2, 0.2, 0.2, 1));
 		Utility::DrawLine(CVector3D(i * 1.0f, 0, -5), CVector3D(i * 1.0f, 0, 5), CVector4D(0.2, 0.2, 0.2, 1));
 	}
-	if (GameData::m_item >= 1) {
+	if (GameData::m_item >= 5) {
 		//SetKill();
 		Kill();
 	}

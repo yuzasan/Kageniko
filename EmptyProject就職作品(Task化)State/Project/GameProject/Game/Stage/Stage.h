@@ -2,6 +2,7 @@
 //#include "../Base/Base.h"
 #include "../../TaskSystem/Task.h"
 #include "../../TaskSystem/TaskManeger.h"
+class StageWatch;
 
 class Stage : public Task {
 private:
@@ -13,6 +14,8 @@ private:
 	//ステージモデル
 	//CModelObj m_model;
 	CModel* m_model;
+	CModel* m_Navmodel;
+	StageWatch* m_Watchmodel;
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -48,4 +51,5 @@ public:
 		return &m_model;
 	}*/
 	CModel* GetModel();
+	CModel* GetColNavModel() const;
 };

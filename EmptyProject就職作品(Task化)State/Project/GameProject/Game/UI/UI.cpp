@@ -71,3 +71,45 @@ void Fade::Draw(){
 	CVector4D color = CVector4D(0.0f, 0.0f, 0.0f, m_alpha);
 	Utility::DrawQuad(CVector2D(0, 0), CVector2D(SCREEN_WIDTH, SCREEN_HEIGHT), color);
 }
+
+Timer::Timer() : Task(TaskType::eUI)
+	,m_ang(0)
+	,m_ang2(0)
+	,m_time(0)
+{
+	m_img = COPY_RESOURCE("Needle", CImage);
+	m_img2 = COPY_RESOURCE("Needlethin", CImage);
+}
+
+Timer::~Timer()
+{
+
+}
+
+void Timer::Update() {
+	m_time++;
+	if (m_time % 60 == 0) {
+		if (abs(m_ang) % 360 == 0) {
+			m_ang = 0;
+			if (abs(m_ang2) % 360 == 0) {
+				m_ang2 = 0;
+			}
+			if (m_time != 60) {
+				m_ang2 -= 1;
+			}
+		}
+		m_ang -= 6;
+	}
+}
+
+void Timer::Draw() {
+	m_img.SetAng(DtoR(m_ang2));
+	m_img.SetPos(SCREEN_WIDTH - 100, 100);
+	m_img.SetCenter(32, 64);
+	m_img2.SetAng(DtoR(m_ang));
+	m_img2.SetPos(SCREEN_WIDTH - 100, 100);
+	m_img2.SetCenter(32, 64);
+	Utility::DrawCircle(CVector2D(SCREEN_WIDTH - 100, 100), 80, CVector4D(0.5, 0.0, 1.0, 0.5f));
+	m_img.Draw();
+	m_img2.Draw();
+}

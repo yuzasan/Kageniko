@@ -95,6 +95,12 @@
     <ClInclude Include="Title\Choose.h">
       <Filter>Title</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Stage\BreakBox.h">
+      <Filter>Game\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Stage\StageWatch.h">
+      <Filter>Game\Stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -190,6 +196,12 @@
     </ClCompile>
     <ClCompile Include="Title\Choose.cpp">
       <Filter>Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Stage\BreakBox.cpp">
+      <Filter>Game\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Stage\StageWatch.cpp">
+      <Filter>Game\Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

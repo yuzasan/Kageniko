@@ -25,9 +25,12 @@
 //#define G 0.8f
 //最大重力
 //#define MAX_G 0.001f
+
+#define DBUG_SPEED 5.0f
+
 //移動先
-#define MOVE_RANGE_MIN -6.0f//-13.0f
-#define MOVE_RANGE_MAX 6.0f//13.0f
+#define MOVE_RANGE_MIN -48.0f//-6.0f//-13.0f
+#define MOVE_RANGE_MAX 48.0f//6.0f//13.0f
 
 Enemy::Enemy(const CVector3D& pos, float emotion):CharaBase(TaskType::eEnemy)
 	,mp_player(nullptr)
@@ -60,8 +63,8 @@ Enemy::Enemy(const CVector3D& pos, float emotion):CharaBase(TaskType::eEnemy)
 
 	//m_rad = 0.8f / 2.0f;
 	//m_rad = 0.8f;
-	//m_rad = 0.3f;
-	m_rad = 0.2f;
+	m_rad = 0.3f;
+	//m_rad = 0.2f;
 	m_isFind = false;
 	m_isFindplayer = false;
 
@@ -192,7 +195,18 @@ void Enemy::ActionMove()
 		if (m_moveNode != nullptr) {
 			//現在位置から目的地のモードまでの経路探索を行う
 			NavManeger* navMgr = NavManeger::Instance();
-			m_nextNode = navMgr->Navigate(m_navNode, m_moveNode);
+			if (mp_noise->m_isNoise && mp_noise->m_isNoisemove) {
+				NavNode* noiseNode = mp_noise->GetNavNode();
+				if (!mp_noise->m_isKill) {
+					m_nextNode = navMgr->Navigate(m_navNode, noiseNode);
+				}
+				else {
+					m_nextNode = navMgr->Navigate(m_navNode, m_moveNode);
+				}
+			}
+			else {
+				m_nextNode = navMgr->Navigate(m_navNode, m_moveNode);
+			}
 
 			//次に移動すべきノードが存在すれば、
 			if (m_nextNode != nullptr) {
@@ -338,12 +352,17 @@ void Enemy::ActionLost() {
 		//見失った場合は、視野範囲を無視して、
 		//プレイヤーまでの視線が通るかどうかで判定する
 		if (IsLookPlayer()) {
-			//追跡状態へ移行
-			m_action = Action::Chase;
-			m_isFind = false;
+			if (!mp_player->m_isHide && !GameData::m_islostflg) {
+				//CVector3D pos = mp_player->m_pos - m_pos;
+				//if (IsLookPlayer() && pos.Length() < 30.0f || !mp_player->m_isHide && !GameData::m_islostflg) {
+					//追跡状態へ移行
+				m_action = Action::Chase;
+				m_isFind = false;
+			}
 		}
 		//プレイヤーが視線の通らないところにいる
 		else {
+			GameData::m_islostflg = true;
 			//目的地まで移動
 			if (MoveTo(m_nextNode->GetPos())) {
 				if (m_nextNode != m_lostNode) {
@@ -361,7 +380,8 @@ void Enemy::ActionLost() {
 	//目的地まで移動が終われば、
 	else {
 		//new Effect("Fukidasi",CVector3D(0, 2.5, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, false, 60);
-		new Effect("Fukidasi", m_pos + CVector3D(0, 2.5, -1), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, false, 60);
+		//new Effect("Fukidasi", m_pos + CVector3D(0, 2.5, -1), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, false, 60);
+		new Effect("Kinosei", m_pos + CVector3D(0, 2.5, -1), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, false, 60);
 		//待機状態へ移行
 		m_action = Action::Idle;
 	}
@@ -437,7 +457,8 @@ bool Enemy::IsLookPlayer() const {
 //指定座標への移動処理
 bool Enemy::MoveTo(const CVector3D& target) {
 
-	float moveSpeed = WALK_SPEED * (m_emotion/100);
+	float moveSpeed = DBUG_SPEED * (m_emotion/100);
+	//float moveSpeed = WALK_SPEED * (m_emotion/100);
 
 	CVector3D vec = target - m_pos;
 	vec.y = 0.0f;
@@ -514,7 +535,7 @@ void Enemy::Update()
 	// 視野範囲のカラー(初期色は緑)
 	color = CVector4D(0.0f, 1.0f, 0.0f, 0.75f);
 
-	if (m_emotion <= 0) {
+	if (m_emotion <= 5) {
 		m_state = State::Sleep;
 	}
 	else if (m_emotion <= 25) {
@@ -641,6 +662,30 @@ void Enemy::Render()
 	if (m_isTouch) {//m_isFind && !IsFoundPlayer()
 		//Utility::DrawCapsule(m_lineS, m_lineE, m_rad, CVector4D(1, 0, 1, 1));
 		//Utility::DrawCube(m_pos + CVector3D(0, 2, 0), CVector3D(1, 0, 1), CVector4D(1, 0, 1, 1));
+
+		switch (m_state)
+		{
+		case Enemy::State::Normal:
+			Utility::DrawSphere(m_pos + CVector3D(0, 2.0f, 0), 0.1f, CVector4D(0, 1, 0, 1));
+			break;
+		case Enemy::State::Happy:
+			Utility::DrawSphere(m_pos + CVector3D(0, 2.0f, 0), 0.1f, CVector4D(1, 0, 0.5, 1));
+			break;
+		case Enemy::State::Warning:
+			Utility::DrawSphere(m_pos + CVector3D(0, 2.0f, 0), 0.1f, CVector4D(1, 1, 0, 1));
+			break;
+		case Enemy::State::Cross:
+			Utility::DrawSphere(m_pos + CVector3D(0, 2.0f, 0), 0.1f, CVector4D(1, 0, 0, 1));
+			break;
+		case Enemy::State::Sad:
+			Utility::DrawSphere(m_pos + CVector3D(0, 2.0f, 0), 0.1f, CVector4D(0, 0, 1, 1));
+			break;
+		case Enemy::State::Sleep:
+			Utility::DrawSphere(m_pos + CVector3D(0, 2.0f, 0), 0.1f, CVector4D(1, 1, 1, 1));
+			break;
+		default:
+			break;
+		}
 		m_modelobj.SetPos(m_pos + CVector3D(0, 2, 0));
 		m_modelobj.SetRot(CVector3D(0, 1, 0));
 		m_modelobj.Render();
@@ -648,7 +693,7 @@ void Enemy::Render()
 	else {
 		//敵カプセルの表示
 		//Utility::DrawCapsule(m_lineS, m_lineE, m_rad, CVector4D(0, 0, 1, 1));
-		Utility::DrawCube(m_pos + CVector3D(0, 2, 0), CVector3D(1, 0, 1), CVector4D(0, 0, 1, 1));
+		//Utility::DrawCube(m_pos + CVector3D(0, 2, 0), CVector3D(1, 0, 1), CVector4D(0, 0, 1, 1));
 	}
 	
 }

@@ -27,6 +27,8 @@
 
 #define UP_SPEED 10.0f
 
+#define DBUG_SPEED 7.0f//10.0f
+
 Player::Player(const CVector3D& pos) :CharaBase(TaskType::ePlayer)
 	,mp_camera(nullptr)
 	,m_moveDir(0.0f,0.0f,0.0f)
@@ -104,7 +106,8 @@ void Player::StateMove() {
 			m_vec = CVector3D(moveVec.x, m_vec.y, moveVec.z);
 		}
 		else {
-			float moveSpeed = WALK_SPEED;
+			float moveSpeed = DBUG_SPEED;
+			//float moveSpeed = WALK_SPEED;
 			//移動方向と移動速度から移動ベクトルを求める
 			CVector3D moveVec = m_moveDir * moveSpeed;
 			m_vec = CVector3D(moveVec.x, m_vec.y, moveVec.z);
@@ -320,13 +323,13 @@ void Player::Render() {
 	m_model.SetScale(0.003f, 0.003f, 0.003f);
 	m_model.Render();
 	//プレイヤーカプセルの表示
-	Utility::DrawCapsule(m_lineS, m_lineE, m_rad, CVector4D(1, 0, 0, 1));
+	//Utility::DrawCapsule(m_lineS, m_lineE, m_rad, CVector4D(1, 0, 0, 1));
 	//回転値から方向ベクトルを計算
 	CVector3D dir(CVector3D(sin(m_rot.y), 0, cos(m_rot.y)));
 	//扇の見た目
 	CMatrix m;
 	m.LookAt(m_pos + CVector3D(0, 0.5f, 0), m_pos + CVector3D(0, 0.1f, 0) + dir * m_viewLength, CVector3D(0, 1, 0));
-	Utility::DrawSector(m, -DtoR(m_viewAngle), DtoR(m_viewAngle), m_viewLength, color);
+	//Utility::DrawSector(m, -DtoR(m_viewAngle), DtoR(m_viewAngle), m_viewLength, color);
 
 	/*CLight::SetType(1, CLight::eLight_Spot);
 	CLight::SetPos(1, m_pos + CVector3D(0, 2, 0));
@@ -358,7 +361,7 @@ void Player::NoEnemyRender()
 	//扇の見た目
 	CMatrix m;
 	m.LookAt(m_pos + CVector3D(0, 0.5f, 0), m_pos + CVector3D(0, 0.1f, 0) + dir * m_viewLength, CVector3D(0, 1, 0));
-	Utility::DrawSector(m, -DtoR(m_viewAngle), DtoR(m_viewAngle), m_viewLength, color);
+	//Utility::DrawSector(m, -DtoR(m_viewAngle), DtoR(m_viewAngle), m_viewLength, color);
 }
 
 bool Player::IsFoundEnemy(Enemy* e) const
@@ -450,6 +453,7 @@ void Player::Collision(Task* b) {
 			float max_y = max(t.m_vertex[0].y, max(t.m_vertex[1].y, t.m_vertex[2].y));
 			//接触した面の方向へ、めり込んだ分押し戻す
 			CVector3D nv = t.m_normal * (m_rad - t.m_dist);
+			
 			//最も大きな移動量を求める
 			v.y = fabs(v.y) > fabs(nv.y) ? v.y : nv.y;
 			v.x = fabs(v.x) > fabs(nv.x) ? v.x : nv.x;

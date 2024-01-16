@@ -6,6 +6,7 @@ EnemyManager* EnemyManager::ms_instance = nullptr;
 //敵の探索位置ノードのリスト
 std::list<SearchNode> EnemyManager::ms_searchNodes =
 {
+	/*
 	SearchNode(CVector3D(-13.5f,0.0f,-13.5f)),
 	SearchNode(CVector3D(-13.5f,0.0f, 1.5f)),
 	SearchNode(CVector3D(-10.5f,0.0f, 9.0f)),
@@ -19,6 +20,19 @@ std::list<SearchNode> EnemyManager::ms_searchNodes =
 	SearchNode(CVector3D( 11.0f,0.0f,-13.5f)),
 	SearchNode(CVector3D( 13.0f,0.0f,-13.5f)),
 	SearchNode(CVector3D( 13.0f,0.0f, 13.0f)),
+	*/
+	SearchNode(CVector3D(-48.0f,0.0f, 48.0f)),
+	SearchNode(CVector3D(0.0f,0.0f, 48.0f)),
+	SearchNode(CVector3D(-48.0f,0.0f,-48.0f)),
+	SearchNode(CVector3D(0.0f,0.0f,-48.0f)),
+	SearchNode(CVector3D(48.0f,0.0f,-48.0f)),
+	SearchNode(CVector3D(48.0f,0.0f, 0.0f)),
+	SearchNode(CVector3D(48.0f,0.0f, 48.0f)),
+	SearchNode(CVector3D(-48.0f,0.0f, 0.0f)),
+	SearchNode(CVector3D(-13.0f,0.0f, 13.0f)),
+	SearchNode(CVector3D(-13.0f,0.0f,-13.0f)),
+	SearchNode(CVector3D(13.0f,0.0f,-13.0f)),
+	SearchNode(CVector3D(13.0f,0.0f, 13.0f)),
 };
 
 //コンストラクタ

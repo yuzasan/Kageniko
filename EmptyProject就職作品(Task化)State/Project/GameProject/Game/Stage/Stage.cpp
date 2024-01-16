@@ -1,4 +1,5 @@
 #include "Stage.h"
+#include "StageWatch.h"
 #include "../../Navigation/NavNode.h"
 #include "../../Navigation/NavManeger.h"
 
@@ -7,6 +8,7 @@ Stage* Stage::ms_instance = nullptr;
 //経路探索用ノードのテーブル
 std::list<CVector3D> Stage::ms_nodes =
 {
+	/*
 	CVector3D(-13.5f,0.0f,-13.5f),		//行き止まり
 	CVector3D(-13.5f,0.0f,-9.0f),
 	CVector3D(-13.5f,0.0f,-5.5f),
@@ -65,6 +67,20 @@ std::list<CVector3D> Stage::ms_nodes =
 	CVector3D(13.0f,0.0f, 5.5f),
 	CVector3D(13.0f,0.0f, 9.0f),
 	CVector3D(13.0f,0.0f, 13.0f),		//行き止まり
+	*/
+
+	CVector3D(-48.0f,0.0f, 48.0f),
+	CVector3D( 0.0f,0.0f, 48.0f),
+	CVector3D(-48.0f,0.0f,-48.0f),
+	CVector3D( 0.0f,0.0f,-48.0f),
+	CVector3D( 48.0f,0.0f,-48.0f),
+	CVector3D( 48.0f,0.0f, 0.0f),
+	CVector3D( 48.0f,0.0f, 48.0f),
+	CVector3D(-48.0f,0.0f, 0.0f),
+	CVector3D(-13.0f,0.0f, 13.0f),
+	CVector3D(-13.0f,0.0f,-13.0f),
+	CVector3D( 13.0f,0.0f,-13.0f),
+	CVector3D( 13.0f,0.0f, 13.0f),
 	
 };
 
@@ -75,7 +91,11 @@ Stage::Stage()
 	ms_instance = this;
 
 	//m_model = COPY_RESOURCE("Stage", CModelObj);
-	m_model = GET_RESOURCE("Stage", CModel);
+	m_model = GET_RESOURCE("Stagecol", CModel);
+	m_Navmodel = GET_RESOURCE("Stagecol", CModel);
+	
+	m_Watchmodel = new StageWatch();
+	TaskManeger::Instance()->Add(m_Watchmodel);
 
 	//経路探索用のノードを作成
 	CreateNavNodes();
@@ -120,6 +140,17 @@ void Stage::CreateNavNodes()
 
 }
 
+CModel* Stage::GetColNavModel() const
+{
+	return m_Navmodel;
+}
+
+CModel* Stage::GetModel()
+{
+	return m_model;
+}
+
+
 //指定したレイとStageのコリジョンとのヒット判定
 bool Stage::CollisionRay(const CVector3D& start, const CVector3D& end, CVector3D* outHitPos, CVector3D* outHitNormal)
 {
@@ -156,9 +187,4 @@ void Stage::NoEnemyRender()
 	m_model.Render();*/
 	m_model->SetScale(1, 1, 1);
 	m_model->Render();
-}
-
-CModel* Stage::GetModel()
-{
-	return m_model;
 }

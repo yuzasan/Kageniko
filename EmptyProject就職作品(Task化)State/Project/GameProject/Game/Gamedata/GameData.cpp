@@ -6,3 +6,5 @@ bool GameData::m_isleftflg = false;
 bool GameData::m_isrightflg = false;
 bool GameData::m_isforwardflg = false;
 bool GameData::m_isbackflg = false;
+bool GameData::m_isnoiseflg = false;
+bool GameData::m_islostflg = false;

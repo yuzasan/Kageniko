@@ -26,7 +26,8 @@ void PlayerCamera::Render() {
 	if (FieldCamera::rendring)return;
 	if (CShadow::GetInstance()->GetState() == CShadow::eShadow)return;
 	//注視点までの距離
-	static float cam_dist = 3.0f;
+	//static float cam_dist = 3.0f;
+	static float cam_dist = 1.5f;
 	//回転速度係数
 	float cam_speed = 0.002f;
 	//マウスの移動量
@@ -40,10 +41,12 @@ void PlayerCamera::Render() {
 	m_rot.y = Utility::NormalizeAngle(m_rot.y);
 
 	//距離制限
-	cam_dist = min(10.0f, max(2.0f, cam_dist - CInput::GetMouseWheel()));
+	//cam_dist = min(10.0f, max(2.0f, cam_dist - CInput::GetMouseWheel()));
 	//位置と注視点を設定
 	//cam_at = mp_player->m_pos + CVector3D(0, 1.5, 0);
-	cam_at = mp_player->m_pos + CVector3D(0, 0.75f, 0);
+	//cam_at = mp_player->m_pos + CVector3D(0, 0.75f, 0);
+	cam_at = mp_player->m_pos + CVector3D(0, 0.65f, 0);
+	//cam_pos = cam_at + CMatrix::MRotation(m_rot).GetFront() * -cam_dist;
 	cam_pos = cam_at + CMatrix::MRotation(m_rot).GetFront() * -cam_dist;
 
 	CCamera::GetCurrent()->LookAt(cam_pos, cam_at, CVector3D(0, 1, 0));

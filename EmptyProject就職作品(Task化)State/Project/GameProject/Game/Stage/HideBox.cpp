@@ -1,4 +1,5 @@
 #include "HideBox.h"
+#include "Game/Gamedata/GameData.h"
 
 HideBox::HideBox(const CVector3D& pos, const CVector3D& rot, const CVector3D& size)
 	: Task(TaskType::eHideBox)
@@ -27,12 +28,12 @@ void HideBox::Update()
 void HideBox::Render()
 {
 	if (CShadow::GetInstance()->GetState() == CShadow::eShadow)return;
-	Utility::DrawOBB(m_obb, CVector4D(1, 1, 1, 1));
+	Utility::DrawOBB(m_obb, CVector4D(1, 1, 1, 0.5));
 }
 
 void HideBox::NoEnemyRender()
 {
-	Utility::DrawOBB(m_obb, CVector4D(1, 1, 1, 1));
+	Utility::DrawOBB(m_obb, CVector4D(1, 1, 1, 0.5));
 }
 
 void HideBox::Collision(Task* b) {

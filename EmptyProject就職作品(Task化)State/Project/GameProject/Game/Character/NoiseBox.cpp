@@ -1,6 +1,7 @@
 #include "NoiseBox.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Game/Gamedata/GameData.h"
 #include "../../Navigation/NavNode.h"
 #include "../../Navigation/NavManeger.h"
 
@@ -20,7 +21,7 @@ NoiseBox::NoiseBox(const CVector3D& pos, const CVector3D& rot, const CVector3D& 
 		m_boxSize
 	);
 
-	//プレイヤー位置に経路探索用のノードを作成
+	//ボックス位置に経路探索用のノードを作成
 	m_navNode = new NavNode
 	(
 		m_pos + CVector3D(0.0f, 1.0f, 0.0f),
@@ -82,6 +83,7 @@ void NoiseBox::Collision(Task* b) {
 		float dist;
 		CVector3D axis;
 		if (CCollision::CollisionOBBCapsule(m_obb, mp_player->m_lineS, mp_player->m_lineE, mp_player->m_rad, &axis, &dist)) {
+			GameData::m_isnoiseflg = true;
 			m_isNoise = true;
 		}
 	}

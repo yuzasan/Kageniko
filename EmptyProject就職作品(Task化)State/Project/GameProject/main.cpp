@@ -36,20 +36,34 @@ void Load() {
 	//ADD_RESOURCE("Golem", CModel::CreateModel("Character/golem/golem.a3m"));
 	ADD_RESOURCE("Samurai", CModel::CreateModel("Character/Samurai/samurai3.a3m"));
 	//ステージの読み込み
+	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Castle/hako.obj", 20, 10, 20));
+	//ステージの読み込み
+	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Castle/Collision.obj", 20, 10, 20));
+	ADD_RESOURCE("Stage", CModel::CreateModel("Field/Castle/tamesi.obj", 20, 10, 20));
+	ADD_RESOURCE("Stagecol", CModel::CreateModel("Field/Castle/tamesicol.obj", 20, 10, 20));
+	//ステージの読み込み
+	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Castle/kari.obj", 20, 10, 20));
+	//ステージの読み込み
 	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Castle/castletest3tougou.obj", 20, 10, 20));
 	//ステージの読み込み
-	ADD_RESOURCE("Stage", CModel::CreateModel("Field/Test/TestField11.obj", 20, 10, 20));
+	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Test/TestField11.obj", 20, 10, 20));
 	//ステージの読み込み
-	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Test/test.obj", 20, 10, 20));
+	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Test/test.obj", 20, 10, 20));	ない
 	//Sleep(1000 * 5);
 	//吹き出し「なんだ猫か」
 	ADD_RESOURCE("Fukidasi", CModel::CreateModel("Effect/Fukidasi/Fukidasi.obj"));
 	//吹き出し「にゃ～」
 	ADD_RESOURCE("Nya", CModel::CreateModel("Effect/Fukidasi/nya.obj"));
+	//吹き出し「気のせいか」
+	ADD_RESOURCE("Kinosei", CModel::CreateModel("Effect/Fukidasi/kinoseika.obj"));
 	//猫の手画像
 	ADD_RESOURCE("Nekonote", CImage::CreateImage("Effect/Cathand/blackcatbackhand45.png"));
 	//猫の手の平画像
 	ADD_RESOURCE("Tenohira", CModel::CreateModel("Effect/Cathand/Tenohira.obj"));
+
+	//時計針画像
+	ADD_RESOURCE("Needlethin", CImage::CreateImage("UI/Needlethin.png"));
+	ADD_RESOURCE("Needle", CImage::CreateImage("UI/Needle.png"));
 
 	//タイトル読み込み
 	ADD_RESOURCE("Title", CImage::CreateImage("Title/Title.png"));
@@ -205,7 +219,6 @@ void Init(void)
 	CLight::SetDir(0, CVector3D(-1, -2, 1).GetNormalize());
 	//CLight::SetColor(0, CVector3D(0.1f, 0.1f, 0.1f), CVector3D(0.6f, 0.6f, 0.6f));
 	CLight::SetColor(0, CVector3D(0.2f, 0.2f, 0.2f), CVector3D(0.8f, 0.8f, 0.8f));
-
 	//霧のようになる(フォグ)				,手前5,奥20
 	CLight::SetFogParam(CVector4D(1, 1, 1, 1), 700, 800);
 
