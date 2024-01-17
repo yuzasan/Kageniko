@@ -10,6 +10,19 @@ public:
 	void Update();
 };
 
+class Clear :public Task {
+	//‰æ‘œ
+	CImage m_img;
+	//•¶Žš
+	CFont m_title_text;
+public:
+	Clear();
+	~Clear();
+	void Update();
+	void Draw();
+};
+
+/*
 //ˆÃ“]
 class BlackOut : public Task {
 public:
@@ -20,3 +33,4 @@ public:
 	~BlackOut();
 	void LateUpdate();
 };
+*/

@@ -16,6 +16,8 @@ private:
 	CModel* m_model;
 	CModel* m_Navmodel;
 	StageWatch* m_Watchmodel;
+	//スカイボックスモデル
+	CModelObj skybox;
 public:
 	/// <summary>
 	/// コンストラクタ

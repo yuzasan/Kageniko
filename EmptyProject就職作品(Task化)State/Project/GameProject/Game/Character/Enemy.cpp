@@ -260,7 +260,7 @@ void Enemy::ActionSearch() {
 
 void Enemy::ActionChase()
 {
-	GameData::m_islostflg = false;
+	//GameData::m_islostflg = false;
 	/*if (m_emotion <= 0.5f) {
 		m_state = State::Move;
 		return;
@@ -529,7 +529,8 @@ void Enemy::Shot(){
 	if (Stage* s = dynamic_cast<Stage*>(TaskManeger::FindObject(TaskType::eField))) {
 		//接触面の法線は(使わない)
 		CVector3D n;
-		if (s->GetModel()->CollisionRay(&hit_field_point, &n, lineS, lineE)) {
+		//if (s->GetModel()->CollisionRay(&hit_field_point, &n, lineS, lineE)) {
+		if (s->GetColNavModel()->CollisionRay(&hit_field_point, &n, lineS, lineE)) {
 			//発射位置から接触面への距離
 			dist = (hit_field_point - lineS).LengthSq();
 			//接触したステージを更新

@@ -80,14 +80,16 @@ std::list<CVector3D> Stage::ms_nodes =
 	CVector3D(-13.0f,0.0f, 13.0f),
 	CVector3D(-13.0f,0.0f,-13.0f),
 	CVector3D( 13.0f,0.0f,-13.0f),*/
-	CVector3D(-3.0f,9.0f, 25.0f),
-	CVector3D(15.0f,0.0f, 25.0f),
-	CVector3D(4.0f,4.5f, 25.0f),
-	CVector3D(4.5f,3.5f, 25.0f),
-	//CVector3D(4.5f,3.0f, 25.0f),
-	CVector3D(5.0f,2.0f, 25.0f),
-	CVector3D(0.0f,7.0f, 25.0f),
 	
+	CVector3D(-8,6,11),
+	CVector3D(-8,6,25),
+	CVector3D(-8,6,50),
+	CVector3D(-34,6,50),
+	CVector3D(-34,6,-2),
+	CVector3D(-13,6,-2),
+	CVector3D(-58,6,48),
+	CVector3D(-58,6,24),
+	CVector3D(-58,6,-2),
 	
 };
 
@@ -101,6 +103,15 @@ Stage::Stage()
 	m_model = GET_RESOURCE("Stagecol", CModel);
 	m_Navmodel = GET_RESOURCE("Stagecol", CModel);
 	
+	skybox = COPY_RESOURCE("Sky", CModelObj);
+	for (int i = 0; i < skybox.GetMaterialSize(); i++) {
+		if (CTexture* t = skybox.GetMaterial(i)->mp_texture) {
+			//テクスチャ―の貼り方変更
+			t->SetWrapST(GL_CLAMP_TO_EDGE);
+			t->SetFilter(GL_LINEAR);
+		}
+	}
+
 	m_Watchmodel = new StageWatch();
 
 	//経路探索用のノードを作成
@@ -180,6 +191,36 @@ void Stage::Update()
 
 void Stage::Render()
 {
+	//■スカイボックス
+	//背景として描画するので、一番最初に描画する
+
+	//深度テストOFF
+	//ここでの描画は深度バッファへ影響しない
+	glDisable(GL_DEPTH_TEST);
+	//ライティング無効
+	CLight::SetLighting(false);
+	//現在使用中のカメラを取得
+	CCamera* back = CCamera::GetCurrent();
+	//スカイボックス用カメラを取得
+	CCamera c = *back;
+	//ビュー行列を取得
+	CMatrix matrix = c.GetViewMatrix();
+	//ビュー行列の座標を無効
+	matrix.m03 = 0; matrix.m13 = 0; matrix.m23 = 0;
+	//スカイボックス用のビュー行列に設定
+	c.SetViewMatrix(matrix);
+	//使用するカメラをスカイボックス用に設定
+	CCamera::SetCurrent(&c);
+
+	//スカイボックス描画
+	skybox.Render();
+	//設定を元の設定に戻す
+	//カメラを元のカメラに戻す
+	CCamera::SetCurrent(back);
+	//ライティング有効
+	CLight::SetLighting(true);
+	//深度テストON
+	glEnable(GL_DEPTH_TEST);
 	if (CShadow::GetInstance()->GetState() == CShadow::eShadow)return;
 	/*m_model.SetScale(1, 1, 1);
 	m_model.Render();*/
@@ -189,6 +230,36 @@ void Stage::Render()
 
 void Stage::NoEnemyRender()
 {
+	//■スカイボックス
+	//背景として描画するので、一番最初に描画する
+
+	//深度テストOFF
+	//ここでの描画は深度バッファへ影響しない
+	glDisable(GL_DEPTH_TEST);
+	//ライティング無効
+	CLight::SetLighting(false);
+	//現在使用中のカメラを取得
+	CCamera* back = CCamera::GetCurrent();
+	//スカイボックス用カメラを取得
+	CCamera c = *back;
+	//ビュー行列を取得
+	CMatrix matrix = c.GetViewMatrix();
+	//ビュー行列の座標を無効
+	matrix.m03 = 0; matrix.m13 = 0; matrix.m23 = 0;
+	//スカイボックス用のビュー行列に設定
+	c.SetViewMatrix(matrix);
+	//使用するカメラをスカイボックス用に設定
+	CCamera::SetCurrent(&c);
+
+	//スカイボックス描画
+	skybox.Render();
+	//設定を元の設定に戻す
+	//カメラを元のカメラに戻す
+	CCamera::SetCurrent(back);
+	//ライティング有効
+	CLight::SetLighting(true);
+	//深度テストON
+	glEnable(GL_DEPTH_TEST);
 	if (CShadow::GetInstance()->GetState() == CShadow::eShadow)return;
 	/*m_model.SetScale(1, 1, 1);
 	m_model.Render();*/

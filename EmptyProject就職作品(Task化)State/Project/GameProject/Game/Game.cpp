@@ -31,11 +31,13 @@ Game::Game():Task(TaskType::eScene){
 	Base::Add(new FieldCamera());*/
 
 	//new Player(CVector3D(0, 1.2f, 20));
-	new Player(CVector3D(0, 5.0f, 0));
+	//new Player(CVector3D(0, 5.0f, 0));
+	new Player(CVector3D(15, 5.0f, 25));
 	//new Player(CVector3D(78, 5.0f, 0));
 	//new EnemyManager();
 	//new Enemy(CVector3D(9.0f, 5.0f, 25.0f), 75.0f);
-	new Enemy(CVector3D(9.0f, 5.0f, 25.0f), 75.0f);
+	//new Enemy(CVector3D(9.0f, 5.0f, 25.0f), 75.0f);
+	new Enemy(CVector3D(-8.0f, 6.0f, 25.0f), 75.0f);
 	/*new Enemy(CVector3D(3, 5, 20), 110.0f);
 	new Enemy(CVector3D(3, 5, -20), 100.0f);
 	new Enemy(CVector3D(20, 5, 3), 75.0f);
@@ -128,7 +130,7 @@ Game::Game():Task(TaskType::eScene){
 		moveTime, intervalTime, 1, 1, true
 	);*/
 
-	new RotateBox
+	/*new RotateBox
 	(
 		CVector3D(5.0f, 10.0f, -10.0f),
 		CVector3D(0.0f, 0.0f, 0.0f),
@@ -180,7 +182,7 @@ Game::Game():Task(TaskType::eScene){
 		CVector3D(10.0f, 1.0f, 0.0f),
 		CVector3D(0.0f, 0.0f, 0.0f),
 		CVector3D(1.0f, 2.0f, 1.0f)
-	);
+	);*/
 
 	//new FellBox
 	//(
@@ -196,12 +198,12 @@ Game::Game():Task(TaskType::eScene){
 		CVector3D(130.0f, 2.0f, 130.0f)		//size
 	);
 
-	new FellBox
-	(
-		CVector3D(0.0f, 0.0f, 10.0f),	//pos
-		CVector3D(0.0f, 0.0f, 0.0f),	//rot
-		CVector3D(1.0f, 2.0f, 1.0f)		//size
-	);
+	//new FellBox
+	//(
+	//	CVector3D(0.0f, 0.0f, 10.0f),	//pos
+	//	CVector3D(0.0f, 0.0f, 0.0f),	//rot
+	//	CVector3D(1.0f, 2.0f, 1.0f)		//size
+	//);
 
 	//一つなら大丈夫
 	//new NoiseBox
@@ -211,61 +213,83 @@ Game::Game():Task(TaskType::eScene){
 	//	CVector3D(1.0f, 2.0f, 1.0f)		//size
 	//);
 
+	//new BreakBox
+	//(
+	//	CVector3D(-43.0f, 0.0f, 0.0f),	//pos
+	//	CVector3D(0.0f, 0.0f, 0.0f),	//rot
+	//	CVector3D(3.0f, 3.0f, 3.0f),	//size
+	//	4
+	//);
+	//new BreakBox
+	//(
+	//	CVector3D(-43.0f, 0.0f, 43.0f),	//pos
+	//	CVector3D(0.0f, 0.0f, 0.0f),	//rot
+	//	CVector3D(3.0f, 3.0f, 3.0f),	//size
+	//	4
+	//);
+	//new BreakBox
+	//(
+	//	CVector3D(0.0f, 0.0f, 43.0f),	//pos
+	//	CVector3D(0.0f, 0.0f, 0.0f),	//rot
+	//	CVector3D(3.0f, 3.0f, 3.0f),	//size
+	//	1
+	//);
+	//new BreakBox
+	//(
+	//	CVector3D(43.0f, 0.0f, 43.0f),	//pos
+	//	CVector3D(0.0f, 0.0f, 0.0f),	//rot
+	//	CVector3D(3.0f, 3.0f, 3.0f),	//size
+	//	4
+	//);
+	//new BreakBox
+	//(
+	//	CVector3D(43.0f, 0.0f, 0.0f),	//pos
+	//	CVector3D(0.0f, 0.0f, 0.0f),	//rot
+	//	CVector3D(3.0f, 3.0f, 3.0f),	//size
+	//	2
+	//);
+	//new BreakBox
+	//(
+	//	CVector3D(43.0f, 0.0f, -43.0f),	//pos
+	//	CVector3D(0.0f, 0.0f, 0.0f),	//rot
+	//	CVector3D(3.0f, 3.0f, 3.0f),	//size
+	//	4
+	//);
+	//new BreakBox
+	//(
+	//	CVector3D(0.0f, 0.0f, -43.0f),	//pos
+	//	CVector3D(0.0f, 0.0f, 0.0f),	//rot
+	//	CVector3D(3.0f, 3.0f, 3.0f),	//size
+	//	3
+	//);
+	//new BreakBox
+	//(
+	//	CVector3D(-43.0f, 0.0f, -43.0f),	//pos
+	//	CVector3D(0.0f, 0.0f, 0.0f),	//rot
+	//	CVector3D(3.0f, 3.0f, 3.0f),	//size
+	//	4
+	//);
+
 	new BreakBox
 	(
-		CVector3D(-43.0f, 0.0f, 0.0f),	//pos
+		CVector3D(-27.0f, 16.0f, 15.0f),	//pos
 		CVector3D(0.0f, 0.0f, 0.0f),	//rot
-		CVector3D(3.0f, 3.0f, 3.0f),	//size
-		4
-	);
-	new BreakBox
-	(
-		CVector3D(-43.0f, 0.0f, 43.0f),	//pos
-		CVector3D(0.0f, 0.0f, 0.0f),	//rot
-		CVector3D(3.0f, 3.0f, 3.0f),	//size
-		4
-	);
-	new BreakBox
-	(
-		CVector3D(0.0f, 0.0f, 43.0f),	//pos
-		CVector3D(0.0f, 0.0f, 0.0f),	//rot
-		CVector3D(3.0f, 3.0f, 3.0f),	//size
-		1
-	);
-	new BreakBox
-	(
-		CVector3D(43.0f, 0.0f, 43.0f),	//pos
-		CVector3D(0.0f, 0.0f, 0.0f),	//rot
-		CVector3D(3.0f, 3.0f, 3.0f),	//size
-		4
-	);
-	new BreakBox
-	(
-		CVector3D(43.0f, 0.0f, 0.0f),	//pos
-		CVector3D(0.0f, 0.0f, 0.0f),	//rot
-		CVector3D(3.0f, 3.0f, 3.0f),	//size
+		CVector3D(5.0f, 5.0f, 5.0f),	//size
 		2
 	);
-	new BreakBox
+
+	new Item
 	(
-		CVector3D(43.0f, 0.0f, -43.0f),	//pos
-		CVector3D(0.0f, 0.0f, 0.0f),	//rot
-		CVector3D(3.0f, 3.0f, 3.0f),	//size
-		4
+		CVector3D(-52,17,4),
+		CVector3D(0,0,0),
+		CVector3D(0.1f, 0.1f, 0.1f)
 	);
-	new BreakBox
+
+	new LastItem
 	(
-		CVector3D(0.0f, 0.0f, -43.0f),	//pos
-		CVector3D(0.0f, 0.0f, 0.0f),	//rot
-		CVector3D(3.0f, 3.0f, 3.0f),	//size
-		3
-	);
-	new BreakBox
-	(
-		CVector3D(-43.0f, 0.0f, -43.0f),	//pos
-		CVector3D(0.0f, 0.0f, 0.0f),	//rot
-		CVector3D(3.0f, 3.0f, 3.0f),	//size
-		4
+		CVector3D(-27, 7, 15),
+		CVector3D(0, 0, 0),
+		CVector3D(1.0f, 1.0f, 1.0f)
 	);
 
 	//new Effect2D("Nekonote");
@@ -280,9 +304,11 @@ Game::~Game()
 	//タイトルシーンへ
 	//Base::Add(new Title());
 	GameData::m_item = 0;
+	GameData::m_lastitem = 0;
 	GameData::m_isdownflg = false;
 	//タイトルシーンへ
-	new Title();
+	//new Title();
+	new Clear();
 }
 
 void Game::Update()
@@ -296,11 +322,36 @@ void Game::Update()
 		Utility::DrawLine(CVector3D(-5, 0, i * 1.0f), CVector3D(5, 0, i * 1.0f), CVector4D(0.2, 0.2, 0.2, 1));
 		Utility::DrawLine(CVector3D(i * 1.0f, 0, -5), CVector3D(i * 1.0f, 0, 5), CVector4D(0.2, 0.2, 0.2, 1));
 	}
-	if (GameData::m_item >= 5) {
+	if (GameData::m_lastitem >= 1) {
 		//SetKill();
 		Kill();
 	}
 }
+
+Clear::Clear() :Task(TaskType::eScene), m_title_text("C:\\Windows\\Fonts\\msgothic.ttc", 64)
+{
+	m_img = COPY_RESOURCE("Title", CImage);
+}
+
+Clear::~Clear()
+{
+	//タイトルシーンへ
+	new Title();
+}
+
+void Clear::Update()
+{
+	if (PUSH(CInput::eButton5)) {
+		Kill();
+	}
+}
+
+void Clear::Draw()
+{
+	m_title_text.Draw(700, 700, 0, 0, 0, "ゲームクリア");
+	m_title_text.Draw(700, 900, 0, 0, 0, "Spaceキーでタイトルに戻る");
+}
+
 
 //BlackOut::BlackOut() :Task(TaskType::eUI)
 //	, m_gauge(0)

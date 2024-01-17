@@ -34,8 +34,13 @@ std::list<SearchNode> EnemyManager::ms_searchNodes =
 	SearchNode(CVector3D(-13.0f,0.0f,-13.0f)),
 	SearchNode(CVector3D(13.0f,0.0f,-13.0f)),
 	SearchNode(CVector3D(13.0f,0.0f, 13.0f)),*/
-	SearchNode(CVector3D(-3.0f,6.0f, 25.0f)),
-	SearchNode(CVector3D(15.0f,0.0f, 25.0f)),
+	
+	//SearchNode(CVector3D(-3.0f,6.0f, 25.0f)),
+	SearchNode(CVector3D(-8,6,51)),
+	SearchNode(CVector3D(-57,6,51)),
+	SearchNode(CVector3D(-57,6,-2)),
+	SearchNode(CVector3D(-13,6,-2)),
+	
 };
 
 //コンストラクタ

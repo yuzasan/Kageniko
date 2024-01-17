@@ -26,6 +26,7 @@ enum class TaskType {
 	eBullet,		//弾
 	eEffect,		//エフェクト
 	eItem,			//アイテム
+	eLastItem,			//アイテム
 	eEventCamera,	//イベントカメラ
 	//eFieldCamera,	//ミニマップ
 
