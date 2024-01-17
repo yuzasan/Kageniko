@@ -21,7 +21,8 @@ std::list<SearchNode> EnemyManager::ms_searchNodes =
 	SearchNode(CVector3D( 13.0f,0.0f,-13.5f)),
 	SearchNode(CVector3D( 13.0f,0.0f, 13.0f)),
 	*/
-	SearchNode(CVector3D(-48.0f,0.0f, 48.0f)),
+
+	/*SearchNode(CVector3D(-48.0f,0.0f, 48.0f)),
 	SearchNode(CVector3D(0.0f,0.0f, 48.0f)),
 	SearchNode(CVector3D(-48.0f,0.0f,-48.0f)),
 	SearchNode(CVector3D(0.0f,0.0f,-48.0f)),
@@ -32,7 +33,9 @@ std::list<SearchNode> EnemyManager::ms_searchNodes =
 	SearchNode(CVector3D(-13.0f,0.0f, 13.0f)),
 	SearchNode(CVector3D(-13.0f,0.0f,-13.0f)),
 	SearchNode(CVector3D(13.0f,0.0f,-13.0f)),
-	SearchNode(CVector3D(13.0f,0.0f, 13.0f)),
+	SearchNode(CVector3D(13.0f,0.0f, 13.0f)),*/
+	SearchNode(CVector3D(-3.0f,6.0f, 25.0f)),
+	SearchNode(CVector3D(15.0f,0.0f, 25.0f)),
 };
 
 //コンストラクタ

@@ -1,6 +1,6 @@
 #include "Title.h"
 #include "../Game/Game.h"
-#include "Effect/Effect.h"
+#include "../Effect/Effect.h"
 //#include "../Base/Base.h"
 
 void Title::StepFirst()

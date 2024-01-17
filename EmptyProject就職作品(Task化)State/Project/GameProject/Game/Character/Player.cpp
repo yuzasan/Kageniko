@@ -4,10 +4,10 @@
 #include "../Stage/TyukanBox.h"
 #include "../Stage/Stage.h"
 #include "../Gamedata/GameData.h"
-#include "Game/Game.h"
+#include "../Game.h"
 #include "../UI/UI.h"
-#include "Debug/DebugPrint.h"
-#include "Effect/Effect.h"
+#include "../../Debug/DebugPrint.h"
+#include "../../Effect/Effect.h"
 #include "../../Navigation/NavNode.h"
 #include "../../Navigation/NavManeger.h"
 #include "../Stage/FellBox.h"
@@ -38,6 +38,7 @@ Player::Player(const CVector3D& pos) :CharaBase(TaskType::ePlayer)
 	,m_viewLength(3.0f)
 	,m_isSearch(false)
 	,m_isBark(false)
+	,m_enemyflg(false)
 {
 	m_model = COPY_RESOURCE("Ninja", CModelA3M);
 	m_pos = m_tyukan = pos;
@@ -184,6 +185,7 @@ void Player::StateInvisible() {
 		m_elapsedTime = 0.0f;
 		//m_isHide = false;
 		m_pos = m_tyukan;
+		m_enemyflg = false;
 		//m_isDie = false;
 		m_state = State::Move;
 	}
@@ -473,7 +475,7 @@ void Player::Collision(Task* b) {
 				}
 				if (PUSH(CInput::eMouseL) && !enemy->m_isFindplayer) {//if (HOLD(CInput::eMouseL)) {
 					Shot(enemy);
-					
+
 					m_isSearch = false;
 				}
 			}
@@ -481,17 +483,22 @@ void Player::Collision(Task* b) {
 				m_isSearch = false;
 			}
 		}
-		/*
+
 		//“G‚Ì”»’è
 		CVector3D c1, dir1, c2, dir2;
 		float dist;
-		if (CCollision::CollisionCapsule(m_lineS, m_lineE, m_rad,
-			b->m_lineS, b->m_lineE, b->m_rad,
-			&dist, &c1, &dir1, &c2, &dir2)) {
-			new BlackOut();
-			m_state = State::Invisible;
+		if (!m_enemyflg) {
+			if (CCollision::CollisionCapsule(m_lineS, m_lineE, m_rad,
+				b->m_lineS, b->m_lineE, b->m_rad,
+				&dist, &c1, &dir1, &c2, &dir2)) {
+				//m_enemyflg = true;
+			}
+			if (m_enemyflg) {
+				//m_pos = m_pos - CVector3D(0.1f, 0, 0.1f);
+				Fade::FadeOut();
+				m_state = State::Invisible;
+			}
 		}
-		*/
 	}
 	break;
 	case TaskType::eTyukanBox:

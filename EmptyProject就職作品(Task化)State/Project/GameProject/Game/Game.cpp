@@ -17,9 +17,9 @@
 #include "Stage/Item.h"
 #include "Stage/Stage.h"
 #include "Stage/BreakBox.h"
-#include "Debug/DebugPrint.h"
+#include "../Debug/DebugPrint.h"
 #include "../Title/Title.h"
-#include "TaskSystem/TaskManeger.h"
+#include "../TaskSystem/TaskManeger.h"
 #include "../Effect/Effect.h"
 #include "UI/UI.h"
 
@@ -32,18 +32,19 @@ Game::Game():Task(TaskType::eScene){
 
 	//new Player(CVector3D(0, 1.2f, 20));
 	new Player(CVector3D(0, 5.0f, 0));
-	//new Player(CVector3D(0, 10, 20));
-	//new Player(CVector3D(0, 1, 8));
+	//new Player(CVector3D(78, 5.0f, 0));
 	//new EnemyManager();
-	new Enemy(CVector3D(3, 1, 20), 110.0f);
-	new Enemy(CVector3D(3, 1, -20), 100.0f);
-	new Enemy(CVector3D(20, 1, 3), 75.0f);
-	new Enemy(CVector3D(-20, 1, 3), 50.0f);
-	new Enemy(CVector3D(-20, 1, 20), 25.0f);
-	new Enemy(CVector3D(20, 1, -20), 5.0f);
-	new Enemy(CVector3D(-20, 1, 20), 5.0f);
-	new Enemy(CVector3D(20, 1, -20), 5.0f);
-	new Enemy(CVector3D(20, 1, 20), 5.0f);
+	//new Enemy(CVector3D(9.0f, 5.0f, 25.0f), 75.0f);
+	new Enemy(CVector3D(9.0f, 5.0f, 25.0f), 75.0f);
+	/*new Enemy(CVector3D(3, 5, 20), 110.0f);
+	new Enemy(CVector3D(3, 5, -20), 100.0f);
+	new Enemy(CVector3D(20, 5, 3), 75.0f);
+	new Enemy(CVector3D(-20, 5, 3), 50.0f);
+	new Enemy(CVector3D(-20, 5, 20), 25.0f);
+	new Enemy(CVector3D(20, 5, -20), 5.0f);
+	new Enemy(CVector3D(-20, 5, 20), 5.0f);
+	new Enemy(CVector3D(20, 5, -20), 5.0f);
+	new Enemy(CVector3D(20, 5, 20), 5.0f);*/
 
 
 	new Stage();
@@ -203,12 +204,12 @@ Game::Game():Task(TaskType::eScene){
 	);
 
 	//àÍÇ¬Ç»ÇÁëÂè‰ïv
-	new NoiseBox
-	(
-		CVector3D(-7.0f, 0.0f, 1.0f),	//pos
-		CVector3D(0.0f, 0.0f, 0.0f),	//rot
-		CVector3D(1.0f, 2.0f, 1.0f)		//size
-	);
+	//new NoiseBox
+	//(
+	//	CVector3D(-7.0f, 0.0f, 1.0f),	//pos
+	//	CVector3D(0.0f, 0.0f, 0.0f),	//rot
+	//	CVector3D(1.0f, 2.0f, 1.0f)		//size
+	//);
 
 	new BreakBox
 	(

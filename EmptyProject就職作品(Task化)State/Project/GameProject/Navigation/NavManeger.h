@@ -1,8 +1,8 @@
 #pragma once
 #include <list>
 #include "NavNode.h"
-#include "../../TaskSystem/Task.h"
-#include "../../TaskSystem/TaskManeger.h"
+#include "../TaskSystem/Task.h"
+#include "../TaskSystem/TaskManeger.h"
 
 //Œo˜H’Tõˆ—‚ÌŠÇ—ƒNƒ‰ƒX
 class NavManeger : public Task {

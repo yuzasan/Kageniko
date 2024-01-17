@@ -4,7 +4,7 @@
 #include "../Stage/Item.h"
 #include "../Stage/Stage.h"
 #include "../GameData/GameData.h"
-#include "Effect/Effect.h"
+#include "../../Effect/Effect.h"
 #include "../../Debug/DebugPrint.h"
 #include "../../Navigation/NavNode.h"
 #include "../../Navigation/NavManeger.h"
@@ -126,9 +126,11 @@ void Enemy::ActionIdle()
 
 		//次に探索するノードを取得
 		SearchNode* node = EnemyManager::Instance()->GetNextSearchNode();
-		if (mp_noise->m_isNoise && !mp_noise->m_isNoisemove) {
-			m_moveNode = NavManeger::Instance()->GetNearNavNode(mp_noise->m_pos);
-			mp_noise->m_isNoisemove = true;
+		if (mp_noise != nullptr) {
+			if (mp_noise->m_isNoise && !mp_noise->m_isNoisemove) {
+				m_moveNode = NavManeger::Instance()->GetNearNavNode(mp_noise->m_pos);
+				mp_noise->m_isNoisemove = true;
+			}
 		}
 		else if (node != nullptr) {
 			//探索ノードに一番近いノードを目的地とする
@@ -195,13 +197,15 @@ void Enemy::ActionMove()
 		if (m_moveNode != nullptr) {
 			//現在位置から目的地のモードまでの経路探索を行う
 			NavManeger* navMgr = NavManeger::Instance();
-			if (mp_noise->m_isNoise && mp_noise->m_isNoisemove) {
-				NavNode* noiseNode = mp_noise->GetNavNode();
-				if (!mp_noise->m_isKill) {
-					m_nextNode = navMgr->Navigate(m_navNode, noiseNode);
-				}
-				else {
-					m_nextNode = navMgr->Navigate(m_navNode, m_moveNode);
+			if (mp_noise != nullptr) {
+				if (mp_noise->m_isNoise && mp_noise->m_isNoisemove) {
+					NavNode* noiseNode = mp_noise->GetNavNode();
+					if (!mp_noise->m_isKill) {
+						m_nextNode = navMgr->Navigate(m_navNode, noiseNode);
+					}
+					else {
+						m_nextNode = navMgr->Navigate(m_navNode, m_moveNode);
+					}
 				}
 			}
 			else {
@@ -256,6 +260,7 @@ void Enemy::ActionSearch() {
 
 void Enemy::ActionChase()
 {
+	GameData::m_islostflg = false;
 	/*if (m_emotion <= 0.5f) {
 		m_state = State::Move;
 		return;
@@ -316,7 +321,8 @@ void Enemy::ActionChase()
 		//プレイヤーの最終位置を更新
 		else {
 			CVector3D range = (playerNodePos - enemyNodePos).GetNormalize();
-			m_lostNode->SetPos(playerNodePos - range * 0.5f);
+			//m_lostNode->SetPos(playerNodePos - range * 0.5f);
+			m_lostNode->SetPos(playerNodePos);
 		}
 		m_isFind = false;
 	}
@@ -347,6 +353,7 @@ void Enemy::ActionChase()
 
 //プレイヤーを見失った状態の処理
 void Enemy::ActionLost() {
+	GameData::m_islostflg = false;
 	//目的地が存在する
 	if (m_nextNode != nullptr) {
 		//見失った場合は、視野範囲を無視して、
@@ -432,16 +439,20 @@ bool Enemy::IsFoundPlayer(){
 
 //現在位置からプレイヤーが見えるかどうか
 bool Enemy::IsLookPlayer() const {
-	CVector3D playerPos = mp_player->m_pos;
-	CVector3D vec = playerPos - m_pos;
+	
+	NavNode* playerNode = mp_player->GetNavNode();
+	NavNode* enemyNode = m_navNode;
+	CVector3D playerNodePos = playerNode->GetPos();
+	CVector3D enemyNodePos = enemyNode->GetPos();
+	CVector3D vec = playerNodePos - enemyNodePos;
 	//現在位置からプレイヤーまでの距離を求める
 	float dist = vec.Length();
 
 	//プレイヤーの位置までのレイと壁との衝突判定を行う
-	CVector3D start = m_pos;
-	CVector3D end = playerPos;
-	start.y = 1.0f;
-	end.y = 1.0f;
+	CVector3D start = enemyNodePos;
+	CVector3D end = playerNodePos;
+	/*start.y = 1.0f;
+	end.y = 1.0f;*/
 	CVector3D hitPos, hitNormal;
 	if (Stage::CollisionRay(start, end, &hitPos, &hitNormal)) {
 		float hitDist = (hitPos - start).Length();
@@ -452,6 +463,29 @@ bool Enemy::IsLookPlayer() const {
 	//衝突位置がプレイヤーより奥の位置であるならば、
 	//視野が通っているので、プレイヤーが見える状態
 	return true;
+	
+	/*
+	CVector3D playerPos = mp_player->m_pos;
+	CVector3D vec = playerPos - m_pos;
+	//現在位置からプレイヤーまでの距離を求める
+	float dist = vec.Length();
+
+	//プレイヤーの位置までのレイと壁との衝突判定を行う
+	CVector3D start = m_pos;
+	CVector3D end = playerPos;
+	//start.y = 1.0f;
+	//end.y = 1.0f;
+	CVector3D hitPos, hitNormal;
+	if (Stage::CollisionRay(start, end, &hitPos, &hitNormal)) {
+		float hitDist = (hitPos - start).Length();
+		if (dist > hitDist)return false;
+	}
+
+	//壁と衝突していないもしくは、
+	//衝突位置がプレイヤーより奥の位置であるならば、
+	//視野が通っているので、プレイヤーが見える状態
+	return true;
+	*/
 }
 
 //指定座標への移動処理
@@ -725,8 +759,10 @@ void Enemy::Collision(Task* b)
 			CVector3D nv = t.m_normal * (m_rad - t.m_dist);
 			//最も大きな移動量を求める
 			v.y = fabs(v.y) > fabs(nv.y) ? v.y : nv.y;
-			v.x = fabs(v.x) > fabs(nv.x) ? v.x : nv.x;
-			v.z = fabs(v.z) > fabs(nv.z) ? v.z : nv.z;
+			//if (max_y > m_pos.y + 1) {
+				v.x = fabs(v.x) > fabs(nv.x) ? v.x : nv.x;
+				v.z = fabs(v.z) > fabs(nv.z) ? v.z : nv.z;
+			//}
 		}
 		m_pos += v;
 		m_lineS += v;

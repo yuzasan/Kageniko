@@ -1,6 +1,6 @@
 #pragma once
 #include "../TaskSystem/Task.h"
-#include "../../TaskSystem/TaskManeger.h"
+#include "../TaskSystem/TaskManeger.h"
 class Player;
 class Effect :public Task {
 private:

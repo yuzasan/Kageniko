@@ -1,5 +1,5 @@
 #include "CharaBase.h"
-#include "../../Game/Stage/Stage.h"
+#include "../Stage/Stage.h"
 #include "../../Navigation/NavNode.h"
 
 CharaBase::CharaBase(TaskType type):Task(type){

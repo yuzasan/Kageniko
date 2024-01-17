@@ -13,7 +13,7 @@ TaskManeger::~TaskManeger()
 		Task* deleteTask = *it;
 
 		//次のタスクへ進行しておく
-		it++;
+		it = m_taskList.erase(it);
 
 		//削除フラグが立っていたら、タスクを削除
 		//（リストからのRemove処理はTaskのデストラクタで呼ばれる）

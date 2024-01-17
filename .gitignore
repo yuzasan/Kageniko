@@ -6,3 +6,5 @@ Debug
 *.exp
 *lib
 Release
+*.blend*
+*.zip

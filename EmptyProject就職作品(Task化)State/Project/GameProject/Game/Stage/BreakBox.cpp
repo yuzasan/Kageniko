@@ -1,5 +1,5 @@
 #include "BreakBox.h"
-#include "Game/Gamedata/GameData.h"
+#include "../Gamedata/GameData.h"
 
 BreakBox::BreakBox(const CVector3D& pos, const CVector3D& rot, const CVector3D& size, const int& item)
 	: Task(TaskType::eBreakBox)

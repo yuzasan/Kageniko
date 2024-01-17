@@ -23,6 +23,7 @@ private:
 	CVector3D m_tyukan;			//中間座標
 	float m_elapsedTime;		//待機経過時間
 	CVector4D color;
+	bool m_enemyflg;
 
 	//アニメーション番号
 	enum class AnimId 

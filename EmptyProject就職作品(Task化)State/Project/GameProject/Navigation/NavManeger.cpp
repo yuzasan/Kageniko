@@ -1,6 +1,6 @@
 #include "NavManeger.h"
 #include <GLLibrary/Utility.h>
-#include "Game/Stage/Stage.h"
+#include "../Game/Stage/Stage.h"
 #include "../Debug/DebugPrint.h"
 
 //経路探索の管理クラスのインスタンス

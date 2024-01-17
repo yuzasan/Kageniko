@@ -69,7 +69,7 @@ std::list<CVector3D> Stage::ms_nodes =
 	CVector3D(13.0f,0.0f, 13.0f),		//行き止まり
 	*/
 
-	CVector3D(-48.0f,0.0f, 48.0f),
+	/*CVector3D(-48.0f,0.0f, 48.0f),
 	CVector3D( 0.0f,0.0f, 48.0f),
 	CVector3D(-48.0f,0.0f,-48.0f),
 	CVector3D( 0.0f,0.0f,-48.0f),
@@ -79,8 +79,15 @@ std::list<CVector3D> Stage::ms_nodes =
 	CVector3D(-48.0f,0.0f, 0.0f),
 	CVector3D(-13.0f,0.0f, 13.0f),
 	CVector3D(-13.0f,0.0f,-13.0f),
-	CVector3D( 13.0f,0.0f,-13.0f),
-	CVector3D( 13.0f,0.0f, 13.0f),
+	CVector3D( 13.0f,0.0f,-13.0f),*/
+	CVector3D(-3.0f,9.0f, 25.0f),
+	CVector3D(15.0f,0.0f, 25.0f),
+	CVector3D(4.0f,4.5f, 25.0f),
+	CVector3D(4.5f,3.5f, 25.0f),
+	//CVector3D(4.5f,3.0f, 25.0f),
+	CVector3D(5.0f,2.0f, 25.0f),
+	CVector3D(0.0f,7.0f, 25.0f),
+	
 	
 };
 
@@ -95,7 +102,6 @@ Stage::Stage()
 	m_Navmodel = GET_RESOURCE("Stagecol", CModel);
 	
 	m_Watchmodel = new StageWatch();
-	TaskManeger::Instance()->Add(m_Watchmodel);
 
 	//経路探索用のノードを作成
 	CreateNavNodes();
@@ -159,7 +165,8 @@ bool Stage::CollisionRay(const CVector3D& start, const CVector3D& end, CVector3D
 	if (s == nullptr) return false;
 
 	//コリジョンモデルが作成されていなければ、スルー
-	CModel* col = s->GetModel();
+	//CModel* col = s->GetModel();
+	CModel* col = s->GetColNavModel();
 	if (col == nullptr) return false;
 
 	//コリジョンが存在すれば、レイとのヒット判定の結果を返す
@@ -177,7 +184,7 @@ void Stage::Render()
 	/*m_model.SetScale(1, 1, 1);
 	m_model.Render();*/
 	m_model->SetScale(1, 1, 1);
-	m_model->Render();
+	//m_model->Render();
 }
 
 void Stage::NoEnemyRender()
@@ -186,5 +193,5 @@ void Stage::NoEnemyRender()
 	/*m_model.SetScale(1, 1, 1);
 	m_model.Render();*/
 	m_model->SetScale(1, 1, 1);
-	m_model->Render();
+	//m_model->Render();
 }

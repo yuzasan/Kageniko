@@ -1,7 +1,7 @@
 #include "FieldCamera.h"
-#include "Game/Character/Player.h"
-#include "Game/Character/Enemy.h"
-#include "Game/Stage/Stage.h"
+#include "../Character/Player.h"
+#include "../Character/Enemy.h"
+#include "../Stage/Stage.h"
 //static ‚ÍÅ‰‚Ì#include‚Ì‚Æ‚±‚ë‚É‘‚­
 bool FieldCamera::rendring = false;
 

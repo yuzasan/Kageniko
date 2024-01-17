@@ -40,7 +40,8 @@ void Load() {
 	//ステージの読み込み
 	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Castle/Collision.obj", 20, 10, 20));
 	ADD_RESOURCE("Stage", CModel::CreateModel("Field/Castle/tamesi.obj", 20, 10, 20));
-	ADD_RESOURCE("Stagecol", CModel::CreateModel("Field/Castle/tamesicol.obj", 20, 10, 20));
+	//ADD_RESOURCE("Stagecol", CModel::CreateModel("Field/Castle/tamesicol.obj", 20, 10, 20));
+	ADD_RESOURCE("Stagecol", CModel::CreateModel("Field/Castle/tamesicol2.obj", 20, 10, 20));
 	//ステージの読み込み
 	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Castle/kari.obj", 20, 10, 20));
 	//ステージの読み込み
@@ -218,7 +219,9 @@ void Init(void)
 	CLight::SetPos(0, CVector3D(0, 200, 200));
 	CLight::SetDir(0, CVector3D(-1, -2, 1).GetNormalize());
 	//CLight::SetColor(0, CVector3D(0.1f, 0.1f, 0.1f), CVector3D(0.6f, 0.6f, 0.6f));
-	CLight::SetColor(0, CVector3D(0.2f, 0.2f, 0.2f), CVector3D(0.8f, 0.8f, 0.8f));
+	//CLight::SetColor(0, CVector3D(0.2f, 0.2f, 0.2f), CVector3D(0.8f, 0.8f, 0.8f));
+	CLight::SetColor(0, CVector3D(0.8f, 0.8f, 0.8f), CVector3D(0.2f, 0.2f, 0.2f));
+
 	//霧のようになる(フォグ)				,手前5,奥20
 	CLight::SetFogParam(CVector4D(1, 1, 1, 1), 700, 800);
 

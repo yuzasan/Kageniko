@@ -1,7 +1,7 @@
 #include "Choose.h"
 #include "../Title/Title.h"
 #include "../Game/Game.h"
-#include "Effect/Effect.h"
+#include "../Effect/Effect.h"
 //#include "../Base/Base.h"
 
 void Choose::StepFirst()

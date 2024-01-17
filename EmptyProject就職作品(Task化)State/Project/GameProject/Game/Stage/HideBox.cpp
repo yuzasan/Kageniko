@@ -1,5 +1,5 @@
 #include "HideBox.h"
-#include "Game/Gamedata/GameData.h"
+#include "../Gamedata/GameData.h"
 
 HideBox::HideBox(const CVector3D& pos, const CVector3D& rot, const CVector3D& size)
 	: Task(TaskType::eHideBox)
