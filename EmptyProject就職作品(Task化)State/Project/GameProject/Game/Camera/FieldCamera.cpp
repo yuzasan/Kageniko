@@ -59,7 +59,7 @@ void FieldCamera::Draw(){
 		CCamera back = *CCamera::GetCurrent();
 
 		//キャラクター上面からのカメラ	下に向いている
-		CCamera::GetCurrent()->SetTranseRot(mp_player->m_pos + CVector3D(0, 15, 0), CVector3D(DtoR(90), 0, 0));
+		CCamera::GetCurrent()->SetTranseRot(mp_player->m_pos + CVector3D(-2.5, 15, 0), CVector3D(DtoR(90), 0, 0));
 
 		//描画先の画面サイズが横512:縦512のためアスペクト比は1.0f
 		//CCamera::GetCurrent()->Perspective(DtoR(60), 1.0f, 1.0f, 1000.0f);

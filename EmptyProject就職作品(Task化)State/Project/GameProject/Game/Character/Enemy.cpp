@@ -292,8 +292,8 @@ void Enemy::ActionChase()
 
 	//プレイヤーの位置まで視線が通っているか判定
 	CVector3D hitPos, hitNormal;
-	enemyNodePos.y = 1.0f;
-	playerNodePos.y = 1.0f;
+	/*enemyNodePos.y = 1.0f;
+	playerNodePos.y = 1.0f;*/
 	bool isHit = Stage::CollisionRay(enemyNodePos, playerNodePos, &hitPos, &hitNormal);
 	//プレイヤーの位置までレイを飛ばして、何かに衝突したら、
 	if (isHit) {

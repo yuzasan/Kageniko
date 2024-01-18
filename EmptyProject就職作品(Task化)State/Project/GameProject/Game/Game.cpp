@@ -30,14 +30,26 @@ Game::Game():Task(TaskType::eScene){
 	Base::Add(new PlayerCamera());
 	Base::Add(new FieldCamera());*/
 
+	
+	new Player(CVector3D(15, 5.0f, 25));
+	//new Player(CVector3D(0, 5.0f, 78));
+
 	//new Player(CVector3D(0, 1.2f, 20));
 	//new Player(CVector3D(0, 5.0f, 0));
-	new Player(CVector3D(15, 5.0f, 25));
 	//new Player(CVector3D(78, 5.0f, 0));
 	//new EnemyManager();
 	//new Enemy(CVector3D(9.0f, 5.0f, 25.0f), 75.0f);
 	//new Enemy(CVector3D(9.0f, 5.0f, 25.0f), 75.0f);
 	new Enemy(CVector3D(-8.0f, 6.0f, 25.0f), 75.0f);
+	/*new Enemy(CVector3D(10.0f, 6.0f, 25.0f), 75.0f);
+	
+	new Enemy(CVector3D(-13.0f, 6.0f, 73.0f), 110.0f);
+	new Enemy(CVector3D(-8.0f, 6.0f, 73.0f), 100.0f);
+	new Enemy(CVector3D(-3.0f, 6.0f, 73.0f), 75.0f);
+	new Enemy(CVector3D(2.0f, 6.0f, 73.0f), 50.0f);
+	new Enemy(CVector3D(7.0f, 6.0f, 73.0f), 25.0f);
+	new Enemy(CVector3D(12.0f, 6.0f, 73.0f), 5.0f);*/
+
 	/*new Enemy(CVector3D(3, 5, 20), 110.0f);
 	new Enemy(CVector3D(3, 5, -20), 100.0f);
 	new Enemy(CVector3D(20, 5, 3), 75.0f);
