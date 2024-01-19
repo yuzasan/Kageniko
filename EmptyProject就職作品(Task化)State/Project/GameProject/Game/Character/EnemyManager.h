@@ -15,6 +15,8 @@ private:
 	//敵のリスト
 	std::list<Enemy*> m_enemies;
 
+	bool m_flg;
+
 public:	
 	//コンストラクタ
 	EnemyManager();

@@ -41,6 +41,9 @@ Game::Game():Task(TaskType::eScene){
 	//new Enemy(CVector3D(9.0f, 5.0f, 25.0f), 75.0f);
 	//new Enemy(CVector3D(9.0f, 5.0f, 25.0f), 75.0f);
 	new Enemy(CVector3D(-8.0f, 6.0f, 25.0f), 75.0f);
+	new Enemy(CVector3D(-8.0f, 6.0f, 25.0f), 110.0f);
+	new Enemy(CVector3D(-8.0f, 6.0f, 25.0f), 100.0f);
+	new Enemy(CVector3D(-8.0f, 6.0f, 25.0f), 25.0f);
 	/*new Enemy(CVector3D(10.0f, 6.0f, 25.0f), 75.0f);
 	
 	new Enemy(CVector3D(-13.0f, 6.0f, 73.0f), 110.0f);
@@ -175,26 +178,26 @@ Game::Game():Task(TaskType::eScene){
 		moveTime, intervalTime, 1, 0, true
 	);
 
-	new HideBox
-	(
-		CVector3D(0.0f, 1.0f, 0.0f),
-		CVector3D(0.0f, 0.0f, 0.0f),
-		CVector3D(1.0f, 2.0f, 1.0f)
-	);
-
 	new TyukanBox
 	(
 		CVector3D(5.0f, 1.0f, 0.0f),
 		CVector3D(0.0f, 0.0f, 0.0f),
 		CVector3D(1.0f, 2.0f, 1.0f)
 	);
+	*/
+	new HideBox
+	(
+		CVector3D(-8.0f, 5.0f, 23.0f),
+		CVector3D(0.0f, 0.0f, 0.0f),
+		CVector3D(1.0f, 2.0f, 1.0f)
+	);
 
 	new TyukanBox
 	(
-		CVector3D(10.0f, 1.0f, 0.0f),
+		CVector3D(-2.0f, 5.0f, 26.0f),
 		CVector3D(0.0f, 0.0f, 0.0f),
 		CVector3D(1.0f, 2.0f, 1.0f)
-	);*/
+	);
 
 	//new FellBox
 	//(
@@ -210,20 +213,12 @@ Game::Game():Task(TaskType::eScene){
 		CVector3D(130.0f, 2.0f, 130.0f)		//size
 	);
 
-	//new FellBox
-	//(
-	//	CVector3D(0.0f, 0.0f, 10.0f),	//pos
-	//	CVector3D(0.0f, 0.0f, 0.0f),	//rot
-	//	CVector3D(1.0f, 2.0f, 1.0f)		//size
-	//);
-
-	//一つなら大丈夫
-	//new NoiseBox
-	//(
-	//	CVector3D(-7.0f, 0.0f, 1.0f),	//pos
-	//	CVector3D(0.0f, 0.0f, 0.0f),	//rot
-	//	CVector3D(1.0f, 2.0f, 1.0f)		//size
-	//);
+	new FellBox
+	(
+		CVector3D(17, 0.0f, 25),	//pos
+		CVector3D(0.0f, 0.0f, 0.0f),	//rot
+		CVector3D(1.0f, 2.0f, 1.0f)		//size
+	);
 
 	//new BreakBox
 	//(
@@ -304,6 +299,14 @@ Game::Game():Task(TaskType::eScene){
 		CVector3D(1.0f, 1.0f, 1.0f)
 	);
 
+	//一つなら大丈夫
+	new NoiseBox
+	(
+		CVector3D(-2.0f, 5.0f, 22.0f),	//pos
+		CVector3D(0.0f, 0.0f, 0.0f),	//rot
+		CVector3D(1.0f, 2.0f, 1.0f)		//size
+	);
+
 	//new Effect2D("Nekonote");
 	CFPS::Wait();
 }
@@ -317,6 +320,7 @@ Game::~Game()
 	//Base::Add(new Title());
 	GameData::m_item = 0;
 	GameData::m_lastitem = 0;
+	GameData::m_diecnt = 0;
 	GameData::m_isdownflg = false;
 	//タイトルシーンへ
 	//new Title();

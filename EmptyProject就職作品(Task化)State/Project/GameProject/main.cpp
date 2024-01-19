@@ -119,6 +119,7 @@ void MainLoop(void) {
 		DebugProfiler::EndTimer("LateRender");
 	});
 
+
 	//全Taskの更新後更新
 	DebugProfiler::StartTimer("LateUpdate");
 	TaskManeger::Instance()->LateUpdate();

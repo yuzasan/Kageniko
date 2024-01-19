@@ -113,3 +113,26 @@ void Timer::Draw() {
 	m_img.Draw();
 	m_img2.Draw();
 }
+
+Font::Font(const char* text, const int& d, const CVector2D& pos,const CVector3D& color):Task(TaskType::eUI),m_text("C:\\Windows\\Fonts\\msgothic.ttc", 64)
+	,m_texts(text)
+	, m_d(d)
+	,m_iti(pos)
+	,m_color(color)
+{
+	//m_text.Draw(pos.x,pos.y, color.x, color.y, color.z, text,d);
+}
+
+Font::~Font()
+{
+}
+
+void Font::Update()
+{
+
+}
+
+void Font::Draw()
+{
+	m_text.Draw(m_iti.x, m_iti.y, m_color.x, m_color.y, m_color.z, m_texts, m_d);
+}

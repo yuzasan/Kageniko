@@ -182,6 +182,7 @@ void Player::StateInvisible() {
 	else {
 		
 		Fade::FadeIn();
+		GameData::m_diecnt++;
 		m_elapsedTime = 0.0f;
 		//m_isHide = false;
 		m_pos = m_tyukan;
@@ -487,16 +488,18 @@ void Player::Collision(Task* b) {
 		//“G‚Ì”»’è
 		CVector3D c1, dir1, c2, dir2;
 		float dist;
-		if (!m_enemyflg) {
-			if (CCollision::CollisionCapsule(m_lineS, m_lineE, m_rad,
-				b->m_lineS, b->m_lineE, b->m_rad,
-				&dist, &c1, &dir1, &c2, &dir2)) {
-				m_enemyflg = true;
-			}
-			if (m_enemyflg) {
-				//m_pos = m_pos - CVector3D(0.1f, 0, 0.1f);
-				Fade::FadeOut();
-				m_state = State::Invisible;
+		if (!m_isHide) {
+			if (!m_enemyflg) {
+				if (CCollision::CollisionCapsule(m_lineS, m_lineE, m_rad,
+					b->m_lineS, b->m_lineE, b->m_rad,
+					&dist, &c1, &dir1, &c2, &dir2)) {
+					m_enemyflg = true;
+				}
+				if (m_enemyflg) {
+					//m_pos = m_pos - CVector3D(0.1f, 0, 0.1f);
+					Fade::FadeOut();
+					m_state = State::Invisible;
+				}
 			}
 		}
 	}

@@ -1,9 +1,11 @@
 #include "BreakBox.h"
 #include "../Gamedata/GameData.h"
+#include "../UI/UI.h"
 
 BreakBox::BreakBox(const CVector3D& pos, const CVector3D& rot, const CVector3D& size, const int& item)
 	: Task(TaskType::eBreakBox)
 	,m_cnt(item)
+	,m_flg(false)
 {
 	m_pos = pos;
 	m_rot = rot;
@@ -93,6 +95,10 @@ void BreakBox::Collision(Task* b) {
 			//‰Ÿ‚µ–ß‚µ
 			float s = mp_player->m_rad - dist;
 			mp_player->m_pos += axis * s;
+			if (!m_flg) {
+				//new Font("c‚è%d‘«‚è‚Ü‚¹‚ñ", m_cnt - GameData::m_item, CVector2D(480, 540), CVector3D(0, 0, 0));
+			}
+			m_flg = true;
 			if (GameData::m_item >= m_cnt) {
 				Kill();
 			}

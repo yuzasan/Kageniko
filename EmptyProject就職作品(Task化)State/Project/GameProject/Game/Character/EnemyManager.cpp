@@ -1,5 +1,6 @@
 #include "EnemyManager.h"
 #include "../../Debug/DebugPrint.h"
+#include "../Gamedata/GameData.h"
 
 //敵管理クラスのインスタンス
 EnemyManager* EnemyManager::ms_instance = nullptr;
@@ -40,11 +41,41 @@ std::list<SearchNode> EnemyManager::ms_searchNodes =
 	SearchNode(CVector3D(-57,6,51)),
 	SearchNode(CVector3D(-57,6,-2)),
 	SearchNode(CVector3D(-13,6,-2)),
+
+	//SearchNode(CVector3D(-17,17,-4)),
+	SearchNode(CVector3D(-8,6,24)),
+	SearchNode(CVector3D(-8,6,12)),
+	SearchNode(CVector3D(-14,6,23)),
+	SearchNode(CVector3D(-14,6,5)),
+	SearchNode(CVector3D(-14,6,43)),
+	SearchNode(CVector3D(-20,6,11)),
+	SearchNode(CVector3D(-20,6,23)),
+	SearchNode(CVector3D(-20,6,36)),
+	SearchNode(CVector3D(-34,6,-2)),
+	SearchNode(CVector3D(-34,6,5)),
+	SearchNode(CVector3D(-34,6,11)),
+	SearchNode(CVector3D(-34,6,36)),
+	SearchNode(CVector3D(-34,6,43)),
+	SearchNode(CVector3D(-34,6,50)),
+	SearchNode(CVector3D(-45,6,36)),
+	SearchNode(CVector3D(-45,6,23)),
+	SearchNode(CVector3D(-45,6,11)),
+	SearchNode(CVector3D(-52,6,5)),
+	SearchNode(CVector3D(-52,6,23)),
+	SearchNode(CVector3D(-52,6,36)),
+	SearchNode(CVector3D(-58,6,23)),
+
+	
+	
+	
+
 	
 };
 
 //コンストラクタ
-EnemyManager::EnemyManager():Task(TaskType::eEnemyManager){
+EnemyManager::EnemyManager():Task(TaskType::eEnemyManager)
+	,m_flg(false)
+{
 	//TaskManeger::Instance()->Add(this);
 	
 }
@@ -108,6 +139,13 @@ void EnemyManager::Update()
 		node.prob = Utility::Clamp01(node.prob + 0.0005f);
 		//node.prob = Utility::Clamp01(node.prob + 0.03 * CFPS::GetDeltaTime());
 	}
+
+	if (GameData::m_diecnt == 3 && !m_flg) {
+		new Enemy(CVector3D(-8.0f, 6.0f, 25.0f), 75.0f);
+		new Enemy(CVector3D(6.0f, 3.0f, 24.0f), 5.0f);
+		m_flg = true;
+	}
+	
 }
 
 //描画

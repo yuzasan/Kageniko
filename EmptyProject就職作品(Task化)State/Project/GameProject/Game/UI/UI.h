@@ -2,6 +2,20 @@
 #include "../../TaskSystem/Task.h"
 #include "../../TaskSystem/TaskManeger.h"
 
+class Font : public Task {
+private:
+	CFont m_text;
+public:
+	const char* m_texts = {};
+	int m_d;
+	CVector2D m_iti;
+	CVector3D m_color;
+	Font(const char* text, const int& d, const CVector2D& pos, const CVector3D& color);
+	~Font();
+	void Update();
+	void Draw();
+};
+
 class Fade : public Task {
 private:
 	Fade();

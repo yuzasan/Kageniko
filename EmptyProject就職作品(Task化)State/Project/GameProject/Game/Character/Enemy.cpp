@@ -126,12 +126,12 @@ void Enemy::ActionIdle()
 
 		//次に探索するノードを取得
 		SearchNode* node = EnemyManager::Instance()->GetNextSearchNode();
-		if (mp_noise != nullptr) {
+		//if (mp_noise != nullptr) {
 			if (mp_noise->m_isNoise && !mp_noise->m_isNoisemove) {
 				m_moveNode = NavManeger::Instance()->GetNearNavNode(mp_noise->m_pos);
 				mp_noise->m_isNoisemove = true;
 			}
-		}
+		//}
 		else if (node != nullptr) {
 			//探索ノードに一番近いノードを目的地とする
 			m_searchNode = node;
@@ -197,7 +197,7 @@ void Enemy::ActionMove()
 		if (m_moveNode != nullptr) {
 			//現在位置から目的地のモードまでの経路探索を行う
 			NavManeger* navMgr = NavManeger::Instance();
-			if (mp_noise != nullptr) {
+			//if (mp_noise != nullptr) {
 				if (mp_noise->m_isNoise && mp_noise->m_isNoisemove) {
 					NavNode* noiseNode = mp_noise->GetNavNode();
 					if (!mp_noise->m_isKill) {
@@ -207,7 +207,7 @@ void Enemy::ActionMove()
 						m_nextNode = navMgr->Navigate(m_navNode, m_moveNode);
 					}
 				}
-			}
+			//}
 			else {
 				m_nextNode = navMgr->Navigate(m_navNode, m_moveNode);
 			}
@@ -354,41 +354,47 @@ void Enemy::ActionChase()
 //プレイヤーを見失った状態の処理
 void Enemy::ActionLost() {
 	GameData::m_islostflg = false;
-	//目的地が存在する
-	if (m_nextNode != nullptr) {
-		//見失った場合は、視野範囲を無視して、
-		//プレイヤーまでの視線が通るかどうかで判定する
-		if (IsLookPlayer()) {
-			if (!mp_player->m_isHide && !GameData::m_islostflg) {
-				//CVector3D pos = mp_player->m_pos - m_pos;
-				//if (IsLookPlayer() && pos.Length() < 30.0f || !mp_player->m_isHide && !GameData::m_islostflg) {
-					//追跡状態へ移行
-				m_action = Action::Chase;
-				m_isFind = false;
+	if (!mp_player->m_isHide) {
+		//目的地が存在する
+		if (m_nextNode != nullptr) {
+			//見失った場合は、視野範囲を無視して、
+			//プレイヤーまでの視線が通るかどうかで判定する
+			if (IsLookPlayer()) {
+				if (!mp_player->m_isHide && !GameData::m_islostflg) {
+					//CVector3D pos = mp_player->m_pos - m_pos;
+					//if (IsLookPlayer() && pos.Length() < 30.0f || !mp_player->m_isHide && !GameData::m_islostflg) {
+						//追跡状態へ移行
+					m_action = Action::Chase;
+					m_isFind = false;
+				}
+			}
+			//プレイヤーが視線の通らないところにいる
+			else {
+				GameData::m_islostflg = true;
+				//目的地まで移動
+				if (MoveTo(m_nextNode->GetPos())) {
+					if (m_nextNode != m_lostNode) {
+						NavManeger* navMgr = NavManeger::Instance();
+						m_nextNode = navMgr->Navigate(m_nextNode, m_lostNode);
+					}
+					else {
+						delete m_lostNode;
+						m_lostNode = nullptr;
+						m_nextNode = nullptr;
+					}
+				}
 			}
 		}
-		//プレイヤーが視線の通らないところにいる
+		//目的地まで移動が終われば、
 		else {
-			GameData::m_islostflg = true;
-			//目的地まで移動
-			if (MoveTo(m_nextNode->GetPos())) {
-				if (m_nextNode != m_lostNode) {
-					NavManeger* navMgr = NavManeger::Instance();
-					m_nextNode = navMgr->Navigate(m_nextNode, m_lostNode);
-				}
-				else {
-					delete m_lostNode;
-					m_lostNode = nullptr;
-					m_nextNode = nullptr;
-				}
-			}
+			//new Effect("Fukidasi",CVector3D(0, 2.5, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, false, 60);
+			//new Effect("Fukidasi", m_pos + CVector3D(0, 2.5, -1), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, false, 60);
+			new Effect("Kinosei", m_pos + CVector3D(0, 2.5, -1), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, false, 60);
+			//待機状態へ移行
+			m_action = Action::Idle;
 		}
 	}
-	//目的地まで移動が終われば、
 	else {
-		//new Effect("Fukidasi",CVector3D(0, 2.5, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, false, 60);
-		//new Effect("Fukidasi", m_pos + CVector3D(0, 2.5, -1), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, false, 60);
-		new Effect("Kinosei", m_pos + CVector3D(0, 2.5, -1), CVector3D(0, 0, 0), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 0.0f, 1.0f, 0.0f, 0, true, false, 60);
 		//待機状態へ移行
 		m_action = Action::Idle;
 	}

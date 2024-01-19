@@ -3,6 +3,7 @@ class GameData {
 public:
 	static int m_item;
 	static int m_lastitem;
+	static int m_diecnt;
 	static bool m_isdownflg;
 	static bool m_isleftflg;
 	static bool m_isrightflg;
