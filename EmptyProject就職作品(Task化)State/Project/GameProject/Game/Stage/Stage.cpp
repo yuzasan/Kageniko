@@ -106,11 +106,14 @@ std::list<CVector3D> Stage::ms_nodes =
 	CVector3D(-52,6,23),
 	CVector3D(-52,6,36),
 	CVector3D(-34,6,5),
-	CVector3D(-8,13,5),
 	CVector3D(-16,17,-4),
 	CVector3D(-8,14,0),
-	CVector3D(-10,18,-5),
-	
+	CVector3D(-8,18,-5),
+
+	CVector3D(-2, 6, 24),
+	CVector3D(13, 1, 24),
+	CVector3D(13, 1, 32),
+
 };
 
 //コンストラクタ
@@ -245,7 +248,8 @@ void Stage::Render()
 	/*m_model.SetScale(1, 1, 1);
 	m_model.Render();*/
 	m_model->SetScale(1, 1, 1);
-	//m_model->Render();
+
+	m_model->Render();
 }
 
 void Stage::NoEnemyRender()
@@ -284,5 +288,6 @@ void Stage::NoEnemyRender()
 	/*m_model.SetScale(1, 1, 1);
 	m_model.Render();*/
 	m_model->SetScale(1, 1, 1);
-	//m_model->Render();
+
+	m_model->Render();
 }

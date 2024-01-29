@@ -43,27 +43,40 @@ std::list<SearchNode> EnemyManager::ms_searchNodes =
 	SearchNode(CVector3D(-13,6,-2)),
 
 	//SearchNode(CVector3D(-17,17,-4)),
-	SearchNode(CVector3D(-8,6,24)),
-	SearchNode(CVector3D(-8,6,12)),
-	SearchNode(CVector3D(-14,6,23)),
+
+	//--------------------------------
+	
+	//SearchNode(CVector3D(-8,6,12)),
+	//SearchNode(CVector3D(-8,6,24)),
+	
 	SearchNode(CVector3D(-14,6,5)),
+	//SearchNode(CVector3D(-14,6,23)),
 	SearchNode(CVector3D(-14,6,43)),
-	SearchNode(CVector3D(-20,6,11)),
-	SearchNode(CVector3D(-20,6,23)),
-	SearchNode(CVector3D(-20,6,36)),
-	SearchNode(CVector3D(-34,6,-2)),
-	SearchNode(CVector3D(-34,6,5)),
-	SearchNode(CVector3D(-34,6,11)),
-	SearchNode(CVector3D(-34,6,36)),
-	SearchNode(CVector3D(-34,6,43)),
-	SearchNode(CVector3D(-34,6,50)),
-	SearchNode(CVector3D(-45,6,36)),
-	SearchNode(CVector3D(-45,6,23)),
-	SearchNode(CVector3D(-45,6,11)),
+
+	//SearchNode(CVector3D(-20,6,11)),
+	//SearchNode(CVector3D(-20,6,23)),
+	//SearchNode(CVector3D(-20,6,36)),
+
+	//SearchNode(CVector3D(-34,6,-2)),
+	//SearchNode(CVector3D(-34,6,5)),
+	//SearchNode(CVector3D(-34,6,11)),
+	//SearchNode(CVector3D(-34,6,36)),
+	//SearchNode(CVector3D(-34,6,43)),
+	//SearchNode(CVector3D(-34,6,50)),
+
+	//SearchNode(CVector3D(-45,6,36)),
+	//SearchNode(CVector3D(-45,6,23)),
+	//SearchNode(CVector3D(-45,6,11)),
+
 	SearchNode(CVector3D(-52,6,5)),
-	SearchNode(CVector3D(-52,6,23)),
+	//SearchNode(CVector3D(-52,6,23)),
 	SearchNode(CVector3D(-52,6,36)),
-	SearchNode(CVector3D(-58,6,23)),
+
+	//SearchNode(CVector3D(-58,6,23)),
+
+	SearchNode(CVector3D(-8,18,-5)),
+
+	SearchNode(CVector3D(13, 1, 32)),
 
 	
 	

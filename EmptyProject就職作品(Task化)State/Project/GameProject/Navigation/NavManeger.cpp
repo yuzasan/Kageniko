@@ -213,8 +213,8 @@ int NavManeger::FindConnectNavNodes(NavNode* node, float distance)
 		CVector3D hitPos, hitNormal;
 		CVector3D start = node->m_pos;
 		CVector3D end = n->m_pos;
-		start.y = 1.0f;
-		end.y = 1.0f;
+		/*start.y = 1.0f;
+		end.y = 1.0f;*/
 		//まずレイを飛ばして、何かにヒットするかどうか
 		if (Stage::CollisionRay(start, end, &hitPos, &hitNormal)) {
 			//何かにヒットした場合は、ヒット位置までの距離と、
