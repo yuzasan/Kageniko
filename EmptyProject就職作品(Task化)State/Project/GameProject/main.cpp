@@ -82,7 +82,7 @@ void MainLoop(void) {
 	// Zキーでデバッグ表示をオンオフ切り替え
 	if (PUSH(CInput::eButton1))
 	{
-		g_isRenderDebug = !g_isRenderDebug;
+		//g_isRenderDebug = !g_isRenderDebug;
 	}
 	
 	//全Taskの更新
