@@ -19,7 +19,9 @@
     <ClInclude Include="Game\Camera\FieldCamera.h" />
     <ClInclude Include="Game\Character\CharaBase.h" />
     <ClInclude Include="Game\Character\Enemy.h" />
+    <ClInclude Include="Game\Character\EnemyCopy.h" />
     <ClInclude Include="Game\Character\EnemyManager.h" />
+    <ClInclude Include="Game\Character\EnemyManagerCopy.h" />
     <ClInclude Include="Game\Character\NoiseBox.h" />
     <ClInclude Include="Game\Character\Player.h" />
     <ClInclude Include="Game\Character\PlayerCamera.h" />
@@ -55,7 +57,9 @@
     <ClCompile Include="Game\Camera\FieldCamera.cpp" />
     <ClCompile Include="Game\Character\CharaBase.cpp" />
     <ClCompile Include="Game\Character\Enemy.cpp" />
+    <ClCompile Include="Game\Character\EnemyCopy.cpp" />
     <ClCompile Include="Game\Character\EnemyManager.cpp" />
+    <ClCompile Include="Game\Character\EnemyManagerCopy.cpp" />
     <ClCompile Include="Game\Character\NoiseBox.cpp" />
     <ClCompile Include="Game\Character\Player.cpp" />
     <ClCompile Include="Game\Character\PlayerCamera.cpp" />

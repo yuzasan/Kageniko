@@ -46,3 +46,15 @@ public:
 	void Update() override;
 	void Draw() override;
 };
+
+class UI :public Task {
+private:
+	CFont m_midasi;
+	CFont m_text;
+	
+public:
+	UI();
+	~UI();
+	void Update();
+	void Draw();
+};

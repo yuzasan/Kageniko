@@ -11,7 +11,7 @@ void StageWatch::Update()
 
 void StageWatch::Render()
 {
-	//m_model->Render();
+	m_model->Render();
 }
 
 void StageWatch::NoEnemyRender()

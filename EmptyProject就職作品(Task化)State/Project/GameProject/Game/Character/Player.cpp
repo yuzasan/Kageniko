@@ -395,18 +395,26 @@ bool Player::IsFoundEnemy(Enemy* e) const
 //現在地から敵がいるか
 bool Player::IsSearchEnemy(Enemy* e) const
 {
-	CVector3D enemyPos = e->m_pos;
-	CVector3D vec = enemyPos - m_pos;
+	NavNode* playerNode = m_navNode;
+	NavNode* enemyNode = e->GetNavNode();
+	CVector3D playerNodePos = playerNode->GetPos();
+	CVector3D enemyNodePos = enemyNode->GetPos();
+	CVector3D vec = playerNodePos - enemyNodePos;
+
+	/*CVector3D enemyPos = e->m_pos;
+	CVector3D vec = enemyPos - m_pos;*/
 	// 現在位置からプレイヤーまでの距離を求める
 	float dist = vec.Length();
 
 
 
 	// プレイヤーの位置までのレイと壁との衝突判定を行う
-	CVector3D start = m_pos;
-	CVector3D end = enemyPos;
-	start.y = 1.0f;
-	end.y = 1.0f;
+	/*CVector3D start = m_pos;
+	CVector3D end = enemyPos;*/
+	CVector3D start = enemyNodePos;
+	CVector3D end = playerNodePos;
+	/*start.y = 1.0f;
+	end.y = 1.0f;*/
 	CVector3D hitPos, hitNormal;
 	if (Stage::CollisionRay(start, end, &hitPos, &hitNormal))
 	{

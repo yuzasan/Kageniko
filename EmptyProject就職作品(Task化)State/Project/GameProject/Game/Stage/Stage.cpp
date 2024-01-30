@@ -7,112 +7,81 @@ Stage* Stage::ms_instance = nullptr;
 
 //Œo˜H’Tõ—pƒm[ƒh‚Ìƒe[ƒuƒ‹
 std::list<CVector3D> Stage::ms_nodes =
-{
-	/*
-	CVector3D(-13.5f,0.0f,-13.5f),		//s‚«~‚Ü‚è
-	CVector3D(-13.5f,0.0f,-9.0f),
-	CVector3D(-13.5f,0.0f,-5.5f),
-	CVector3D(-13.5f,0.0f,-2.2f),
-	CVector3D(-13.5f,0.0f, 1.5f),		//s‚«~‚Ü‚è
-	CVector3D(-13.5f,0.0f, 5.0f),
-	CVector3D(-13.5f,0.0f, 13.0f),
-
-	CVector3D(-10.5f,0.0f,9.0f),		//s‚«~‚Ü‚è
-	CVector3D(-10.5f,0.0f,5.0f),
-	CVector3D(-10.5f,0.0f,1.0f),
-	CVector3D(-10.5f,0.0f,-2.5f),
-	CVector3D(-10.5f,0.0f,-9.5f),
-	CVector3D(-10.5f,0.0f,-13.0f),
-
-	CVector3D(-6.0f,0.0f,1.5f),
-	CVector3D(-6.0f,0.0f,5.0f),
-	CVector3D(-6.0f,0.0f,9.0f),
-	CVector3D(-6.0f,0.0f,13.0f),
-
-	CVector3D(-2.0f,0.0f, 5.0f),		//s‚«~‚Ü‚è
-	CVector3D(-2.0f,0.0f, 1.5f),		//s‚«~‚Ü‚è
-	CVector3D(-2.0f,0.0f,-5.5f),		//s‚«~‚Ü‚è
-
-	CVector3D( 2.5f,0.0f,-13.0f),		//s‚«~‚Ü‚è
-	CVector3D( 2.5f,0.0f,-9.0f),
-	CVector3D( 2.5f,0.0f,-5.5f),
-	CVector3D( 2.5f,0.0f, 5.0f),		//s‚«~‚Ü‚è
-	CVector3D( 2.5f,0.0f, 13.0f),		//s‚«~‚Ü‚è
-
-	CVector3D( 5.5f,0.0f, 13.0f),
-	CVector3D( 5.5f,0.0f, 9.0f),
-	CVector3D( 5.5f,0.0f,-2.5f),
-	CVector3D( 5.5f,0.0f,-5.5f),
-	CVector3D( 5.5f,0.0f,-10.5f),
-	CVector3D( 5.5f,0.0f,-13.5f),
-
-	CVector3D( 8.5f,0.0f,-10.5f),
-	CVector3D( 8.5f,0.0f,-2.5f),
-	CVector3D( 8.5f,0.0f, 1.5f),
-	CVector3D( 8.5f,0.0f, 5.0f),
-	CVector3D( 8.5f,0.0f, 13.0f),
-
-	CVector3D(11.0f,0.0f, 13.0f),
-	CVector3D(11.0f,0.0f, 9.0f),
-	CVector3D(11.0f,0.0f, 5.5f),
-	CVector3D(11.0f,0.0f, 2.0f),		//s‚«~‚Ü‚è
-	CVector3D(11.0f,0.0f,-2.5f),
-	CVector3D(11.0f,0.0f,-6.5f),
-	CVector3D(11.0f,0.0f,-10.0f),
-	CVector3D(11.0f,0.0f,-13.5f),		//s‚«~‚Ü‚è
-
-	CVector3D(13.0f,0.0f,-13.5f),		//s‚«~‚Ü‚è
-	CVector3D(13.0f,0.0f,-10.0f),
-	CVector3D(13.0f,0.0f,-6.5f),
-	CVector3D(13.0f,0.0f, 5.5f),
-	CVector3D(13.0f,0.0f, 9.0f),
-	CVector3D(13.0f,0.0f, 13.0f),		//s‚«~‚Ü‚è
-	*/
-
-	/*CVector3D(-48.0f,0.0f, 48.0f),
-	CVector3D( 0.0f,0.0f, 48.0f),
-	CVector3D(-48.0f,0.0f,-48.0f),
-	CVector3D( 0.0f,0.0f,-48.0f),
-	CVector3D( 48.0f,0.0f,-48.0f),
-	CVector3D( 48.0f,0.0f, 0.0f),
-	CVector3D( 48.0f,0.0f, 48.0f),
-	CVector3D(-48.0f,0.0f, 0.0f),
-	CVector3D(-13.0f,0.0f, 13.0f),
-	CVector3D(-13.0f,0.0f,-13.0f),
-	CVector3D( 13.0f,0.0f,-13.0f),*/
-	
-	CVector3D(-8,6,11),
+{	
+	CVector3D(-8,6,18),
 	CVector3D(-8,6,25),
 	CVector3D(-8,6,50),
-	CVector3D(-34,6,50),
-	CVector3D(-34,6,-2),
+
 	CVector3D(-13,6,-2),
-	CVector3D(-58,6,48),
-	CVector3D(-58,6,24),
-	CVector3D(-58,6,-2),
-	CVector3D(-45,6,23),
-	CVector3D(-14,6,23),
-	CVector3D(-20,6,23),
-	CVector3D(-20,6,11),
 	CVector3D(-14,6,5),
+	CVector3D(-14,6,23),
 	CVector3D(-14,6,43),
-	CVector3D(-34,6,43),
-	CVector3D(-34,6,36),
+	
+	CVector3D(-20,6,11),
+	CVector3D(-20,6,23),
 	CVector3D(-20,6,36),
-	CVector3D(-45,6,36),
-	CVector3D(-45,6,11),
+
+	CVector3D(-34,6,-2),
+	CVector3D(-34,6,5),
 	CVector3D(-34,6,11),
+	CVector3D(-34,6,36),
+	CVector3D(-34,6,43),
+	CVector3D(-34,6,50),
+	
+	CVector3D(-45,6,11),
+	CVector3D(-45,6,23),
+	CVector3D(-45,6,36),
+
 	CVector3D(-52,6,5),
 	CVector3D(-52,6,23),
 	CVector3D(-52,6,36),
-	CVector3D(-34,6,5),
-	CVector3D(-16,17,-4),
-	CVector3D(-8,14,0),
-	CVector3D(-8,18,-5),
+	
+	CVector3D(-58,6,-2),
+	CVector3D(-58,6,24),
+	CVector3D(-58,6,48),
 
-	CVector3D(-2, 6, 24),
-	CVector3D(13, 1, 24),
-	CVector3D(13, 1, 32),
+	//2ŠK
+	//CVector3D(-8, 18, -3),
+	//CVector3D(-8, 13, 8),
+	//CVector3D(-8,14,0),
+	//CVector3D(-8,18,-5),
+	//CVector3D(-16,17,-4),
+
+	CVector3D(-19,18,4),
+	//CVector3D(-19,18,-4),
+	CVector3D(-19,18,35),
+
+	CVector3D(-27,18,6),
+
+	CVector3D(-47,18,4),
+	CVector3D(-47,18,35),
+
+	//Še•”‰®‚É‚Â‚È‚ª‚éƒm[ƒh
+	CVector3D(-29,18,26),
+	CVector3D(-29,18,37),
+
+	CVector3D(-36,18,-3),
+	CVector3D(-36,18,5),
+	CVector3D(-36,18,12),
+
+	CVector3D(-47,18,12),
+	CVector3D(-47,18,30),
+
+	CVector3D(-56,18,12),
+	CVector3D(-56,18,31),
+
+	//Še•”‰®‚Ìƒm[ƒh
+	CVector3D(-25,18,-3),
+	CVector3D(-37,18,19),
+	CVector3D(-41,18,27),
+	CVector3D(-48,18,-3),
+	CVector3D(-55,18,21),
+	CVector3D(-56,18,-3),
+
+	//ŠO
+	//CVector3D(-2, 6, 24),
+	//CVector3D(13, 1, 24),
+	//CVector3D(13, 1, 32),
 
 };
 
@@ -247,9 +216,9 @@ void Stage::Render()
 	if (CShadow::GetInstance()->GetState() == CShadow::eShadow)return;
 	/*m_model.SetScale(1, 1, 1);
 	m_model.Render();*/
-	m_model->SetScale(1, 1, 1);
+	//m_model->SetScale(1, 1, 1);
 
-	m_model->Render();
+	//m_model->Render();
 }
 
 void Stage::NoEnemyRender()
@@ -287,7 +256,7 @@ void Stage::NoEnemyRender()
 	if (CShadow::GetInstance()->GetState() == CShadow::eShadow)return;
 	/*m_model.SetScale(1, 1, 1);
 	m_model.Render();*/
-	m_model->SetScale(1, 1, 1);
+	//m_model->SetScale(1, 1, 1);
 
-	m_model->Render();
+	//m_model->Render();
 }

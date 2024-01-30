@@ -7,36 +7,6 @@ EnemyManager* EnemyManager::ms_instance = nullptr;
 //ìGÇÃíTçıà íuÉmÅ[ÉhÇÃÉäÉXÉg
 std::list<SearchNode> EnemyManager::ms_searchNodes =
 {
-	/*
-	SearchNode(CVector3D(-13.5f,0.0f,-13.5f)),
-	SearchNode(CVector3D(-13.5f,0.0f, 1.5f)),
-	SearchNode(CVector3D(-10.5f,0.0f, 9.0f)),
-	SearchNode(CVector3D(-2.0f, 0.0f, 5.0f)),
-	SearchNode(CVector3D(-2.0f, 0.0f, 1.5f)),
-	SearchNode(CVector3D(-2.0f, 0.0f,-5.5f)),
-	SearchNode(CVector3D( 2.5f, 0.0f,-13.0f)),
-	SearchNode(CVector3D( 2.5f, 0.0f, 5.0f)),
-	SearchNode(CVector3D( 2.5f, 0.0f, 13.0f)),
-	SearchNode(CVector3D( 11.0f,0.0f, 2.0f)),
-	SearchNode(CVector3D( 11.0f,0.0f,-13.5f)),
-	SearchNode(CVector3D( 13.0f,0.0f,-13.5f)),
-	SearchNode(CVector3D( 13.0f,0.0f, 13.0f)),
-	*/
-
-	/*SearchNode(CVector3D(-48.0f,0.0f, 48.0f)),
-	SearchNode(CVector3D(0.0f,0.0f, 48.0f)),
-	SearchNode(CVector3D(-48.0f,0.0f,-48.0f)),
-	SearchNode(CVector3D(0.0f,0.0f,-48.0f)),
-	SearchNode(CVector3D(48.0f,0.0f,-48.0f)),
-	SearchNode(CVector3D(48.0f,0.0f, 0.0f)),
-	SearchNode(CVector3D(48.0f,0.0f, 48.0f)),
-	SearchNode(CVector3D(-48.0f,0.0f, 0.0f)),
-	SearchNode(CVector3D(-13.0f,0.0f, 13.0f)),
-	SearchNode(CVector3D(-13.0f,0.0f,-13.0f)),
-	SearchNode(CVector3D(13.0f,0.0f,-13.0f)),
-	SearchNode(CVector3D(13.0f,0.0f, 13.0f)),*/
-	
-	//SearchNode(CVector3D(-3.0f,6.0f, 25.0f)),
 	SearchNode(CVector3D(-8,6,51)),
 	SearchNode(CVector3D(-57,6,51)),
 	SearchNode(CVector3D(-57,6,-2)),
@@ -74,10 +44,24 @@ std::list<SearchNode> EnemyManager::ms_searchNodes =
 
 	//SearchNode(CVector3D(-58,6,23)),
 
-	SearchNode(CVector3D(-8,18,-5)),
 
-	SearchNode(CVector3D(13, 1, 32)),
+	//äO
+	//SearchNode(CVector3D(-8,18,-5)),
 
+
+	//2äK
+	//SearchNode(CVector3D(-8, 18, -3)),
+	//SearchNode(CVector3D(13, 1, 32)),
+	//SearchNode(CVector3D(-19,18,4)),
+	//SearchNode(CVector3D(-19,18,-4)),
+	//SearchNode(CVector3D(-19,18,35)),
+
+	//SearchNode(CVector3D(-27,18,6)),
+
+	//SearchNode(CVector3D(-47,18,4)),
+	//SearchNode(CVector3D(-47,18,35)),
+
+	
 	
 	
 	

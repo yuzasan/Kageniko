@@ -26,12 +26,12 @@ void TyukanBox::Update()
 void TyukanBox::Render()
 {
 	if (CShadow::GetInstance()->GetState() == CShadow::eShadow)return;
-	Utility::DrawOBB(m_obb, CVector4D(1, 0, 0.5, 1));
+	Utility::DrawOBB(m_obb, CVector4D(1, 0, 0.5, 0.5));
 }
 
 void TyukanBox::NoEnemyRender()
 {
-	Utility::DrawOBB(m_obb, CVector4D(1, 0, 0.5, 1));
+	Utility::DrawOBB(m_obb, CVector4D(1, 0, 0.5, 0.5));
 }
 
 void TyukanBox::Collision(Task* b) {

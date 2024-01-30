@@ -3,6 +3,8 @@
 #include "Character/Player.h"
 #include "Character/Enemy.h"
 #include "Character/EnemyManager.h"
+#include "Character/EnemyCopy.h"
+#include "Character/EnemyManagerCopy.h"
 #include "Character/NoiseBox.h"
 #include "Character/PlayerCamera.h"
 #include "Camera/FieldCamera.h"
@@ -24,50 +26,21 @@
 #include "UI/UI.h"
 
 Game::Game():Task(TaskType::eScene){
-	/*Base::Add(new Player(CVector3D(0, 0, 8)));
-	Base::Add(new EnemyManager());
-	Base::Add(new Stage());
-	Base::Add(new PlayerCamera());
-	Base::Add(new FieldCamera());*/
-
+	new Player(CVector3D(11, 5.0f, 25));
 	
-	new Player(CVector3D(15, 5.0f, 25));
-	//new Player(CVector3D(0, 5.0f, 78));
+	new EnemyC(CVector3D(-19.0f, 17.0f, 17.0f), 75.0f);
+	new EnemyC(CVector3D(-19.0f, 17.0f, 17.0f), 110.0f);
 
-	//new Player(CVector3D(0, 1.2f, 20));
-	//new Player(CVector3D(0, 5.0f, 0));
-	//new Player(CVector3D(78, 5.0f, 0));
-	//new EnemyManager();
-	//new Enemy(CVector3D(9.0f, 5.0f, 25.0f), 75.0f);
-	//new Enemy(CVector3D(9.0f, 5.0f, 25.0f), 75.0f);
 	new Enemy(CVector3D(-8.0f, 6.0f, 25.0f), 75.0f);
 	new Enemy(CVector3D(-8.0f, 6.0f, 25.0f), 110.0f);
 	new Enemy(CVector3D(-8.0f, 6.0f, 25.0f), 100.0f);
 	new Enemy(CVector3D(-8.0f, 6.0f, 25.0f), 25.0f);
-	/*new Enemy(CVector3D(10.0f, 6.0f, 25.0f), 75.0f);
-	
-	new Enemy(CVector3D(-13.0f, 6.0f, 73.0f), 110.0f);
-	new Enemy(CVector3D(-8.0f, 6.0f, 73.0f), 100.0f);
-	new Enemy(CVector3D(-3.0f, 6.0f, 73.0f), 75.0f);
-	new Enemy(CVector3D(2.0f, 6.0f, 73.0f), 50.0f);
-	new Enemy(CVector3D(7.0f, 6.0f, 73.0f), 25.0f);
-	new Enemy(CVector3D(12.0f, 6.0f, 73.0f), 5.0f);*/
-
-	/*new Enemy(CVector3D(3, 5, 20), 110.0f);
-	new Enemy(CVector3D(3, 5, -20), 100.0f);
-	new Enemy(CVector3D(20, 5, 3), 75.0f);
-	new Enemy(CVector3D(-20, 5, 3), 50.0f);
-	new Enemy(CVector3D(-20, 5, 20), 25.0f);
-	new Enemy(CVector3D(20, 5, -20), 5.0f);
-	new Enemy(CVector3D(-20, 5, 20), 5.0f);
-	new Enemy(CVector3D(20, 5, -20), 5.0f);
-	new Enemy(CVector3D(20, 5, 20), 5.0f);*/
-
 
 	new Stage();
 	new PlayerCamera();
 	new FieldCamera();
-	new Timer();
+	//new Timer();
+	new UI();
 	//new EventCamera();
 	//フィールドに配置する床を生成
 	float ratio = 1.0f;
@@ -185,18 +158,32 @@ Game::Game():Task(TaskType::eScene){
 		CVector3D(1.0f, 2.0f, 1.0f)
 	);
 	*/
-	new HideBox
+	/*new HideBox
 	(
 		CVector3D(-8.0f, 5.0f, 23.0f),
+		CVector3D(0.0f, 0.0f, 0.0f),
+		CVector3D(1.0f, 2.0f, 1.0f)
+	);*/
+
+	new HideBox
+	(
+		CVector3D(-11.0f, 17.0f, 0.0f),
 		CVector3D(0.0f, 0.0f, 0.0f),
 		CVector3D(1.0f, 2.0f, 1.0f)
 	);
 
 	new TyukanBox
 	(
-		CVector3D(-2.0f, 5.0f, 26.0f),
+		CVector3D(-2.0f, 5.0f, 24.0f),
 		CVector3D(0.0f, 0.0f, 0.0f),
-		CVector3D(1.0f, 2.0f, 1.0f)
+		CVector3D(1.0f, 0.15f, 3.4f)
+	);
+
+	new TyukanBox
+	(
+		CVector3D(-13.5f, 16.8f, -3.0f),
+		CVector3D(0.0f, 0.0f, 0.0f),
+		CVector3D(1.0f, 0.15f, 3.4f)
 	);
 
 	//new FellBox
@@ -277,19 +264,150 @@ Game::Game():Task(TaskType::eScene){
 	//	4
 	//);
 
+	/*
 	new BreakBox
 	(
-		CVector3D(-27.0f, 16.0f, 15.0f),	//pos
+		CVector3D(6, 1, 30),	//pos
 		CVector3D(0.0f, 0.0f, 0.0f),	//rot
-		CVector3D(5.0f, 5.0f, 5.0f),	//size
+		CVector3D(5.0f, 3.0f, 5.0f),	//size
+		1
+	);
+
+	new BreakBox
+	(
+		CVector3D(6, 1, 40),	//pos
+		CVector3D(0.0f, 0.0f, 0.0f),	//rot
+		CVector3D(5.0f, 3.0f, 5.0f),	//size
 		2
+	);
+	*/
+
+	/*new Item
+	(
+		CVector3D(6, 1, 20),
+		CVector3D(0, 0, 0),
+		CVector3D(0.1f, 0.1f, 0.1f)
+	);*/
+
+	new Item
+	(
+		CVector3D(13, 1, -23),
+		CVector3D(0, 0, 0),
+		CVector3D(0.1f, 0.1f, 0.1f)
 	);
 
 	new Item
 	(
-		CVector3D(-52,17,4),
-		CVector3D(0,0,0),
+		CVector3D(-69, 1, 23),
+		CVector3D(0, 0, 0),
 		CVector3D(0.1f, 0.1f, 0.1f)
+	);
+
+	new Item
+	(
+		CVector3D(-33, 5, 58),
+		CVector3D(0, 0, 0),
+		CVector3D(0.1f, 0.1f, 0.1f)
+	);
+
+	new Item
+	(
+		CVector3D(-14, 5, -2),
+		CVector3D(0, 0, 0),
+		CVector3D(0.1f, 0.1f, 0.1f)
+	);
+
+	new Item
+	(
+		CVector3D(3, 1, 30),
+		CVector3D(0, 0, 0),
+		CVector3D(0.1f, 0.1f, 0.1f)
+	);
+
+	/*new Item2
+	(
+		CVector3D(6, 1.0f, 25),
+		CVector3D(0, 0, 0),
+		CVector3D(0.1f, 0.1f, 0.1f)
+	);
+	*/
+	new Item2
+	(
+		CVector3D(-8, 17, 50),
+		CVector3D(0, 0, 0),
+		CVector3D(0.1f, 0.1f, 0.1f)
+	);
+
+	new Item2
+	(
+		CVector3D(-40, 18, 42),
+		CVector3D(0, 0, 0),
+		CVector3D(0.1f, 0.1f, 0.1f)
+	);
+
+	new Item2
+	(
+		CVector3D(-9, 17, 4),
+		CVector3D(0, 0, 0),
+		CVector3D(0.1f, 0.1f, 0.1f)
+	);
+
+	new Item2
+	(
+		CVector3D(-13, 18, 4),
+		CVector3D(0, 0, 0),
+		CVector3D(0.1f, 0.1f, 0.1f)
+	);
+
+	new Item2
+	(
+		CVector3D(-27, 1, 64),
+		CVector3D(0, 0, 0),
+		CVector3D(0.1f, 0.1f, 0.1f)
+	);
+
+	new Item2
+	(
+		CVector3D(-19, 17, -4),
+		CVector3D(0, 0, 0),
+		CVector3D(0.1f, 0.1f, 0.1f)
+	);
+
+	new Item2
+	(
+		CVector3D(-42, 17, 29),
+		CVector3D(0, 0, 0),
+		CVector3D(0.1f, 0.1f, 0.1f)
+	);
+
+	new Item2
+	(
+		CVector3D(-59, 18, 29),
+		CVector3D(0, 0, 0),
+		CVector3D(0.1f, 0.1f, 0.1f)
+	);
+
+	new Item2
+	(
+		CVector3D(-28, 17, 8),
+		CVector3D(0, 0, 0),
+		CVector3D(0.1f, 0.1f, 0.1f)
+	);
+
+	new BreakBox
+	(
+		CVector3D(-8.0f, 6, 15.0f),	//pos
+		CVector3D(0.0f, 0.0f, 0.0f),	//rot
+		CVector3D(2.0f, 4.0f, 2.0f),	//size
+		2
+	);
+
+	new BreakBox
+	(
+		CVector3D(-27.0f, 18.9f, 15.0f),	//pos
+		CVector3D(0.0f, 0.0f, 0.0f),	//rot
+		CVector3D(5.0f, 3.0f, 5.0f),	//size
+		5
 	);
 
 	new LastItem
@@ -300,12 +418,18 @@ Game::Game():Task(TaskType::eScene){
 	);
 
 	//一つなら大丈夫
-	new NoiseBox
+	 new NoiseBox
 	(
-		CVector3D(-2.0f, 5.0f, 22.0f),	//pos
+		CVector3D(-2.0f, 1000.0f, 22.0f),	//pos
 		CVector3D(0.0f, 0.0f, 0.0f),	//rot
 		CVector3D(1.0f, 2.0f, 1.0f)		//size
 	);
+	//new NoiseBox
+	//(
+	//	CVector3D(-2.0f, 5.0f, 22.0f),	//pos
+	//	CVector3D(0.0f, 0.0f, 0.0f),	//rot
+	//	CVector3D(1.0f, 2.0f, 1.0f)		//size
+	//);
 
 	//new Effect2D("Nekonote");
 	CFPS::Wait();
@@ -319,8 +443,11 @@ Game::~Game()
 	//タイトルシーンへ
 	//Base::Add(new Title());
 	GameData::m_item = 0;
+	GameData::m_item2 = 0;
 	GameData::m_lastitem = 0;
 	GameData::m_diecnt = 0;
+	GameData::m_step = 0;
+	GameData::m_breakflg = 0;
 	GameData::m_isdownflg = false;
 	//タイトルシーンへ
 	//new Title();

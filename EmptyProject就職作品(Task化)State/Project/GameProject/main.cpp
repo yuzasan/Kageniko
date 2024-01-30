@@ -30,29 +30,15 @@ bool g_isRenderDebug = false;
 void Load() {
 	//モデルの読み込み
 	//プレイヤー
-	//ADD_RESOURCE("Ninja", CModel::CreateModel("Character/Cat/cat.a3m"));
 	ADD_RESOURCE("Ninja", CModel::CreateModel("Character/Cat/cat4.a3m"));
 	//エネミー
-	//ADD_RESOURCE("Golem", CModel::CreateModel("Character/golem/golem.a3m"));
 	ADD_RESOURCE("Samurai", CModel::CreateModel("Character/Samurai/samurai3.a3m"));
 	//ステージの読み込み
-	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Castle/hako.obj", 20, 10, 20));
-	//ステージの読み込み
-	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Castle/Collision.obj", 20, 10, 20));
-	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Castle/tamesi.obj", 20, 10, 20));
-	ADD_RESOURCE("Stage", CModel::CreateModel("Field/Castle/tamesi3.obj", 20, 10, 20));
-	//ADD_RESOURCE("Stagecol", CModel::CreateModel("Field/Castle/tamesicol.obj", 20, 10, 20));
-	//ADD_RESOURCE("Stagecol", CModel::CreateModel("Field/Castle/tamesicol2.obj", 20, 10, 20));
-	ADD_RESOURCE("Stagecol", CModel::CreateModel("Field/Castle/tamesicol3.obj", 20, 10, 20));
-	//ステージの読み込み
-	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Castle/kari.obj", 20, 10, 20));
-	//ステージの読み込み
-	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Castle/castletest3tougou.obj", 20, 10, 20));
-	//ステージの読み込み
-	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Test/TestField11.obj", 20, 10, 20));
-	//ステージの読み込み
-	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Test/test.obj", 20, 10, 20));	ない
-	//Sleep(1000 * 5);
+	//ADD_RESOURCE("Stage", CModel::CreateModel("Field/Castle/tamesi3.obj", 20, 10, 20));
+	ADD_RESOURCE("Stage", CModel::CreateModel("Field/Castle/tamesi6.obj", 20, 10, 20));
+	//ステージColの読み込み
+	//ADD_RESOURCE("Stagecol", CModel::CreateModel("Field/Castle/tamesicol3.obj", 20, 10, 20));
+	ADD_RESOURCE("Stagecol", CModel::CreateModel("Field/Castle/tamesiCol6.obj", 20, 10, 20));
 	//吹き出し「なんだ猫か」
 	ADD_RESOURCE("Fukidasi", CModel::CreateModel("Effect/Fukidasi/Fukidasi.obj"));
 	//吹き出し「にゃ～」
@@ -163,6 +149,8 @@ void MainLoop(void) {
 
 	}
 	else {
+		CImage m_img = COPY_RESOURCE("Start", CImage);
+		m_img.Draw();
 		//ロード中
 		//NowLoadingの文字をアニメーション
 		static int t = 0;
@@ -264,7 +252,7 @@ void Init(void)
 	*/
 
 	////タイトル読み込み
-	//ADD_RESOURCE("Title", CImage::CreateImage("Title/Title.png"));
+	ADD_RESOURCE("Start", CImage::CreateImage("Title/Start.png"));
 	//ADD_RESOURCE("FusumaL", CModel::CreateModel("Effect/Load/FusumaL.obj"));
 	//ADD_RESOURCE("FusumaR", CModel::CreateModel("Effect/Load/FusumaR.obj"));
 	//ADD_RESOURCE("fusumaL", CImage::CreateImage("Effect/Load/fusumaL.png"));

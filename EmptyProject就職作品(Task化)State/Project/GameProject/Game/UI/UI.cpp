@@ -136,3 +136,61 @@ void Font::Draw()
 {
 	m_text.Draw(m_iti.x, m_iti.y, m_color.x, m_color.y, m_color.z, m_texts, m_d);
 }
+
+UI::UI() :Task(TaskType::eUI)
+	, m_midasi("C:\\Windows\\Fonts\\msgothic.ttc", 42)
+	, m_text("C:\\Windows\\Fonts\\msgothic.ttc", 20) 
+{
+
+}
+
+UI::~UI() {
+
+}
+
+void UI::Update() {
+	if (GameData::m_item == 2 && GameData::m_step == 0) {
+		GameData::m_step = 1;
+	}
+
+	if (GameData::m_breakflg == 1 && GameData::m_step == 1) {
+		GameData::m_step = 2;
+	}
+
+	if (GameData::m_item2 == 5 && GameData::m_step == 2) {
+		GameData::m_breakflg = 0;
+		GameData::m_step = 3;
+	}
+}
+
+void UI::Draw() {
+	
+	Utility::DrawQuad(CVector2D(1600, 25), CVector2D(300, 150), CVector4D(1,1,1,0.8));
+	//m_midasi.Draw(1615,75, 0, 0, 0, "目標");
+	//m_text.Draw(1650, 125, 0, 0, 0, "キューブを見つけろ");
+	switch (GameData::m_step)
+	{
+	case 0:
+		m_midasi.Draw(1615, 75, 0, 0, 0, "目標");
+		Utility::DrawQuad(CVector2D(1740, 45), CVector2D(40, 40), CVector4D(0, 1, 1, 1));
+		m_text.Draw(1610, 125, 0, 0, 0, "水色キューブを探そう 残り%d個", 2 - GameData::m_item);
+		break;
+	case 1:
+		m_midasi.Draw(1615, 75, 0, 0, 0, "目標");
+		Utility::DrawQuad(CVector2D(1740, 45), CVector2D(40, 40), CVector4D(1, 0, 0, 1));
+		m_text.Draw(1630, 125, 0, 0, 0, "道をふさいでいる");
+		m_text.Draw(1630, 150, 0, 0, 0, "赤い壁を壊そう");
+		break;
+	case 2:
+		m_midasi.Draw(1615, 75, 0, 0, 0, "目標");
+		Utility::DrawQuad(CVector2D(1740, 45), CVector2D(40, 40), CVector4D(1, 1, 0, 1));
+		m_text.Draw(1610, 125, 0, 0, 0, "黄色キューブを探そう 残り%d個", 5 - GameData::m_item2);
+		break;
+	case 3:
+		m_midasi.Draw(1615, 75, 0, 0, 0, "最終目標");
+		Utility::DrawQuad(CVector2D(1800, 45), CVector2D(40, 40), CVector4D(0, 0, 0, 1));
+		m_text.Draw(1620, 125, 0, 0, 0, "道をふさぐ黒い壁を壊し、");
+		m_text.Draw(1620, 150, 0, 0, 0, "ピンクキューブを見つけよう！");
+		break;
+	}
+}
