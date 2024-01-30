@@ -807,7 +807,7 @@ void EnemyC::FollBox() {
 			CVector3D(0.1f, 0.1f, 0.1f)
 		));
 		*/
-		new Item(
+		new Item2(
 			m_pos + CVector3D(0, 0.5f, 0),
 			CVector3D(0.0f, 0.0f, 0.0f),
 			CVector3D(0.1f, 0.1f, 0.1f)

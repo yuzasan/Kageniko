@@ -51,7 +51,8 @@ Title::Title():Task(TaskType::eScene), m_title_text("C:\\Windows\\Fonts\\msgothi
 	,m_time(0)
 	,m_isOn(false)
 {
-	m_img = COPY_RESOURCE("Title", CImage);
+	//m_img = COPY_RESOURCE("Title", CImage);
+	m_img = COPY_RESOURCE("Start", CImage);
 	//new Effect("Fukidasi", m_pos + CVector3D(0, 2.5, -1), CVector3D(0, 0, 0), CVector3D(0, 0, 0), 1.0f, 1.0f, 1.0f, 0.0f, 0, true, 60);
 	//new Effect("FusumaR", CVector3D(-0.3f, -2, 0), CVector3D( 0.3f, -0.3f, 0), CVector3D(0, 0, 0), 1.0f, 0.1f, 1.0f, 0.0f, 0, true, 120);
 	//new Effect("FusumaL", CVector3D( 0.3f, -2, 0), CVector3D(-0.3f, -0.3f, 0), CVector3D(0, 0, 0), 1.0f, 0.1f, 1.0f, 0.0f, 0, true, 120);
@@ -102,6 +103,6 @@ void Title::Draw()
 		FuwaFuwa();
 		//文字表示
 		//m_title_text.Draw(800, 800 - abs(sin(fuwafuwa_r)) * 64, 0, 0, 0, "左クリック");
-		m_title_text.Draw(800, 900 - abs(sin(fuwafuwa_r)) * 64, 0, 0, 0, "左クリック");
+		m_title_text.Draw(800, 900 - abs(sin(fuwafuwa_r)) * 64, 1, 1, 1, "左クリック");
 	}
 }
